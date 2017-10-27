@@ -25,12 +25,7 @@ public class ActionButtonsUi {
 	public WebElement getLinkFileCheckbox() {
 		return linkFileCheckbox;
 	}
-	@FindBy(xpath="//input[@id='dontbid']")
-	private WebElement rejectButton_ODapproval;
-	
-	public WebElement getRejectButton_ODapproval() {
-		return rejectButton_ODapproval;
-	}
+
 	@FindBy(linkText="Project Archive")
 	private WebElement project_Archive;
 	@FindBy(linkText="All Projects")

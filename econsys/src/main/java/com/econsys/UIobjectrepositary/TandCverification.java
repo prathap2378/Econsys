@@ -28,10 +28,9 @@ public class TandCverification {
 	public WebElement getCreditWorthy() {
 		return creditWorthy;
 	}
-
-	/**
-	 * @return the proposedCourseofAction
-	 */
+	//T&C review submit button
+	@FindBy(id="btnsubmit") public WebElement submitT_Creview;
+	//@return the proposedCourseofAction
 	public WebElement getProposedCourseofAction() {
 		return proposedCourseofAction;
 	}

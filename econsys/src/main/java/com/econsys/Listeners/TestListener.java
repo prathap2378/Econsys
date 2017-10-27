@@ -33,12 +33,15 @@ public class TestListener extends Driver implements ITestListener,ISuiteListener
 	ExtentTest logger;
 	Workbook wb = new Workbook();
 	WebDriver driver;
-	
+
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		
+
 	}
 
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+
+	}
+	public void onStart1(ISuite suite){
 		
 	}
 	//On test suite start
@@ -52,21 +55,21 @@ public class TestListener extends Driver implements ITestListener,ISuiteListener
 		}
 		log.info("driver open ...@test suite start");
 		log.info("This is before test suite....");
-		
+
 	}
 	//On test suite finish
 	public void onFinish(ISuite suite) {
 		log.info("Suite execution ended ....");
 		//driver.close();
-		
+
 		//mreport.sendmailReport("kaveri.r@quadwave.com");
 	}
-	
+
 	//On @test start
 	public void onTestStart(ITestResult result) {
 		try {
 			//Set project name to Test data excel sheet
-			
+
 			String proname = result.getName().toString().trim();
 			if (proname.contentEquals("newLinkPrepareQuote")||proname.contentEquals("newLinkAssignSalesLeader")||
 					proname.contentEquals("newLinkSubmitQuote")||proname.contentEquals("newLinkStatuOfSubmitQuote")||proname.contentEquals("newLinkStatuOfResubmitQuote")||proname.contentEquals("linkProjectAssignSalesLeader")||
@@ -76,8 +79,8 @@ public class TestListener extends Driver implements ITestListener,ISuiteListener
 				log.info("For the test case"+proname+" Project Name will be same");
 			}
 			else{
-			log.info("projectName***onTestStart :"+proname); 
-			wb.setExcelData(1, 1, 2,proname);}
+				log.info("projectName***onTestStart :"+proname); 
+				wb.setExcelData(1, 1, 2,proname);}
 			//Open url on test start
 			//Thread.sleep(500);
 			//login.url();
@@ -95,12 +98,10 @@ public class TestListener extends Driver implements ITestListener,ISuiteListener
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		boolean elementPresent=Driver.driver().findElements(By.xpath("//span[@class='nav-item-label']/span")).size()>0;
+		boolean elementPresent = driver().findElements(By.xpath("//span[@class='nav-item-label']/span")).size()>0;
 		if(elementPresent)
-
 			try {
 				//logout if element present
 				login.logout();
@@ -110,70 +111,68 @@ public class TestListener extends Driver implements ITestListener,ISuiteListener
 				log.error(e);
 			}
 		else
-			log.info("Test has not logged in to Application...");
-			}
+			log.info("Not logged in to Application...");
+	}
 	//On @test failure
 	public void onTestFailure(ITestResult result) {
-		    log.info(result+" :Test has failed");
-			log.error("FAIL Test "+result.getName().toString().trim()+" was failed In "+result.getTestClass()+" class");
-			log.error("This is the Exception thrown on test execution",result.getThrowable());
-			String screenShotName_loc=System.getProperty("user.dir")+"\\ScreenShots\\"+"FAIL_"+result.getTestClass().getName()+"__"+result.getName().toString().trim();
-			cu.screenShot(screenShotName_loc);
-			
+
+		log.info(result+" :Test has failed");
+		log.error("FAIL Test "+result.getName().toString().trim()+" was failed In "+result.getTestClass()+" class");
+		log.error("This is the Exception thrown on test execution",result.getThrowable());
+		String screenShotName_loc=System.getProperty("user.dir")+"\\ScreenShots\\"+"FAIL_"+result.getTestClass().getName()+"__"+result.getName().toString().trim();
+		cu.screenShot(screenShotName_loc);
+
+		try {
+			cu.blindWait();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		boolean elementPresent=Driver.driver().findElements(By.xpath("//span[@class='nav-item-label']/span")).size()>0;
+		if(elementPresent)
+
 			try {
-				cu.blindWait();
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//logout if element present
+				login.logout();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			boolean elementPresent=Driver.driver().findElements(By.xpath("//span[@class='nav-item-label']/span")).size()>0;
-			if(elementPresent)
-				
-				try {
-					//logout if element present
-					login.logout();
-					//Driver.driver().close();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			else
-				log.info("Test has not logged in to Application...");
-			}
+		else
+			log.info("Not logged in to Application...");
+	}
 	//On @test skipped
 	public void onTestSkipped(ITestResult result) {
-		
-			log.info(result+"Test has skipped...");
+
+		log.info(result+"Test has skipped...");
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		boolean elementPresent=Driver.driver().findElements(By.xpath("//span[@class='nav-item-label']/span")).size()>0;
+		if(elementPresent)
+
 			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				login.logout();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			boolean elementPresent=Driver.driver().findElements(By.xpath("//span[@class='nav-item-label']/span")).size()>0;
-			if(elementPresent)
-				
-				try {
-					login.logout();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			else
-				log.info("Test has not logged in to Application...");
-			Driver.driver().quit();
-			}
+		else
+			log.info("Test has not logged in to Application...");
+		Driver.driver().quit();
+	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		
+
 	}
 
 	public void onStart(ITestContext context) {
-		
-		
+
+
 	}
 
 	public void onFinish(ITestContext context) {
-		
-		
+
+
 	}
 
 }

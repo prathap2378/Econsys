@@ -116,6 +116,9 @@ public class Preparequote {
 
 	@FindBy(xpath="//input[@id='fileList_flm_bidSheet']")
 	private WebElement cp2cp3biddoc;
+	
+	@FindBy(xpath="//input[@id='fileList_flm_quoteDocument']")
+	WebElement cp2cp3_quote_doc;
 
 	@FindBy(xpath="//select[@id='authorize_bid_sheet_g3']")
 	private WebElement cp2cp3bidsheet;
@@ -200,5 +203,9 @@ public class Preparequote {
 	}
 	public WebElement getCp2cp3deletebidsheet() {
 		return cp2cp3deletebidsheet;
+	}
+	//@return the cp2cp3_quote_doc
+	public WebElement getCp2cp3_quote_doc() {
+		return cp2cp3_quote_doc;
 	}
 }
