@@ -19,6 +19,8 @@ public class EconsysVariables {
 	//RTQ inputs
 	public String estimatedSize,location_inside, estimatedSize0to100k_, location, estimatedSize500_, 
 	location_other, location_SouthEast, estimatedSize250_, eSizertq2, locationrtq2, eSizertq3, locationrtq3;
+	//CP1-CP2 asign sales leader
+	public String sl;
 	//Cp1-Cp3
 	public String ourformat, bidsheetauthorised, exeCP2, cp2cp3ourformat, cp2cp3bidsheetauthorised, exeCP3;
 	//Status of Submit Resubmit quote
@@ -61,10 +63,12 @@ public class EconsysVariables {
 	public String customerCommitmentType_Verbal = "Verbal Commitment Received - Under Review";
 	
 	//organization working now
-	public String org_Name = "UberControls";
+	public String org_Name = "RCC Limited";
 	public String org_Matrixs = "MatrixCS";
-	public String org_4eg = "UberControls";
+	public String org_4eg = "UberControls";//"UberControls"
 	public String el,cl,pl;
+	public String select_No = "No";
+	public String select_Yes = "Yes";
 	//public String org_ASQ = "ASQ";MatrixCS;
 	
 	{
@@ -96,7 +100,8 @@ public class EconsysVariables {
 			//RTQ 3 in revised prepare quote
 			 eSizertq3 = wb.getXLData(7, 4, 1);
 			 locationrtq3 = wb.getXLData(9, 4, 1);
-			 
+			 //Assign sales leader
+			 sl=wb.getXLData(7,3, 0);
 			//prepare quote variables
 			ourformat = wb.getXLData(2, 5, 0);
 			bidsheetauthorised =wb.getXLData(4, 5, 0);

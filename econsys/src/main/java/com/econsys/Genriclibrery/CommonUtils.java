@@ -183,7 +183,7 @@ public class CommonUtils extends Driver {
 	}
 	//taking Screen shot
 	public void screenShot(String ScreenShotLocationWithName){
-		File scrfile = ((TakesScreenshot)Driver.driver()).getScreenshotAs(OutputType.FILE);
+		File scrfile = ((TakesScreenshot)driver()).getScreenshotAs(OutputType.FILE);
 		try {
 		org.apache.commons.io.FileUtils.copyFile(scrfile, new File(ScreenShotLocationWithName+".png"));
 		} catch (IOException e) {
