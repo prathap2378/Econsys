@@ -8,23 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import com.econsys.Genriclibrery.Alerts;
-import com.econsys.Genriclibrery.CommonUtils;
-import com.econsys.Genriclibrery.Driver;
-import com.econsys.Genriclibrery.EconsysVariables;
-import com.econsys.Projects.Basic;
-import com.econsys.Projects.Login;
-import com.econsys.Projects.Monorail;
-import com.econsys.Projects.PropertiesUtil;
-import com.econsys.Projects.TaskCP3CP4;
-import com.econsys.Projects.TasksCP4toCP5;
-import com.econsys.Projects.TasksCP5toCP9;
+import com.econsys.Genriclibrery.*;
+import com.econsys.Projects.*;
 import com.econsys.TestData.Workbook;
-import com.econsys.UIobjectrepositary.ActionButtonsUi;
-import com.econsys.UIobjectrepositary.CosCommitQuoteStatusUi;
-import com.econsys.UIobjectrepositary.PDPui;
-import com.econsys.UIobjectrepositary.Preparequote;
+import com.econsys.UIobjectrepositary.*;
+
 
 public class ActionButtonsCPApprovalsProjects extends Driver {
 	//Page factory classes
@@ -33,6 +21,7 @@ public class ActionButtonsCPApprovalsProjects extends Driver {
 	public Preparequote prepare_Quoteui=PageFactory.initElements(Driver.driver(), Preparequote.class);
 	CosCommitQuoteStatusUi ccq_Ui=PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
 	private static Logger log=Logger.getLogger(ActionButtonsCPApprovalsProjects.class.getName());
+	DeliveryReviewUi deliveryReviewUi = PageFactory.initElements(driver(), DeliveryReviewUi.class);
 	static PDPui pdp_Ui=PageFactory.initElements(Driver.driver(),PDPui.class);
 	
 	//Import classes
@@ -149,7 +138,7 @@ public void reject_DonotPro_CP3() throws IOException, InterruptedException, AWTE
       //Status of submit quote
       monorail.submitQuote();
       //login.loginSL();
-	  b.pnStatusofSubmitedQuote();
+	  b.edit_StatusofSubmitedQuote();
 	  Thread.sleep(200);
 	  cu.selectByVisibleText(driver.findElement(By.xpath("//select[@id='st_quoteStatus']")),"Amend Bid");
 	  ab.getComments().sendKeys("Amend bid");
@@ -236,14 +225,14 @@ public void reject_DonotPro_CP3() throws IOException, InterruptedException, AWTE
 	  
 	  //Operation acceptance "Cancel" by project lead
 	  login.loginPL();
-	  b.pnOperationAcceptance();
+	  b.edit_OperationAcceptance();
 	  ab.getCancelbutton().click();
 	  //Operation acceptance "Save" by project lead 
-	  b.pnOperationAcceptance();
+	  b.edit_OperationAcceptance();
 	  ab.getComments().sendKeys("Save at Operation acceptance");
 	  ab.getSavebutton().click();
 	  //Operation Acceptance 'Reject' by project lead
-	  b.pnOperationAcceptance();
+	  b.edit_OperationAcceptance();
 	  ab.getComments().sendKeys("Reject at Operation acceptance");
 	  ab.getRejectbutton().click();
 	  login.logout();
@@ -286,7 +275,7 @@ public void reject_DonotPro_CP3() throws IOException, InterruptedException, AWTE
 	  
 	  //Operation acceptance
 	  login.loginPL();
-	  b.pnOperationAcceptance();
+	  b.edit_OperationAcceptance();
 	  ab.getComments().sendKeys("Approve at Operation acceptance");
 	  driver.findElement(By.xpath("//input[@id='approve']")).click();
 	  login.logout();
@@ -393,17 +382,17 @@ public void reject_DonotPro_CP3() throws IOException, InterruptedException, AWTE
 	  //OD approval "Reject" by OD
 	  b.projectName_Board_Byme();
 	  ab.getComments().sendKeys("Reject at OD approval");
-	  ab.getRejectButton_ODapproval().click();
+	  ab.getRejectbutton().click();
 	  login.logout();
 	  
 	  login.loginPL();
 	  b.pnDeliveryReview();
 	  ab.getComments().sendKeys("Project completed");
-	  driver().findElement(By.xpath("//input[@value='Project Completed']")).click();  
+	  ab.getProjectCompletedbutton().click();  
 	  
  	  //Delivery review project completion alert
 	  cu.blindWait();
-	  driver.findElement(By.xpath("//div[div[contains(text(),'There are changes against the approved data hence changes will go for OD Approval')]]//div/a[1]")).click();
+	  deliveryReviewUi.getDataChange_Alert().click();
 	  login.logout();
 	  
 	  login.loginOD();

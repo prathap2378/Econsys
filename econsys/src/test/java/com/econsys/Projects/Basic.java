@@ -62,35 +62,35 @@ public class Basic extends Driver {
 	  // select Size
 	  cu.selectByVisibleText(nrtq.getEstimatedSize(), estimatedSize);
 	  
-	  points=wb.getXLData(10,1,1);
-	  nrtq.getPoints().sendKeys(""+points);
 	  
-	//Company field only for 4eg
+	  int quoteRefenceNumber = (int)(Math.random()*10000000);
+	  //Company field only for 4eg
 	  String orgName = driver.findElement(By.xpath("//*[@id='breadcrumbs']/ul/li[1]/a[text()='"+ev.org_Name+"']")).getText();
 	  if(ev.org_4eg.equalsIgnoreCase(orgName)){
-		  int i = (int)(Math.random()*10000000);
+		  points=wb.getXLData(10,1,1);
+		  nrtq.getPoints().sendKeys(""+points);
+		  //select company
 		  WebElement company = driver.findElement(By.xpath("//*[@id='st_company']"));
-			cu.selectByIndex(company, 1);
-		  nrtq.getQuoterRefNumber().sendKeys(""+i);
+		  cu.selectByIndex(company, 1);
 		  cu.selectByIndex(nrtq.getNeworExis(), 1);
-		  //cu.selectByIndex(nrtq.getQuotationType(), 1);
-		  cu.selectByIndex(nrtq.getLeadSource(), 1);
-		  //anticipated date
-		  nrtq.getAnticipatedDate().click();
-		  driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[2]/button")).click();
+		//Quote reference number
+		  nrtq.getQuoterRefNumber().sendKeys(""+quoteRefenceNumber);
 	  }
-			
 	  //Matrix specific fields 
 	  if(ev.org_Matrixs.equalsIgnoreCase(orgName)){
-		  double i = Math.random();
-		  nrtq.getQuoterRefNumber().sendKeys(""+i);
-		  cu.selectByIndex(nrtq.getNeworExis(), 1);
+		  points=wb.getXLData(10,1,1);
+		  nrtq.getPoints().sendKeys(""+points);
+		  //select quotation type
 		  cu.selectByIndex(nrtq.getQuotationType(), 1);
-		  cu.selectByIndex(nrtq.getLeadSource(), 1);
-		  //anticipated date
-		  nrtq.getAnticipatedDate().click();
-		  driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[2]/button")).click();
+		//Quote reference number
+		  nrtq.getQuoterRefNumber().sendKeys(""+quoteRefenceNumber);
 	  }
+	  
+	  cu.selectByIndex(nrtq.getNeworExis(), 1);
+	  cu.selectByIndex(nrtq.getLeadSource(), 1);
+	  //anticipated date
+	  nrtq.getAnticipatedDate().click();
+	  driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[2]/button")).click();
 	  //Engineering
 	  //productSpecified=wb.getXLData(12,1,1);
 	  cu.selectByIndex(nrtq.getProductSpecifieddd(),1);
@@ -137,6 +137,9 @@ public class Basic extends Driver {
 	  
 	  String retention_Advised=wb.getXLData(21,2,1);
 	  cu.selectByVisibleText(nrtq.getRetention_Advised(),retention_Advised);
+	  if(retention_Advised.equalsIgnoreCase(ev.select_Yes)){
+			driver.findElement(By.xpath("//input[@id='st_RetentionValue']")).sendKeys("10");
+		}
 	  
 	  //File upload in RTQ fom
 	  nrtq.getUploaddocument().click();
@@ -171,19 +174,18 @@ public class Basic extends Driver {
 //green-amber-red 'Decide path'
 public void pathdession(String estimatedSize,String location) throws InterruptedException, IOException{
 		
-		if(estimatedSize.equals(ev.estimatedSize250_)){
+		if(!(ev.eSizertq2.equals(ev.estimatedSize0to100k_)||ev.estimatedSize.equalsIgnoreCase(ev.estimatedSize250_)||ev.estimatedSize.equalsIgnoreCase(ev.estimatedSize0to100k_))){
 			System.out.println("Eng review path");
-		ri.reviewEL();
+			ri.reviewEL();
 		}
-		if(location.equals(ev.location_SouthEast)){
-			
-		ri.reviewCL();
+		if(!(ev.locationrtq2.equals(ev.location_inside)||ev.location.equalsIgnoreCase(ev.location_inside)||ev.location.equalsIgnoreCase(ev.location_SouthEast))){
+			ri.reviewCL();
 		}
-		if(estimatedSize.equals(ev.estimatedSize500_)){
+		if(ev.estimatedSize.equals(ev.estimatedSize500_)){
 			System.out.println("Eng Involve path");
 			ri.involveEL();
 		}
-		if(location.equals(ev.location_other)){
+		if(ev.location.equals(ev.location_other)){
 			System.out.println("Comer Involve path");
 			ri.involveCL();
 		}
@@ -192,19 +194,15 @@ public void pathdession(String estimatedSize,String location) throws Interrupted
 	public void pathdessioncp2cp3(String estimatedSize,String location) throws InterruptedException, IOException{
 		
 		if(estimatedSize.equals(ev.estimatedSize250_)){
-			
-		ri.reviewEL();
+			ri.reviewEL();
 		}
 		if(location.equals(ev.location_SouthEast)){
-			
-		ri.reviewCL();
+			ri.reviewCL();
 		}
-		if(estimatedSize.equals(ev.estimatedSize500_)){
-			
+		if(ev.eSizertq2.equals(ev.estimatedSize500_)){
 			ri.involveEL();
 		}
-		if(location.equals(ev.location_other)){
-			
+		if(ev.locationrtq2.equals(ev.location_other)){
 			ri.involveCLcp2cp3();
 		}
 	}
@@ -295,7 +293,7 @@ public void pnReSubmitedQuote() throws InterruptedException, IOException{
 	String taskName = PropertiesUtil.getPropValues("resubmit_Quote");
 	projectTaskName(taskName);
 }
-public void pnStatusofSubmitedQuote() throws InterruptedException, IOException{
+public void edit_StatusofSubmitedQuote() throws InterruptedException, IOException{
 	
 	String taskName = PropertiesUtil.getPropValues("status_ofSubmitted_Quote");
 	projectTaskName(taskName);	
@@ -305,12 +303,12 @@ public void pnAppointKeyStaff() throws InterruptedException, IOException{
 	String taskName = PropertiesUtil.getPropValues("appoint_key_staff");
 	projectTaskName(taskName);	
 }
-public void pnSalestoOperation() throws InterruptedException, IOException{
+public void edit_Salesto_Operation() throws InterruptedException, IOException{
 	
 	String taskName = PropertiesUtil.getPropValues("salesto_Operation");
 	projectTaskName(taskName);	
 }
-public void pnOperationAcceptance() throws InterruptedException, IOException{
+public void edit_OperationAcceptance() throws InterruptedException, IOException{
 	
 	String taskName = PropertiesUtil.getPropValues("operations_Acceptanceof_Handover");
 	projectTaskName(taskName);	

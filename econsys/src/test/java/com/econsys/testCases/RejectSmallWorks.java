@@ -93,7 +93,7 @@ public void cp3_Reject() throws IOException, InterruptedException, AWTException{
 	  m.submitQuote();
 	  
 	  //login.loginSL();
-	  b.pnStatusofSubmitedQuote();
+	  b.edit_StatusofSubmitedQuote();
 	  Thread.sleep(200);
 	  cu.selectByVisibleText(driver.findElement(By.xpath("//select[@id='st_quoteStatus']")),"Amend Bid");
 	  ab.getComments().sendKeys("Amend bid");

@@ -52,7 +52,7 @@ public class Delivery_Review extends Driver{
 	  
 	  //monorail.board();
 	  monorail.submitQuote();
-	  b.pnStatusofSubmitedQuote();
+	  b.edit_StatusofSubmitedQuote();
 	  commonutils.waitForPageToLoad();
 	  commonutils.selectByVisibleText(ccq.getQuoteStatus(),"Customer Commitment Received");
 	  commonutils.waitForPageToLoad();

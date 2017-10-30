@@ -47,7 +47,7 @@ public class ReviewInvolve extends Driver {
 	  b.projectname_Reviews();
 	  Thread.sleep(1000);
 
-	  select_Dropdowns();
+	  //select_Dropdowns();
 	  ab.getComments().sendKeys("Engg review");
 	  ab.getApprove_Button().click();
 	  login.logout();
@@ -63,14 +63,14 @@ public class ReviewInvolve extends Driver {
 	  b.projectname_Involves();
 	  Thread.sleep(1000);
 	  
-	  select_Dropdowns();
+	  //select_Dropdowns();
 	  ab.getComments().sendKeys("Engg involve");
 	  ab.getApprove_Button().click();
 	  login.logout();
   }
   
   //**********Comm and Engineering select drop downs**************
-  public static void select_Dropdowns(){
+  public static void selwect_Dropdowns(){
 	  List<WebElement> SelectOptions=driver.findElements(By.xpath("//td[@class='rtqChekBoxlabel']/following-sibling::td/select"));
 	  for(int i=0;i<SelectOptions.size();i++){
 		  WebElement selectElement=SelectOptions.get(i);
@@ -92,10 +92,7 @@ public class ReviewInvolve extends Driver {
 	  ab.getReviewinvolvetasks().sendKeys(Keys.RETURN); 
 	  b.projectname_Reviews();
 	  Thread.sleep(1000);
-	 /* cu.selectByVisibleText(cri.getrTermsandConditions(), "Yes");
-	  cu.selectByVisibleText(cri.getrPerformanceBond(), "Yes");
-	  cu.selectByVisibleText(cri.getrParentCompanyGuarantee(), "Yes");*/
-	  select_Dropdowns();
+	  //select_Dropdowns();
 	  ab.getComments().sendKeys("Comm review");
 	  ab.getApprove_Button().click();
 	  
@@ -111,7 +108,7 @@ public class ReviewInvolve extends Driver {
 	  b.projectname_Involves();
 	  Thread.sleep(1000);
 	  
-	  select_Dropdowns();
+	  //select_Dropdowns();
 	  ab.getComments().sendKeys("Comm involve");
 	  ab.getApprove_Button().click();
 	  
@@ -125,7 +122,7 @@ public class ReviewInvolve extends Driver {
 	  ab.getReviewinvolvetasks().sendKeys(Keys.RETURN);	 
 	  b.projectname_Involves();
 	  Thread.sleep(1000);
-	  select_Dropdowns();
+	  //select_Dropdowns();
 	  ab.getComments().sendKeys("Comm involve CP2-CP3");
 	  ab.getApprove_Button().click();
 	  

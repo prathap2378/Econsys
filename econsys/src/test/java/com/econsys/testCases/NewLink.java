@@ -33,35 +33,26 @@ public class NewLink extends Driver{
 	Login login = new Login();
 	CommonUtils cu = new CommonUtils();
 	Monorail rtq=new Monorail();
-	public static String projName;
 	Logger log = Logger.getLogger(NewLink.class);
 	@Test(priority=1)
+
 	public void newLinkSavedRTQ() throws IOException, InterruptedException, AWTException {
 		//Save the RTQ form
 		login.url();
 		login.loginSD();
 		b.rtqForm(ev.estimatedSize,ev.location);
-		
 		ab.getSavebutton().click();
-		
+		//open saved rtq
 		rtqUi.getSaved_RTQ_Link().click();
-		
-		projName=ev.projectName();
 		driver.findElement(By.xpath("//tr[td[@title=\""+ev.projectName()+"\"]]//td/div/button")).click();
 		cu.blindWait();
-		
 		driver.findElement(By.xpath("//td/span[contains(text(),'Edit')]")).click();
-		
+		//Click on new rtq link
 		rtqUi.getNew_Link().click();
 	    String projectName = driver.findElement(By.xpath("//input[@id='st_ProjectName']")).getAttribute("value");
-	    log.info("Project name :"+projectName);
-	    
-	    log.info("Ev project name :"+ev.projectName());
-	    //Asserting Project names
-	    cu.blindWait();
+	    //Comparing/Asserting Project names
 	    Thread.sleep(1500);
 	    cu.assert_Test(projectName, ev.projectName());
-	    
 	    //ab.getSubmitbutton().click();
 	}
   

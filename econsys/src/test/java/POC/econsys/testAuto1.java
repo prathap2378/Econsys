@@ -1,20 +1,13 @@
 package POC.econsys;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.Test;
-
-import bsh.StringUtil;
 
 import com.econsys.Genriclibrery.CommonUtils;
 import com.econsys.Genriclibrery.Driver;
 import com.econsys.Projects.Login;
 import com.econsys.TestData.Workbook;
 import com.econsys.UIobjectrepositary.AllPages;
-
 //import com.econsys.Genriclibrery.Driver;
 
 public class testAuto1{
@@ -38,10 +31,13 @@ public class testAuto1{
 	char g = 'q';
 	float ii = 151231231212312123123121312312312311122.02f;
 	double jj = 123456723234234234234131231234234234238910.89;
-	int i;
-	int n =5,k = 2*n;
-
+	int y = (int)ii;
 	
+	System.out.println("floating number "+ii);
+	System.out.println("Integer number--"+y);
+	int n =5,k = 2*n;
+	int i = (10==10)?78:79;
+	System.out.println("ternary ope---"+i);
 	for(i = 0; i <= 4;i++){
 	
 		for(int h=0;h<k;h++){

@@ -160,10 +160,11 @@ public class TaskCP3CP4 extends Driver{
 		 cu.selectByIndex(tandCver.getCreditWorthy(), 1);
 		 //upload order acknowledgement file
 		 tandCver.getOrderAcknowledgement_file().click();
-		 pr_Methods.linktoFileupload();
+		 ProjectMethods_Small_Works.linktoFileupload();
 		 
 		 ab.getComments().sendKeys("T & C verification...");
-		 b.submit_Logout();
+		 tandCver.submitT_Creview.click();
+		 login.logout();
 	 }
 
   //Prepare response task
@@ -182,7 +183,6 @@ public class TaskCP3CP4 extends Driver{
   public void clApproval() throws IOException, InterruptedException{
 	  	login.loginCL();
 	  	b.projectname_ReviewApproval();
-	  	//..
 	  	ab.getComments().sendKeys("Customer Commitment CL Approval");
 	  	ab.getApprove_Button().click();
 	  	login.logout();

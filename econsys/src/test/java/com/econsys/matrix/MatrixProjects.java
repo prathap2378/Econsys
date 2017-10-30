@@ -204,7 +204,7 @@ public class MatrixProjects extends Driver {
 
 //status of submitted quote Matrix flow
 public static void statusQuotesubmit_(String customerCommitmentType,String quoteStatus) throws IOException, InterruptedException{
-		
+	
 	 //login.loginSL();
 	 cu.waitForPageToLoad();
 	 // String rtqType= driver.findElement(By.xpath("//tr[td[@title='"+wb.getXLData(1, 2, 1)+"']]/td[6]")).getText();

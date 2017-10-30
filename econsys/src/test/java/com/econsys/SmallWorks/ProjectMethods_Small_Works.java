@@ -24,32 +24,30 @@ import com.econsys.TestData.*;
 
 public class ProjectMethods_Small_Works extends Driver{
 	//Page factory
-	Logger log=Logger.getLogger(ProjectMethods_Small_Works.class.getName());
-	RTQForm_Ui rtq = PageFactory.initElements(Driver.driver(), RTQForm_Ui.class);
-	Preparequote prepare_Quoteui = PageFactory.initElements(Driver.driver(), Preparequote.class);
+	static Logger log=Logger.getLogger(ProjectMethods_Small_Works.class.getName());
+	static RTQForm_Ui rtq = PageFactory.initElements(Driver.driver(), RTQForm_Ui.class);
+	static Preparequote prepare_Quoteui = PageFactory.initElements(Driver.driver(), Preparequote.class);
 	static CommonUtils commonutils = PageFactory.initElements(Driver.driver(), CommonUtils.class);
-	ActionButtonsUi ab=PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
-	smallWorkPageElements sWp= PageFactory.initElements(Driver.driver(),smallWorkPageElements.class);
+	static ActionButtonsUi ab=PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
+	static smallWorkPageElements sWp= PageFactory.initElements(Driver.driver(),smallWorkPageElements.class);
 	TandCverification TandCver = PageFactory.initElements(driver(), TandCverification.class);
-	Salestooperation sales=PageFactory.initElements(Driver.driver(), Salestooperation.class);
-	AppointkeystaffandCommerSuitUi appointKeyStaff_CommercialSuite_Ui=PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
+	static Salestooperation sales=PageFactory.initElements(Driver.driver(), Salestooperation.class);
+	static AppointkeystaffandCommerSuitUi appointKeyStaff_CommercialSuite_Ui=PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
 	CosCommitQuoteStatusUi ccq=PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
 	LoginPageui loginui=PageFactory.initElements(Driver.driver(), LoginPageui.class);
 	PDPui pdp_Ui=PageFactory.initElements(Driver.driver(),PDPui.class);
 	
 	static //Import class
 	Login login = new Login();
-	Workbook wb = new Workbook();
+	static Workbook wb = new Workbook();
 	static TaskCP3CP4 g34=new TaskCP3CP4();
 	static Basic b = new Basic();
 	Monorail monorail=new Monorail();
-	EconsysVariables ev = new EconsysVariables();
+	static EconsysVariables ev = new EconsysVariables();
 	boolean flag=false;
-	
-	String filepath=System.getProperty("user.dir");
-	
-	public void uploadFile(String filename) throws InterruptedException  {
-		
+	static String filepath=System.getProperty("user.dir");
+	public static void uploadFile(String filename) throws InterruptedException  {
+			
 		//Specify the file location with extension
 		StringSelection selctFilepath = new StringSelection(filepath+"\\Documentsuploded\\"+filename);
 		//Copy to clipboard
@@ -75,11 +73,10 @@ public class ProjectMethods_Small_Works extends Driver{
 			}
 	}
 
-public void linktoFileupload() throws InterruptedException{
+public static void linktoFileupload() throws InterruptedException{
 		ProjectMethods_Small_Works pm = new ProjectMethods_Small_Works();
 		commonutils.blindWait();
 		int linktoFileCheckbox_Size = driver.findElements(By.xpath("//input[@class='list_item_link_docs_multiple']")).size();
-		
 		if(linktoFileCheckbox_Size>0){
 			ab.getLinkFileCheckbox().click();
 			ab.getAdd_LinkfilePopup().click();
@@ -91,9 +88,7 @@ public void linktoFileupload() throws InterruptedException{
 					log.info("Files are not available");
 					pm.uploadFile("Updated Risk and Opportunity Register 3.txt");
 			}
-		
 	}
-	
 public boolean smallworkForm() throws InterruptedException, IOException, ClassNotFoundException, SQLException{
 		int rownum= wb.getrowNum(2);
 		boolean flag=false;
@@ -114,13 +109,13 @@ public boolean smallworkForm() throws InterruptedException, IOException, ClassNo
 			commonutils.selectByIndex(rtq.getSmallWorksType(), 1);
 			
 			//Company field only for 4eg
-			  String orgName = driver.findElement(By.xpath("//*[@id='breadcrumbs']/ul/li[1]/a[text()='"+ev.org_Name+"']")).getText();
+			  String orgName = (driver.findElement(By.xpath("//*[@id='breadcrumbs']/ul/li[1]/a[text()='"+ev.org_Name+"']"))).getText();
 			  if(ev.org_4eg.equalsIgnoreCase(orgName)){
 				  WebElement company = driver.findElement(By.xpath("//*[@id='st_company']"));
 					commonutils.selectByIndex(company, 1);
 			  }
-			  int i1 = (int)(Math.random()*10000000);
-			  driver.findElement(By.id("st_ats_quoterRefNumber")).sendKeys(""+i1);
+			  /*int i1 = (int)(Math.random()*10000000);
+			  driver.findElement(By.id("st_ats_quoterRefNumber")).sendKeys(""+i1);*/
 			//Quote Info
 			commonutils.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), wb.getXLData(2, 5, 0));
 			prepare_Quoteui.getOverallProjectCost().sendKeys(wb.getXLData(1, 4, 2));
@@ -160,7 +155,7 @@ public boolean smallworkForm() throws InterruptedException, IOException, ClassNo
 			commonutils.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), wb.getXLData(4, 5, 0));
 			prepare_Quoteui.getComments().sendKeys("Small Work form ...");
 			commonutils.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(), ev.exeCP2);
-			rtq.getSubmit().click();
+			//rtq.getSubmit().click();
 			
 			//boolean alert = Driver.driver().findElements(By.xpath("//div[@class='modal-body']")).size()>0;
 			
@@ -182,7 +177,7 @@ public boolean smallworkForm() throws InterruptedException, IOException, ClassNo
 				}
 			}
 			log.info("log out small work form");
-			login.logout();
+			//login.logout();
 			log.info("loged out");
 			return flag;
 }
@@ -207,7 +202,7 @@ public void prepareRevisedQuote() throws InterruptedException, IOException{
 
 }
 //Submit quote form
-public void submit_Quoteform() throws InterruptedException, IOException{
+public static void submit_Quoteform() throws InterruptedException, IOException{
 		//boolean flag=false;
 		login.loginSL();
 		b.projectname();
@@ -419,45 +414,41 @@ public void status_ResubmittedQuote_() throws InterruptedException, IOException{
 	 }
 
 }
+//Sales to operation small works
+public static void salesToOperation(){
+	try {
+		login.loginSL();
+		b.edit_Salesto_Operation();
+		prepare_Quoteui.getAddnewpopup().click();
+		sWp.getDescription().sendKeys("Test1");
+		prepare_Quoteui.getSaveAddcostsellpopup().click(); // Save button of Add New pop up
 
-	public void salesToOperation(){
-		try {
-			login.loginSL();
-			b.pnSalestoOperation();
-			prepare_Quoteui.getAddnewpopup().click();
-	        sWp.getDescription().sendKeys("Test1");
-	        prepare_Quoteui.getSaveAddcostsellpopup().click(); // Save button of Add New pop up
-	       
-	        sWp.getUpload_sales().click();
-	        commonutils.blindWait();
-	        sWp.getLinkTofilebtn().click();
-	        commonutils.blindWait();
-	        linktoFileupload();
-	        commonutils.selectByVisibleText(sales.getMeeting(), wb.getXLData(22, 7, 0));
-	        
-	        String delegatetoPL=wb.getXLData(22,7,0);
-	        String customerCommitmentType= ev.customerCommitmentType;
-	        if(customerCommitmentType.equals("LOI Received - Under Review")||customerCommitmentType.equals("Email Received - Under Review")
-	     			||customerCommitmentType.equals("Verbal Commitment Received - Under Review")){
-	
-	        	commonutils.selectByVisibleText(sales.getDelegateTaskto_PL(),delegatetoPL);
-	        }
-	  	    sales.getComments().sendKeys("Sales to Operation form ...");
-	        
-	        /*commonutils.selectByVisibleText(sWp.getExe_cp5_sw(),"");
-	        sWp.getSubmitBtn().click();
-	        login.logout();
-*/	        
-		} catch (Exception e) {
-			e.printStackTrace();
-			} 
-	}
-	public void operation_acceptance(){
+		sWp.getUpload_sales().click();
+		commonutils.blindWait();
+		sWp.getLinkTofilebtn().click();
+		commonutils.blindWait();
+		linktoFileupload();
+		commonutils.selectByVisibleText(sales.getMeeting(), wb.getXLData(22, 7, 0));
+
+		String delegatetoPL=wb.getXLData(22,7,0);
+		String customerCommitmentType= ev.customerCommitmentType;
+		if(customerCommitmentType.equals("LOI Received - Under Review")||customerCommitmentType.equals("Email Received - Under Review")
+				||customerCommitmentType.equals("Verbal Commitment Received - Under Review")){
+
+			commonutils.selectByVisibleText(sales.getDelegateTaskto_PL(),delegatetoPL);
+		}
+		sales.getComments().sendKeys("Sales to Operation form ...");
+	} catch (Exception e) {
+		e.printStackTrace();
+	} 
+}
+//Operation acceptance
+	public static void operation_acceptance(){
 	
 		try{
 			login.loginPL();
 			commonutils.blindWait();
-			b.pnOperationAcceptance();
+			b.edit_OperationAcceptance();
 			List<WebElement> opacce=Driver.driver().findElements(By.xpath("//td[@aria-describedby='salesToOperationGrid_action']/select"));
 		 	
 			for(int j=0;j<opacce.size();j++){
@@ -545,10 +536,9 @@ public void status_ResubmittedQuote_() throws InterruptedException, IOException{
 		  ab.getComments().sendKeys("Delivery review to monthly review");
 		  
 	}
-	public void od_approval() throws IOException, InterruptedException{
+	public static void od_approval() throws IOException, InterruptedException{
 		//Login as ****** OD
 		  login.loginOD();
-		  
 		  b.projectname_ReviewApproval();
 		  ab.getComments().sendKeys("Approved monthly review");
 		  ab.getApprove_Button().click();
@@ -566,7 +556,7 @@ public void project_complted_DeliveryReview() throws IOException, InterruptedExc
 	  
 	  
 	  ab.getComments().sendKeys("Delivery review project completed with out changes");
-	  Driver.driver().findElement(By.xpath("//input[@value='Project Completed']")).click();
+	  ab.getProjectCompletedbutton().click();
 	  commonutils.blindWait();
 	  Driver.driver().findElement(By.xpath("//a[@class='btn btn-small btn-info']")).click();
 	  commonutils.blindWait();

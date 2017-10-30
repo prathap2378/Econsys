@@ -33,7 +33,18 @@ public class AppointkeystaffandCommerSuitUi {
 	@FindBy(xpath="//input[@id='fileList_flm_paymentCycleDocument']")
 	private WebElement payment_Cycle_Document;
 	
+	@FindBy(id="fileList_flm_milestoneDocument")
+	private WebElement milestoneDocInCommercialSuite;
 	
+	@FindBy(id="fileList_flm_panelProductionScheduleDocument")
+	private WebElement productionSheduleDocCommercialSuite;
+	
+	public WebElement getproductionSheduleDocCommercialSuite(){
+		return productionSheduleDocCommercialSuite;
+	}
+	public WebElement getMilestoneDocInCommercialSuite(){
+		return milestoneDocInCommercialSuite;
+	}
 	public WebElement getPayment_Terms() {
 		return payment_Terms;
 	}

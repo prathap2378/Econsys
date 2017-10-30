@@ -46,40 +46,30 @@ public class CustomerCommitmentAcceptance_Projects extends Driver{
 	
 	/*String userName = wb.getXLData(1, 0,0);
 	String sl=wb.getXLData(10, 0, 0);*/
-	
 	static int num;
 	String filepath=System.getProperty("user.dir");
-	
-	CustomerCommitmentAcceptance_Projects() throws IOException{
-		
-	}
-	
+
 @Test
 public void verifyLOICCA() throws InterruptedException, IOException, AWTException{
-log.info("verifyLOICCA");
+	log.info("verifyLOICCA");
 	login.url();
 	log.info("verifyLOICCA");
 	String customerCommitmentType = wb.getXLData(15, 3, 1);
 	Thread.sleep(1000);
-	
-	login.user(); 
-	
-	//**** monorail form*********
+	login.user();
+	//**** econsys RTQ form*********
     b.rtqForm(ev.estimatedSize,ev.location);
     b.submit_Logout();
-	//***********CP1 exe dession************
+	//***********CP1 explicit approval************
 	if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
 		b.boardApproval();
 	}
-	
-	//Assign a sales leader if task is not submitted by a sales leader
-	
-		monorail.ASL();
-
-		monorail.prepare_Quote();
-		prepare_Quoteui.getQuoteprepared().click();
-		login.logout();
+	monorail.ASL();
+	monorail.prepare_Quote();
+	prepare_Quoteui.getQuoteprepared().click();
+	login.logout();
 	b.pathdession(ev.estimatedSize,ev.location);
+	
 	//**********CP2 exe dession**************
 	if((ev.ourformat.equals("No"))||(ev.bidsheetauthorised.equals("No"))||(ev.exeCP2.equals("Yes"))){
 		b.boardApproval();
@@ -96,7 +86,6 @@ public void verifyPOCCA() throws InterruptedException, IOException, AWTException
 	boolean elementexist=driver.findElements(By.cssSelector("input[id='_58_emailInput'][name='_58_login']")).size()>0;
 	if(elementexist)
 	login.user(); 
-	
 	//****intiation of monorail form*********
     b.rtqForm(ev.estimatedSize,ev.location);
     b.submit_Logout();
@@ -104,14 +93,12 @@ public void verifyPOCCA() throws InterruptedException, IOException, AWTException
 	if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
 		b.boardApproval();
 	}
-	
-		monorail.ASL();
-
-		monorail.prepare_Quote();
-		prepare_Quoteui.getQuoteprepared().click();
-		login.logout();
-
-			//driver.close();
+	//Assign Sales leader
+	monorail.ASL();
+	//Prepare quote
+	monorail.prepare_Quote();
+	prepare_Quoteui.getQuoteprepared().click();
+	login.logout();
 	b.pathdession(ev.estimatedSize,ev.location);
 	//**********CP2 exe dession**************
 	if((ev.ourformat.equals("No"))||(ev.bidsheetauthorised.equals("No"))||(ev.exeCP2.equals("Yes"))){
@@ -129,9 +116,6 @@ public void verifyVerbalCCA() throws InterruptedException, IOException, AWTExcep
 	boolean elementexist=driver.findElements(By.cssSelector("input[id='_58_emailInput'][name='_58_login']")).size()>0;
 	if(elementexist)
 	login.user(); 
-	
-	
-	
 	//****intiation of monorail form*********
     b.rtqForm(ev.estimatedSize,ev.location);
     b.submit_Logout();
@@ -139,8 +123,9 @@ public void verifyVerbalCCA() throws InterruptedException, IOException, AWTExcep
 	if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
 		b.boardApproval();
 	}
+	//Assign Sales Leader
 	monorail.ASL();
-
+	//Prepare Quote
 	monorail.prepare_Quote();
 	prepare_Quoteui.getQuoteprepared().click();
 	login.logout();
@@ -171,12 +156,12 @@ public void verifyEmailCCA() throws InterruptedException, IOException, AWTExcept
 	if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
 		b.boardApproval();
 	}
+	//Assign Sales Leader
 	monorail.ASL();
-
+	//Prepare Quote
 	monorail.prepare_Quote();
 	prepare_Quoteui.getQuoteprepared().click();
 	login.logout();
-	//driver.close();
 	b.pathdession(ev.estimatedSize,ev.location);
 	//**********CP2 exe dession**************
 	if((ev.ourformat.equals("No"))||(ev.bidsheetauthorised.equals("No"))||(ev.exeCP2.equals("Yes"))){
@@ -186,7 +171,7 @@ public void verifyEmailCCA() throws InterruptedException, IOException, AWTExcept
 	monorail.statusQuotesubmit(customerCommitmentType,ev.quoteStatusCCARecived);
 	}
 //Customer commitment as Sub-contract received
-//@Test
+@Test
 public void verifySubContractCCA() throws InterruptedException, IOException, AWTException{
 	log.info("verifySubContractCCA");	
 	String customerCommitmentType = wb.getXLData(19, 3, 1);
@@ -194,16 +179,16 @@ public void verifySubContractCCA() throws InterruptedException, IOException, AWT
 	boolean elementexist=driver.findElements(By.cssSelector("input[id='_58_emailInput'][name='_58_login']")).size()>0;
 	if(elementexist)
 	login.user(); 
-	
-	//****intiation of monorail form*********
+	//****Initiation of Project form*********
     b.rtqForm(ev.estimatedSize,ev.location);
     b.submit_Logout();
 	//***********CP1 exe dession************
 	if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
 		b.boardApproval();
 	}
+	//Assign Sales leader
 	monorail.ASL();
-
+	//Prepare Quote
 	monorail.prepare_Quote();
 	prepare_Quoteui.getQuoteprepared().click();
 	login.logout();
@@ -215,7 +200,6 @@ public void verifySubContractCCA() throws InterruptedException, IOException, AWT
 	monorail.submitQuote();
 	monorail.statusQuotesubmit(customerCommitmentType,ev.quoteStatusCCARecived);
 	}
-
 @Test
 public void verifyAmendBidCCA() throws InterruptedException, IOException, AWTException{
 	log.info("verifyAmendBidCCA");
@@ -245,4 +229,3 @@ public void verifyAmendBidCCA() throws InterruptedException, IOException, AWTExc
 	monorail.statusQuotesubmit(ev.customerCommitmentType,ev.quoteStatusAmendBid);
 	}
 }
-

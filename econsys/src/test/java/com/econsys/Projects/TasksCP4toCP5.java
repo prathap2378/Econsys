@@ -27,7 +27,7 @@ public class TasksCP4toCP5 extends Driver {
 	Assignsalesleader sla=PageFactory.initElements(Driver.driver(), Assignsalesleader.class);
 	CosCommitQuoteStatusUi ccq=PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
 	ActionButtonsUi ab=PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
-	AppointkeystaffandCommerSuitUi ak=PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
+	AppointkeystaffandCommerSuitUi appointKeyStaff_CommercialSuite_Uielements = PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
 	Salestooperation so=PageFactory.initElements(Driver.driver(),Salestooperation.class);
 	
 	Logger log = Logger.getLogger(TasksCP4toCP5.class);
@@ -51,11 +51,11 @@ public void apointkeystaf() throws IOException, InterruptedException{
 	  b.projectTaskName(taskName);
 	  
 	  Thread.sleep(1000);
-	  cu.selectByVisibleText(ak.getLeadEL(), ev.el);
-	  cu.selectByVisibleText(ak.getLeadCL(), ev.cl);
-	  cu.selectByVisibleText(ak.getLeadPL(), ev.pl);
+	  cu.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getLeadEL(), ev.el);
+	  cu.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getLeadCL(), ev.cl);
+	  cu.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getLeadPL(), ev.pl);
 	  num=radomNum.randumNumber();
-	  ak.getJobid().sendKeys(""+num);
+	  appointKeyStaff_CommercialSuite_Uielements.getJobid().sendKeys(""+num);
 	  ab.getComments().sendKeys("Appoint Key staff");
 	  ab.getSubmitbutton().click();
 	  login.logout();
@@ -76,38 +76,15 @@ public void apointkeystaf() throws IOException, InterruptedException{
 	  cu.waitForPageToLoad();
 	  String taskName = PropertiesUtil.getPropValues("commercial_Suite");
 	  b.projectTaskName(taskName);
-	  cu.selectByVisibleText(ak.getDraftCommercialSuitProduced(),ev.draftproduced);
+	  cu.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getDraftCommercialSuitProduced(),ev.draftproduced);
 	  if(ev.draftproduced.equals("Yes")){
-		  ak.getCummercialSuit_doc().click();
+		  appointKeyStaff_CommercialSuite_Uielements.getCummercialSuit_doc().click();
 		  projectMethods_Small_Works.linktoFileupload();
 	  }
 	  ab.getComments().sendKeys("Commercial Suite and Application for Payment");
 	  ab.getSubmitbutton().click();
 	  login.logout();
   }
-//Commercial suite of UKAS 
-  public void commerSuitUKAS() throws IOException, InterruptedException{
-	  login.loginCL();
-	  cu.blindWait();
-	  String taskName = PropertiesUtil.getPropValues("commercial_task_Prior_Commencement");
-	  b.projectTaskName(taskName);
-	  cu.selectByVisibleText(ak.getDraftCommercialSuitProduced(),ev.draftproduced);
-	  if(ev.draftproduced.equals("Yes")){
-	  ak.getCummercialSuit_doc().click();
-	  projectMethods_Small_Works.linktoFileupload();
-	  }
-	  cu.selectByIndex(driver.findElement(By.xpath("//select[@id='st_insurance']")), 1);
-	  cu.selectByIndex(driver.findElement(By.xpath("//select[@id='st_forecatAccounts']")), 1);
-	  cu.selectByIndex(driver.findElement(By.xpath("//select[@id='st_projectPlanner']")), 1);
-	
-	  cu.selectByIndex(driver.findElement(By.xpath("//select[@id='st_paymentRequestType']")), 2);
-	  ab.getComments().sendKeys("Commercial Suite and Application for Payment");
-	  ab.getSubmitbutton().click();
-	  //Thread.sleep(1000);
-	  login.logout();
-	  //driver().quit();
-  }
-  
   //Commercial suite for 4eg
   public void cummercialSuite_4eg() throws InterruptedException, IOException{
 	//Payment terms
@@ -117,13 +94,13 @@ public void apointkeystaf() throws IOException, InterruptedException{
 	  b.projectTaskName("Commercial Tasks Prior to Commencement");
 	  cu.blindWait();
 	  log.info("commmercial suite payments ");
-	  cu.selectByIndex(ak.getDraftCommercialSuitProduced(),2);
+	  cu.selectByIndex(appointKeyStaff_CommercialSuite_Uielements.getDraftCommercialSuitProduced(),2);
 	  /*if(ev.draftproduced.equals("Yes")){
-		  ak.getPayment_Cycle_Document().click();
+		  appointKeyStaff_CommercialSuite_Uielements.getPayment_Cycle_Document().click();
 		  projectMethods_Small_Works.linktoFileupload();
 	  }*/
-	  ak.getPayment_Terms().sendKeys("15");
-	  ak.getDays_From().sendKeys("3");
+	  appointKeyStaff_CommercialSuite_Uielements.getPayment_Terms().sendKeys("15");
+	  appointKeyStaff_CommercialSuite_Uielements.getDays_From().sendKeys("3");
 	  log.info("completed");
 	  ab.getComments().sendKeys("Commercial Suite and Application for Payment");
 	  ab.getSubmitbutton().click();
@@ -131,7 +108,6 @@ public void apointkeystaf() throws IOException, InterruptedException{
 	  login.logout();
 	  //driver().quit();
   }
-  
   //using this in GA, Matrix and UKAS as there in delegate option in ukas also
   public void salestoOperation() throws IOException, InterruptedException {
 	  
@@ -185,7 +161,7 @@ public void apointkeystaf() throws IOException, InterruptedException{
 	 		cu.selectByVisibleText(driver.findElement(By.xpath("//select[@id='st_cCChangeTaskOwnerOPS']")),"Yes");
 	 	}
       }
-	  cu.selectByVisibleText(ak.getMeetingwithsales(),ev.meetingwithSL);
+	  cu.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getMeetingwithsales(),ev.meetingwithSL);
 	  ab.getComments().sendKeys("Operations Acceptance");
       }
 

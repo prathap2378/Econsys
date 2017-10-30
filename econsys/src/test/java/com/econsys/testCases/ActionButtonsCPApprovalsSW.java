@@ -195,7 +195,7 @@ public void cp5_doNotProceed() throws IOException, InterruptedException, AWTExce
       login.logout();
     //submit sales to operaton
       login.loginSL();
-      b.pnSalestoOperation();
+      b.edit_Salesto_Operation();
       ab.getComments().sendKeys("Sales to Operation handover");
       ab.getSubmitbutton().click();
       login.logout();
@@ -214,7 +214,7 @@ public void cp5_doNotProceed() throws IOException, InterruptedException, AWTExce
 	  login.logout();
 	//submit sales to operaton
 	  login.loginSL();
-      b.pnSalestoOperation();
+      b.edit_Salesto_Operation();
       ab.getComments().sendKeys("Sales to Operation handover");
       ab.getSubmitbutton().click();
       login.logout();

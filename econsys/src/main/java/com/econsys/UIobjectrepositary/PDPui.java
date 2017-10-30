@@ -1,5 +1,6 @@
 package com.econsys.UIobjectrepositary;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -30,7 +31,6 @@ private WebElement claim;
 
 @FindBy(xpath="//textarea[@id='comments']")
 private WebElement commentsMilestone;
-
 public WebElement getInvoiceNumber() {
 	return invoiceNumber;
 }
@@ -130,6 +130,9 @@ private WebElement comments_PDPpopup;
 public WebElement getComments_PDPpopup(){
 	return comments_PDPpopup;
 }
+
+@FindBy(xpath="//select[@id='editFormReportIntverval']")
+private WebElement ReportIntverval_PDP;
 
 @FindBy(xpath="//a[starts-with(@id,'img_cmt_InstructionsGriddoc')]")
 private WebElement doc_instructions;
@@ -384,6 +387,13 @@ private WebElement ppc_cp9;
 @FindBy(xpath="//input[@id='fileList_flm_progDocument']")
 private WebElement project_Programme_document;
 
+@FindBy(xpath=("//div[div[contains(text(),'The Project has been submitted to Control Point 9 for Approval. If Approval is granted, the Project will be automatically archived')]]/div/a"))
+private WebElement projectSubmitCP9Alert;
+
+public WebElement getProjectSubmitCP9Alert(){
+	return projectSubmitCP9Alert;
+}
+
 public WebElement getOpcdoc_certificateobtained() {
 	return opcdoc_certificateobtained;
 }
@@ -540,5 +550,8 @@ public WebElement getExecp6() {
 public WebElement getProject_Programme_document(){
 	return project_Programme_document;
 }
-
+//@return the ReportIntverval_PDP
+public WebElement getReportIntverval_PDP() {
+	return ReportIntverval_PDP;
+}
 }

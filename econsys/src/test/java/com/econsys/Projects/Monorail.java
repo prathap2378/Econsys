@@ -39,7 +39,6 @@ public class Monorail extends Driver {
 	private static Logger log = Logger.getLogger(Monorail.class.getName());
 	//Page UI classes
 	public static Preparequote prepare_Quoteui=PageFactory.initElements(Driver.driver(), Preparequote.class);
-	static CommonUtils cu=PageFactory.initElements(Driver.driver(), CommonUtils.class);
 	static RTQForm_Ui nrtq=PageFactory.initElements(Driver.driver(), RTQForm_Ui.class);
 	Assignsalesleader sla=PageFactory.initElements(Driver.driver(), Assignsalesleader.class);
 	static TandCverification tandCver = PageFactory.initElements(driver(), TandCverification.class);
@@ -61,13 +60,14 @@ public class Monorail extends Driver {
 	static TasksCP5toCP9 pdop=new TasksCP5toCP9();
 	static EconsysVariables ev = new EconsysVariables();
 	static ProjectMethods_Small_Works projectMethods_Small_Works = new ProjectMethods_Small_Works();
+	static CommonUtils commonUtils = new CommonUtils();
 	
 	//Variables
 	/*public static String estimatedSize;
 	public static String location;*/
 	
 	static int num;
-	double overallSell;
+	String overallSell;
 	String filepath=System.getProperty("user.dir");
 	
 	//Monorail flow 
@@ -85,7 +85,7 @@ public class Monorail extends Driver {
 		login.url();
 
 		//*****Login as genral user******
-		cu.waitForPageToLoad();
+		commonUtils.waitForPageToLoad();
 		//boolean elementexist=driver.findElements(By.cssSelector("input[id='_58_emailInput'][name='_58_login']")).size()>0;
 		//if(elementexist)
 		login.user();
@@ -109,7 +109,7 @@ public class Monorail extends Driver {
 			
 		//Prepare Quote
 		rtq.prepare_Quote();
-		cu.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(),ev.exeCP2);
+		commonUtils.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(),ev.exeCP2);
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
 		
@@ -130,14 +130,14 @@ public class Monorail extends Driver {
         //Sales to operation hand-over
 		g45.salestoOperation();
 		
-  	    cu.selectByVisibleText(so.getExeCP5(),ev.exe5_SalestoOper);
+  	    commonUtils.selectByVisibleText(so.getExeCP5(),ev.exe5_SalestoOper);
   	    ab.getComments().sendKeys("Sales to operation");
   	    ab.getSubmitbutton().click();
   	    login.logout();
   	    
   	    //operation hand-over
         g45.operationAcceptance();
-  	  	cu.selectByVisibleText(ak.getExeOperationAcceptanceCP5(), ev.exeCP5_OperationAccep);
+  	  	commonUtils.selectByVisibleText(ak.getExeOperationAcceptanceCP5(), ev.exeCP5_OperationAccep);
   	  	ab.getComments().sendKeys("Operations Acceptance");
   	  	ab.getAcceptOperationAcceptance().click();
   	  	login.logout();
@@ -148,10 +148,10 @@ public class Monorail extends Driver {
 		}
         //driver.close();
 		pdop.pdp();
-		cu.selectByVisibleText(pdp_ui.getExecp6(),ev.execp6);
-		cu.waitForPageToLoad();
+		commonUtils.selectByVisibleText(pdp_ui.getExecp6(),ev.execp6);
+		commonUtils.waitForPageToLoad();
 		ab.getSubmitbutton().click();
-		cu.waitForPageToLoad();
+		commonUtils.waitForPageToLoad();
 		login.logout();
 		//**********CP6 exe dession **********
 		if(ev.execp6.equals("Yes")){
@@ -162,7 +162,7 @@ public class Monorail extends Driver {
 		//**********OD approval **************
 		pdop.obtainpracticalcomplition();
 		
-		cu.selectByVisibleText(pdp_ui.getOpc_cp8(), ev.execp8);
+		commonUtils.selectByVisibleText(pdp_ui.getOpc_cp8(), ev.execp8);
 		ab.getSubmitbutton().click();
 		login.logout();
 		//***********CP8 exe dession **********
@@ -170,7 +170,7 @@ public class Monorail extends Driver {
 			b.boardApproval();
 		}
 		pdop.postpracticalcomplition();
-		cu.selectByVisibleText(pdp_ui.getPpc_cp9(), ev.execp9);
+		commonUtils.selectByVisibleText(pdp_ui.getPpc_cp9(), ev.execp9);
 		ab.getSubmitbutton().click();
 		login.logout();
 		//***********CP9 exe dession **********
@@ -183,98 +183,77 @@ public class Monorail extends Driver {
 	
 	//***************Assign sales leader task **************
 	 public void ASL() throws InterruptedException, IOException {
-		 
-		  login.loginSD();
-		  Thread.sleep(1000);
-	   	  ab.getViewalltasks().click();
-	   	  String taskName = PropertiesUtil.getPropValues("ASL");
-	   	  b.projectTaskName(taskName);
-	   		
-	   	  Thread.sleep(1000);
-	   	  /*ab.getViewalltasks().click();*/
-		  Select select=new Select(sla.getSalesleader());
-		  
-		  String sl=wb.getXLData(7,3, 0);
-		  //select sales leader
-		  select.selectByVisibleText(sl);
-		  
-		  		  
-		  //View work load
-		  //sla.getViewworkload().click();
-		  sla.getComments().sendKeys("Asigne sales leader");
-		  
-		  //Save task
-		  //sla.getSavebutton().click();
-		  
-		  //Allocate sales leader
-		  sla.getAllocate().click();
-		  
-		  //Cancel task
-		  //sla.getCancelbutton().click();
-		  login.logout();
+		 login.loginSD();
+			commonUtils.blindWait();
+			ab.getViewalltasks().click();
+			String taskName = PropertiesUtil.getPropValues("ASL");
+			b.projectTaskName(taskName);
+			commonUtils.selectByVisibleText(sla.getSalesleader(), ev.sl);
+			sla.getComments().sendKeys("Asigne sales leader");
+			//Allocate sales leader
+			sla.getAllocate().click();
+			login.logout();
 		}
 	 //********Prepare Quote task***********
 	 public void prepare_Quote() throws InterruptedException, IOException {
 		 
 		 login.loginSL();
-		 cu.blindWait();
+		 commonUtils.blindWait();
 		 String taskName = PropertiesUtil.getPropValues("prepare_Quote");
 		 b.projectTaskName(taskName);
-		 cu.blindWait();
+		 commonUtils.blindWait();
 		 //Matrix specific change Estimated size and location
 		 String orgName = driver.findElement(By.xpath("//*[@id='breadcrumbs']/ul/li[1]/a[text()='"+ev.org_Name+"']")).getText();
-		 if(ev.org_Matrixs.equalsIgnoreCase(orgName)){
+		 if(ev.org_4eg.equalsIgnoreCase(orgName)){
 			 //RTQ 2 in prepare quote
 			 //String eSizertq2 = wb.getXLData(2, 4, 1);
 			 String locationrtq2 = wb.getXLData(4, 4, 1);
-			 //cu.selectByVisibleText(nrtq.geteSizertq2(), eSizertq2);
-			 cu.selectByVisibleText(nrtq.getLocationrtq2(), locationrtq2);
+			 //commonUtils.selectByVisibleText(nrtq.geteSizertq2(), eSizertq2);
+			 commonUtils.selectByVisibleText(nrtq.getLocationrtq2(), locationrtq2);
 		 }
-		 cu.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), ev.ourformat);
+		 commonUtils.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), ev.ourformat);
 		 
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 prepare_Quoteui.getQuotedocument_Linkfile().click();
-		 projectMethods_Small_Works.linktoFileupload();
-		 cu.waitForPageToLoad();
+		 ProjectMethods_Small_Works.linktoFileupload();
+		 commonUtils.waitForPageToLoad();
 		 
 		 prepare_Quoteui.getRiskopportunityregister_Linkfile().click();
-		 projectMethods_Small_Works.linktoFileupload();
+		 ProjectMethods_Small_Works.linktoFileupload();
 		 
-		 cu.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), ev.bidsheetauthorised);
+		 commonUtils.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), ev.bidsheetauthorised);
 		  
 		 prepare_Quoteui.getBidsheet_linkfile().click();
-		 projectMethods_Small_Works.linktoFileupload();
-		 cu.waitForPageToLoad();
-		 
-		 prepare_Quoteui.getComments().sendKeys("Prepare Quote");
+		 ProjectMethods_Small_Works.linktoFileupload();
+		 commonUtils.waitForPageToLoad();
 
+		 String overallCost = wb.getXLData(1, 4, 2);
+		 prepare_Quoteui.getOverallProjectCost().sendKeys(overallCost);
+		  
+		 overallSell = wb.getXLData(1, 5, 2);
+		 prepare_Quoteui.getOverallProjectSell().sendKeys(overallSell);
+		 
 		 //Reading cost and sell values
 		 String testdataXLpath=filepath+"\\src\\main\\java\\com\\econsys\\TestData\\Monorail_testdata.xls";
 		 FileInputStream file = new FileInputStream(testdataXLpath);
 		 HSSFWorkbook wb1 = new HSSFWorkbook(file);
 		 int sheetNumber = 2;
-		 HSSFSheet Firstpage=wb1.getSheetAt(sheetNumber);
-		  
-		 double overallCost=Firstpage.getRow(1).getCell(4).getNumericCellValue();
-		 prepare_Quoteui.getOverallProjectCost().sendKeys(""+overallCost);
-		  
-		 overallSell=Firstpage.getRow(1).getCell(5).getNumericCellValue();
-		 prepare_Quoteui.getOverallProjectSell().sendKeys(""+overallSell);
+		 HSSFSheet Firstpage = wb1.getSheetAt(sheetNumber);
 			  
 		 Iterator rowIterator = Firstpage.rowIterator();	
 				
 		 while(rowIterator.hasNext()){
 		 HSSFRow row = (HSSFRow) rowIterator.next();
 		 int rowNum = row.getRowNum();
-		 
-		 if(row!=null){
+
 		 if (rowNum !=0) {
-			 String cell1Value=null;
-			 double Cost=0;
-			 double sell=0;
+		 if(row!=null && (rowNum==0 || rowNum==1 || rowNum==2)){
+			 String quoteType = null;
+			 double Cost = 0;
+			 double sell = 0;
 			 
 			 if(row.getCell(0)!=null){
-				 cell1Value= row.getCell(0).getStringCellValue();
+				 quoteType= row.getCell(0).getStringCellValue();
 				 }
 			 if(row.getCell(1)!=null){
 				 Cost= row.getCell(1).getNumericCellValue();
@@ -282,74 +261,48 @@ public class Monorail extends Driver {
 			 if(row.getCell(2)!=null){
 				 sell = row.getCell(2).getNumericCellValue();
 			 }
-			cu.blindWait();
+			commonUtils.blindWait();
 		 prepare_Quoteui.getAddnewpopup().click();
-			cu.blindWait();
-		 prepare_Quoteui.getCostCodeCategorytextfield().sendKeys(cell1Value);
-		 cu.waitForPageToLoad();
+			commonUtils.blindWait();
+		 prepare_Quoteui.getCostCodeCategorytextfield().sendKeys(quoteType);
+		 commonUtils.waitForPageToLoad();
 		 prepare_Quoteui.getCost().sendKeys(""+Cost);
 		 prepare_Quoteui.getSell().sendKeys(""+sell);
-		 cu.blindWait();
+		 commonUtils.blindWait();
 		 prepare_Quoteui.getSaveAddcostsellpopup().click();
-		 cu.blindWait();
-		 cu.waitForPageToLoad();
+		 commonUtils.blindWait();
+		 commonUtils.waitForPageToLoad();
 		 }
-	     	 }
 		 }
-		 /*cu.selectByVisibleText(quote_form.getExpliciteapprovalatgateway2(),exeCP2);
-			  
-		 quote_form.getQuoteprepared().click();
-		 login.logout();*/
-     	 }
-	 
-	/* public void preparequoteOnRject() throws IOException, InterruptedException{
-		 login.loginSL();
-		 String taskName = PropertiesUtil.getPropValues("prepare_Quote");
-		 b.projectTaskName(taskName);
-		 Thread.sleep(1000);
-//Quote document link
-		 cu.waitForPageToLoad();
-		 prepare_Quoteui.getQuotedocument_Linkfile().click();
-		 projectMethods_Small_Works.linktoFileupload();
-		 cu.waitForPageToLoad();
-//Risk and oppourtunity link file
-//		 prepare_Quoteui.getRiskopportunityregister_Linkfile().click();
-//		 projectMethods_Small_Works.linktoFileupload();
-		 
-		 cu.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), ev.bidsheetauthorised);
-//Bid sheet link file 
-		 prepare_Quoteui.getBidsheet_linkfile().click();
-		 projectMethods_Small_Works.linktoFileupload();
-		 cu.waitForPageToLoad();
-		 
-		 prepare_Quoteui.getComments().sendKeys("Prepare Quote again");
+		 }
+		 prepare_Quoteui.getComments().sendKeys("Prepare Quote");
 	 }
-	*/
+	 
 	//********Prepare Quote task***********
 		 public void prepare_Quote2() throws InterruptedException, IOException {
 			 
 			 login.loginSL();
 			 String taskName = PropertiesUtil.getPropValues("prepare_Quote");
 			 b.projectTaskName(taskName);
-			 cu.blindWait();
-			 cu.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), ev.ourformat);
+			 commonUtils.blindWait();
+			 commonUtils.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), ev.ourformat);
 			 
-			 cu.waitForPageToLoad();
+			 commonUtils.waitForPageToLoad();
 			 prepare_Quoteui.getQuotedocument_Linkfile().click();
 			 projectMethods_Small_Works.linktoFileupload();
-			 cu.waitForPageToLoad();
+			 commonUtils.waitForPageToLoad();
 			 
 			 //prepare_Quoteui.getRiskopportunityregister_Linkfile().click();
 			 //projectMethods_Small_Works.linktoFileupload();
 			 
-			 cu.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), ev.bidsheetauthorised);
+			 commonUtils.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), ev.bidsheetauthorised);
 			  
 			 prepare_Quoteui.getBidsheet_linkfile().click();
 			 projectMethods_Small_Works.linktoFileupload();
-			 cu.waitForPageToLoad();
+			 commonUtils.waitForPageToLoad();
 			 
 			 prepare_Quoteui.getComments().sendKeys("Prepare Quote");
-			 /*cu.selectByVisibleText(quote_form.getExpliciteapprovalatgateway2(),exeCP2);
+			 /*commonUtils.selectByVisibleText(quote_form.getExpliciteapprovalatgateway2(),exeCP2);
 				  
 			 quote_form.getQuoteprepared().click();
 			 login.logout();*/
@@ -378,17 +331,17 @@ public class Monorail extends Driver {
 	 //Status of resubmitted quote used for GA
 	 public void status_Quote_Resubmit(String estimatedSize,String location) throws IOException, InterruptedException{
 		 //login.loginSL();
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 String taskName = PropertiesUtil.getPropValues("status_ofRe_SubmittedQuote");
 		 b.projectTaskName(taskName);
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 
-		 cu.selectByVisibleText(ccq.getQuoteStatus(),ev.quote_StatusCp3Cp4);
+		 commonUtils.selectByVisibleText(ccq.getQuoteStatus(),ev.quote_StatusCp3Cp4);
 		 if(ev.quote_StatusCp3Cp4.equals("Customer Commitment Received")){ 
 		 {
-			 cu.waitForPageToLoad();
+			 commonUtils.waitForPageToLoad();
 			 
-			 cu.selectByVisibleText(ccq.getCustomerCommitmentType(), ev.customerCommitmentType);
+			 commonUtils.selectByVisibleText(ccq.getCustomerCommitmentType(), ev.customerCommitmentType);
 			 
 			 if(!"Verbal Commitment Received - Under Review".equals(ev.customerCommitmentType)){
 				 ccq.getUploadDoc_StatusofSubmitQuote().click();
@@ -396,7 +349,7 @@ public class Monorail extends Driver {
 		 		 }
 		 }
 		 ab.getComments().sendKeys("Quote status is Customer Commitment Received");
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 
 		 ab.getSubmitbutton().click();
 		//Customer commitment acceptance logic
@@ -421,18 +374,18 @@ public class Monorail extends Driver {
 	 public void statusQuotesubmit(String customerCommitmentType,String quoteStatus) throws IOException, InterruptedException{
 			
 		 //login.loginSL();
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 // String rtqType= driver.findElement(By.xpath("//tr[td[@title='"+wb.getXLData(1, 2, 1)+"']]/td[6]")).getText();
 		 String taskName = PropertiesUtil.getPropValues("status_ofSubmitted_Quote");
 		 b.projectTaskName(taskName);
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 log.info("quotestatuscp2cp3 : "+quoteStatus);
 		 
-		 cu.selectByVisibleText(ccq.getQuoteStatus(),quoteStatus);
-		 cu.waitForPageToLoad();
+		 commonUtils.selectByVisibleText(ccq.getQuoteStatus(),quoteStatus);
+		 commonUtils.waitForPageToLoad();
 		 	if(quoteStatus.equals("Customer Commitment Received")){
 		 		{
-		 			cu.selectByVisibleText(ccq.getCustomerCommitmentType(), customerCommitmentType);
+		 			commonUtils.selectByVisibleText(ccq.getCustomerCommitmentType(), customerCommitmentType);
 		 			
 		 			if(!"Verbal Commitment Received - Under Review".equals(customerCommitmentType)){
 		 			ccq.getUploadDoc_StatusofSubmitQuote().click();
@@ -451,7 +404,7 @@ public class Monorail extends Driver {
 			 ab.getComments().sendKeys("Quote status is Amend Bid");
 			 ccq.getSubmit().click();	 
 			 rtq.prepareQuotecp2cp3();
-			 cu.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.exeCP3);
+			 commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.exeCP3);
 			 prepare_Quoteui.getQuoteprepared().click();
 			 login.logout();
 			 //Path
@@ -468,18 +421,18 @@ public class Monorail extends Driver {
 	 //used in review involve action buttons to submit status of submit quote as Ammend bid
 	 public void statusofSubmitQuote(String customerCommitmentType,String quoteStatus) throws InterruptedException, IOException{
 		//login.loginSL();
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 // String rtqType= driver.findElement(By.xpath("//tr[td[@title='"+wb.getXLData(1, 2, 1)+"']]/td[6]")).getText();
 		 String taskName = PropertiesUtil.getPropValues("status_ofSubmitted_Quote");
 		 b.projectTaskName(taskName);
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 log.info("quotestatuscp2cp3 : "+quoteStatus);
 		 
-		 cu.selectByVisibleText(ccq.getQuoteStatus(),quoteStatus);
-		 cu.waitForPageToLoad();
+		 commonUtils.selectByVisibleText(ccq.getQuoteStatus(),quoteStatus);
+		 commonUtils.waitForPageToLoad();
 		 	if(quoteStatus.equals("Customer Commitment Received")){
 		 		{
-		 			cu.selectByVisibleText(ccq.getCustomerCommitmentType(), customerCommitmentType);
+		 			commonUtils.selectByVisibleText(ccq.getCustomerCommitmentType(), customerCommitmentType);
 		 			
 		 			if(!"Verbal Commitment Received - Under Review".equals(customerCommitmentType)){
 		 			ccq.getUploadDoc_StatusofSubmitQuote().click();
@@ -504,23 +457,23 @@ public class Monorail extends Driver {
 		 		String taskName = PropertiesUtil.getPropValues("customer_Commitment_Acceptance");
 		 		b.projectTaskName(taskName);
 		 		
-		 		cu.selectByVisibleText(driver.findElement(By.xpath("//select[@id='st_request_for_cw']")),ev.loi_Commencement);
+		 		commonUtils.selectByVisibleText(driver.findElement(By.xpath("//select[@id='st_request_for_cw']")),ev.loi_Commencement);
 		 		ab.getComments().sendKeys("Customer Commitment Type");
 		 		
 			//Does LOI Received specifically request for commencement of work? = 'YES'			 	
 		 		if(ev.loi_Commencement.equals("Yes")){
 		 			
-			 	 		cu.waitForPageToLoad();
+			 	 		commonUtils.waitForPageToLoad();
 			 	 		Thread.sleep(1000);
-			 	 		cu.selectByVisibleText(ccq.getAny_limitation_to_scope(), ev.any_limitation_to_scope);
+			 	 		commonUtils.selectByVisibleText(ccq.getAny_limitation_to_scope(), ev.any_limitation_to_scope);
 			 	 		//Expenditure edit
-			 	 		cu.selectByVisibleText(ccq.getAny_limitation_to_expenditure(), ev.any_limitation_to_expenditure);
+			 	 		commonUtils.selectByVisibleText(ccq.getAny_limitation_to_expenditure(), ev.any_limitation_to_expenditure);
 			 	 		if(ev.any_limitation_to_expenditure.equals("Yes")){
 			 	 			String expenditure = wb.getXLData(1, 5, 2);
 			 	 			ccq.getExpenditureLimit().sendKeys(expenditure);
 			 	 		}
-			 	 		cu.selectByVisibleText(ccq.getAny_Time_limit_to_Instructions(), ev.any_Time_limit_to_Instructions);
-			 	 		cu.selectByVisibleText(ccq.getAny_other_Review(), ev.any_other_Review);
+			 	 		commonUtils.selectByVisibleText(ccq.getAny_Time_limit_to_Instructions(), ev.any_Time_limit_to_Instructions);
+			 	 		commonUtils.selectByVisibleText(ccq.getAny_other_Review(), ev.any_other_Review);
 			 	 		
 			 	 		if(ev.any_limitation_to_scope.equals("Yes")||ev.any_limitation_to_expenditure.equals("Yes")||
 			 	 				ev.any_Time_limit_to_Instructions.equals("Yes")||ev.any_other_Review.equals("Yes"))
@@ -528,7 +481,7 @@ public class Monorail extends Driver {
 			 	 			driver().findElement(By.xpath("//input[@id='fileList_flm_LoiDocs']")).click();
 				 	 		projectMethods_Small_Works.linktoFileupload();	
 			 	 		}
-			 	 		cu.selectByVisibleText(ccq.getExeCP4(), ev.execp4);
+			 	 		commonUtils.selectByVisibleText(ccq.getExeCP4(), ev.execp4);
 			 	 		b.submit_Logout();
 			 	 		
 			 	 		if(ev.any_limitation_to_scope.equals("No")||ev.any_limitation_to_expenditure.equals("No")||
@@ -554,10 +507,10 @@ public class Monorail extends Driver {
 			 	if(ev.loi_Commencement.equals("No")){
 			 		
 			 		//Select explicit cp4 approval
-			 		cu.selectByVisibleText(ccq.getExeCP4(), ev.execp4);
+			 		commonUtils.selectByVisibleText(ccq.getExeCP4(), ev.execp4);
 			 		b.submit_Logout();
-			 		cu.waitForPageToLoad();
-			 		cu.blindWait();
+			 		commonUtils.waitForPageToLoad();
+			 		commonUtils.blindWait();
 			 		//alerts.getAlert_Accept_Yes();
 			 		driver.findElement(By.xpath("//div/a[contains(text(),'Yes')]")).click();
 						
@@ -578,18 +531,18 @@ public class Monorail extends Driver {
 		 	else if(customerCommitmentType.equals("PO Received - Under Review")||customerCommitmentType.equals("Sub-Contract Received - Under Review"))
 		 	{
 			 g34.customercommit();
-			 cu.selectByVisibleText(ccq.getExeCP4(), ev.execp4);
+			 commonUtils.selectByVisibleText(ccq.getExeCP4(), ev.execp4);
 			 b.submit_Logout();
 		 	}
 	 }
 
 	 //Prepare quote Cp2-Cp3
 	 public void prepareQuotecp2cp3() throws IOException, InterruptedException{
-		 ProjectMethods_Small_Works projectMethods_Small_Works = new ProjectMethods_Small_Works(); 
-		 cu.waitForPageToLoad();
+		 
+		 commonUtils.waitForPageToLoad();
 		 String taskName = PropertiesUtil.getPropValues("prepare_Revised_Quote");
 		 b.projectTaskName(taskName);
-		 cu.blindWait();
+		 commonUtils.blindWait();
 		//Matrix specific change Estimated size and location
 		 String orgName = driver.findElement(By.xpath("//*[@id='breadcrumbs']/ul/li[1]/a[text()='"+ev.org_Name+"']")).getText();
 		 log.info("orgName888888888888____"+orgName);
@@ -597,17 +550,17 @@ public class Monorail extends Driver {
 			 //RTQ 3 in revised prepare quote
 			 //String eSizertq3 = wb.getXLData(7, 4, 1);
 			 String locationrtq3 = wb.getXLData(9, 4, 1);
-			 //cu.selectByVisibleText(nrtq.geteSizertq2(), eSizertq3);
-			 cu.selectByVisibleText(nrtq.getLocationrtq2(), locationrtq3);
+			 //commonUtils.selectByVisibleText(nrtq.geteSizertq2(), eSizertq3);
+			 commonUtils.selectByVisibleText(nrtq.getLocationrtq2(), locationrtq3);
 		 }
 		 
 		 driver.findElement(By.xpath("//input[@id='fileList_flm_quoteDocument']")).click();
-		 projectMethods_Small_Works.linktoFileupload();
+		 ProjectMethods_Small_Works.linktoFileupload();
 		
-		 cu.selectByVisibleText(prepare_Quoteui.getCp2cp3gaformat(), ev.cp2cp3ourformat);
+		 commonUtils.selectByVisibleText(prepare_Quoteui.getCp2cp3gaformat(), ev.cp2cp3ourformat);
 		 prepare_Quoteui.getCp2cp3biddoc().click();
-		 projectMethods_Small_Works.linktoFileupload();
-		 cu.selectByVisibleText(prepare_Quoteui.getCp2cp3bidsheet(), ev.cp2cp3bidsheetauthorised);
+		 ProjectMethods_Small_Works.linktoFileupload();
+		 commonUtils.selectByVisibleText(prepare_Quoteui.getCp2cp3bidsheet(), ev.cp2cp3bidsheetauthorised);
 		 ab.getComments().sendKeys("cp2-cp3 prepare quote");
 		 
 	 }

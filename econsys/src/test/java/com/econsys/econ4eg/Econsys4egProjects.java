@@ -55,6 +55,7 @@ public class Econsys4egProjects extends Driver {
 	static int num;
 	static double overallSell;
 	static String filepath=System.getProperty("user.dir");
+
 	//Matrix flow
 	@Test(invocationCount = 1,threadPoolSize = 1)
 	//invocationCount = 10,threadPoolSize = 1
@@ -66,6 +67,7 @@ public class Econsys4egProjects extends Driver {
 	//Test method
 	@Test
 	public static void monorailTestFlow(String estimatedSize,String location) throws Exception{
+	
 		//login.url_Matrixe();
 		login.url();
 		//*****Login as genral user******
@@ -93,18 +95,17 @@ public class Econsys4egProjects extends Driver {
 				
 		b.pathdession(ev.eSizertq2,ev.locationrtq2);
 		//For CL approval in case of Quotation in our format is No
-		boolean isCP1green = estimatedSize.equalsIgnoreCase(ev.estimatedSize0to100k_)&&location.equalsIgnoreCase(ev.location_inside);
-		boolean isCP1amber = estimatedSize.equalsIgnoreCase(ev.estimatedSize250_)|| location.equalsIgnoreCase(ev.location_SouthEast);
-		boolean isCP2red = (ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize500_)||ev.locationrtq2.equalsIgnoreCase(ev.location_other));
-		isCP2amber = (ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize250_)||ev.locationrtq2.equalsIgnoreCase(ev.location_SouthEast));
-		isCP2green = ((ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize0to100k_) && ev.locationrtq2.equalsIgnoreCase(ev.location_inside)));
-		
-		if((ev.ourformat.equals("No"))&& isCP2green){
+		//boolean isCP1green = estimatedSize.equalsIgnoreCase(ev.estimatedSize0to100k_)&&location.equalsIgnoreCase(ev.location_inside);
+		//boolean isCP1amber = estimatedSize.equalsIgnoreCase(ev.estimatedSize250_)|| location.equalsIgnoreCase(ev.location_SouthEast);
+		//boolean isCP2red = (ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize500_)||ev.locationrtq2.equalsIgnoreCase(ev.location_other));
+		//isCP2amber = (ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize250_)||ev.locationrtq2.equalsIgnoreCase(ev.location_SouthEast));
+		//isCP2green = ((ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize0to100k_) && ev.locationrtq2.equalsIgnoreCase(ev.location_inside)));
+		if((ev.ourformat.equals("No"))){
 			log.info("In CL approval");
 			clApproval();
 		}
 		//**********CP2 exe dession**************
-		if( isCP2red&&(isCP1green || isCP1amber) || ev.exeCP2.equals("Yes") || ev.bidsheetauthorised.equals("No")){
+		if(ev.exeCP2.equals("Yes") || ev.bidsheetauthorised.equals("No")||ev.ourformat.equals("No")){
 			b.boardApproval();
 		}
 		monorail.submitQuote();
@@ -134,7 +135,7 @@ public class Econsys4egProjects extends Driver {
   	  	ab.getAcceptOperationAcceptance().click();
   	  	login.logout();
   	  	//Meeting Notes
-  	  	if(ev.meetingwithSL.equals("Yes")||ev.meeting.equals("Yes")){
+  	  	if(ev.meetingwithSL.equals("Ye s")||ev.meeting.equals("Yes")){
   	  		g45.meetings();
   	  	}
   	  	//**********CP5 exe dession **********
@@ -213,7 +214,7 @@ public static void statusQuotesubmit_(String customerCommitmentType,String quote
 	 	}
 	 	else if(quoteStatus.equals(ev.quoteStatusAmendBid)){
 		 ab.getComments().sendKeys("Quote status is Amend Bid");
-		 ccq.getSubmit().click();	 
+		 ccq.getSubmit().click();
 		 monorail.prepareQuotecp2cp3();
 		 cu.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.exeCP3);
 		 prepare_Quoteui.getQuoteprepared().click();

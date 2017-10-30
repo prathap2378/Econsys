@@ -56,7 +56,7 @@ public class Production_RegularTest extends Driver{
 	public void url() throws IOException{
 		String url = wb.getXLData(1,0,3);
 		driver.get(url);
-		cu.maximize();
+		//cu.maximize();
 	}
 @Test
  public void assign_Sales_Leader() throws IOException, InterruptedException {

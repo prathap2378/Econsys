@@ -53,7 +53,7 @@ public void url() throws IOException {
 
 	String workingURL = wb.getXLData(1,3,0);
 	driver().get(workingURL);
-	//cu.maximize();
+	cu.maximize();
 	//driver.navigate().refresh();
 }
 public void url_UKAS() throws IOException {

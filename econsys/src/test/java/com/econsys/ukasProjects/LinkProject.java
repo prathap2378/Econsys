@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
+import com.econsys.Genriclibrery.Alerts;
 import com.econsys.Genriclibrery.CommonUtils;
 import com.econsys.Genriclibrery.Driver;
 import com.econsys.Genriclibrery.EconsysVariables;
@@ -27,6 +28,7 @@ public class LinkProject extends Driver{
 	Login login = new Login();
 	CommonUtils cu = new CommonUtils();
 	Monorail rtq=new Monorail();
+	Alerts alerts = new Alerts();
 	public static String link_projName;
 	Logger log = Logger.getLogger(LinkProject.class);
 	public void linkUnlinkaction() throws InterruptedException{
@@ -34,7 +36,7 @@ public class LinkProject extends Driver{
 		cu.selectByVisibleText(rtqUi.getSelect_Project(), link_projName);
 		rtqUi.getLink_Projectpopupbutton().click();
 		cu.blindWait();
-		rtqUi.getLinked_OK().click();
+		alerts.getAlert_Accept_Ok().click();
 		cu.blindWait();
 		rtqUi.getManageAccprdion().click();//To show all accordion
 		rtqUi.getLinkedOppotunities().click();
@@ -49,9 +51,9 @@ public class LinkProject extends Driver{
 	    cu.assert_Test(projectName, link_projName);
 	    rtqUi.getUnLink_Project().click();	
 	    cu.blindWait();
-	    rtqUi.getLinked_OK().click();//Click Ok to Unlink the project
+	    alerts.getAlert_Accept_Ok().click();//Click Ok to Unlink the project
 	    cu.blindWait();
-	    rtqUi.getLinked_OK().click();
+	    alerts.getAlert_Accept_Ok().click();
 	}
   //@Test(priority=1)
 	public void createLinkProject() throws IOException, InterruptedException, AWTException{
@@ -81,7 +83,7 @@ public class LinkProject extends Driver{
 		cu.selectByVisibleText(rtqUi.getSelect_Project(), link_projName);
 		rtqUi.getLink_Projectpopupbutton().click();
 		cu.blindWait();
-		rtqUi.getLinked_OK().click();
+		alerts.getAlert_Accept_Ok().click();
 		cu.blindWait();
 		rtqUi.getLinkedOppotunities().click();
 		String projectName=rtqUi.getLinkedprojectName().getText();
@@ -95,9 +97,9 @@ public class LinkProject extends Driver{
 	    cu.assert_Test(projectName, link_projName);
 	    rtqUi.getUnLink_Project().click();	
 	    cu.blindWait();
-	    rtqUi.getLinked_OK().click();//Click Ok to Unlink the project
+	    alerts.getAlert_Accept_Ok().click();//Click Ok to Unlink the project
 	    cu.blindWait();
-	    rtqUi.getLinked_OK().click();
+	    alerts.getAlert_Accept_Ok().click();
   }
   @Test (priority=3)
   public void linkProjectAssignSalesLeader() throws IOException, InterruptedException{
