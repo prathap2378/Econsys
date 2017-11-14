@@ -85,7 +85,7 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 		//Assign Sales Leader
 		imperiumProject_methods.ASL();
 		//Prepare quote
-		imperiumProject_methods.prepare_Quote();
+		imperiumProject_methods.prepare_Quote(ev.overallSell,ev.locationrtq2);
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(),"Yes");
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
@@ -133,7 +133,7 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 		ab.getComments().sendKeys("Amend bid");
 		ab.getSubmitbutton().click();
 		//cp2-cp3 prepare quote
-		imperiumProject_methods.prepareQuotecp2cp3();
+		imperiumProject_methods.prepareQuotecp2cp3(ev.locationrtq3);
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),"Yes");
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
@@ -155,7 +155,7 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 
 		//login as user submitted re-prepare quote
 		login.loginSL();
-		imperiumProject_methods.prepareQuotecp2cp3();
+		imperiumProject_methods.prepareQuotecp2cp3(ev.locationrtq3);
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),"Yes");
 		ab.getComments().sendKeys("submit again");
 		prepare_Quoteui.getQuoteprepared().click();
@@ -170,11 +170,11 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 		ab.getDonot_Proceed_allret_Ok().click();
 		login.logout();
 	}
-	//@Test(priority=3)
+	@Test(priority=3)
 	public void reject_DonotPro_CP4() throws IOException, InterruptedException, AWTException {
 		cca_TC_Projects.rtq_submitQuote();
 		//'Submit Quote and Status of Submit Quote'
-		donot_proceed.submitQuote_CP4();
+		donot_proceed.actions_CP4();
 	}
 	@Test(priority=4)
 	public void reject_DonotPro_CP5() throws IOException, InterruptedException, AWTException {
@@ -425,78 +425,5 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 		login.logout();
 
 		basic.boardApproval();
-	}
-	public void statusOfSubmitQuote_CP4() throws IOException, InterruptedException{
-		//login.loginSL();
-		basic.projectname();
-		commonUtils.waitForPageToLoad();
-		commonUtils.selectByVisibleText(ccq_Ui.getQuoteStatus(),"Customer Commitment Received");
-
-		//Customer Commitment recived
-		commonUtils.waitForPageToLoad();
-		commonUtils.selectByVisibleText(ccq_Ui.getCustomerCommitmentType(),ev.customerCommitmentType_PO);
-		ccq_Ui.getUploadDoc_StatusofSubmitQuote().click();
-		ab.getLinkFileCheckbox().click();
-		ab.getAdd_LinkfilePopup().click();
-		ab.getComments().sendKeys("Customer Commitment recived - "+ev.customerCommitmentType_PO);
-		ab.getSubmitbutton().click();
-		//Customer Commitment
-		taskCP3_CP4.scopeDocandContractValueVerification();
-		//Cp4 explicit Approval
-		commonUtils.selectByVisibleText(ccq_Ui.getExeCP4(), "Yes");
-		ccq_Ui.getSubmit().click();
-		login.logout();
-		TaskCP3CP4.TandCreview();
-
-		//Cancel
-		login.loginboard();
-		basic.projectname_ReviewApproval();
-		ab.getCancelbutton().click();
-		//Save
-		commonUtils.blindWait();
-		driver.findElement(By.xpath("//label[@id='groupApprovals']")).click();
-		commonUtils.waitForPageToLoad();
-		driver().findElement(By.xpath("//tr[td[@title="+ev.projectName()+"]]/td/a[contains(text(),'Open')]")).click();
-		ab.getComments().sendKeys("Save CP4 form");
-		ab.getSavebutton().click();
-		//Reject
-		commonUtils.waitForPageToLoad();
-		driver.findElement(By.xpath("//label[@id='myApprovals']")).click();
-		commonUtils.waitForPageToLoad();
-		driver().findElement(By.xpath("//tr[td[@title="+ev.projectName()+"]]/td/a[contains(text(),'Open')]")).click();
-		ab.getComments().sendKeys("Reject @ CP4");
-		ab.getRejectbutton().click();
-		login.logout();
-
-		//login as Sales leader to re-submit customer commitment task(CCA)
-		login.loginSL();
-		basic.projectname();
-		ab.getComments().sendKeys("Customet commecement submit Slaes");
-		commonUtils.selectByVisibleText(ccq_Ui.getExeCP4(), "Yes");
-		ccq_Ui.getSubmit().click();
-		login.logout();
-
-		//login as Operational leader to re-submit customer commitment task(CCA)
-		login.loginOD();
-		basic.projectname();
-		ab.getComments().sendKeys("Customet commecement submit Ops");
-		commonUtils.selectByVisibleText(ccq_Ui.getExeCP4(), "Yes");
-		ccq_Ui.getSubmit().click();
-		login.logout();
-
-		//CP4 board
-		login.loginboard();
-		basic.projectname_ReviewApproval();
-		ab.getComments().sendKeys("Do not proceed at CP4");
-		ab.getDonotproccedbutton().click();
-		String allert = driver.findElement(By.xpath("//div[@class='modal-body']")).getTagName();
-		commonUtils.blindWait();
-		ab.getDonot_Proceed_allret_Ok().click();
-		System.out.println(allert+"project deleted");
-		commonUtils.blindWait();
-		if(driver.findElement(By.xpath("//div[contains(text(),'Your request has been processed successfully ')]")).isDisplayed()){
-			log.info("pass cp4 do not proceed");
-		}
-		login.logout();
 	}
 }

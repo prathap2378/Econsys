@@ -116,7 +116,7 @@ public class MyWatchlist extends Driver{
 //@Test
   public void verifyApprovals_to_MyWatchList() throws IOException, InterruptedException, AWTException{
 	  login.user();
-	  allPages.getViewApprovals().click();
+	  allPages.view_All_Approvals.click();
 	  if(driver.findElement(By.xpath("//input[contains(@title,'Add')]")).isDisplayed()){
 			 flag=addtoWatchList();
 			 	 Assert.assertEquals(true, flag);

@@ -38,6 +38,7 @@ public class Imperium_SmallWork_flow extends Driver{
 	static Login login=new Login();
 	EconsysVariables ev = new EconsysVariables();
 	Imperium_SmallWorks_Methods imperium_SmallWorks_Methods = new Imperium_SmallWorks_Methods();
+	Imperium_Project_Methods imperiumProject_methods = new Imperium_Project_Methods();
 
 	@Test
 	public void smallWorks_flow()throws Exception{
@@ -59,7 +60,7 @@ public class Imperium_SmallWork_flow extends Driver{
 				b.boardApproval();
 			}
 			//Assign Sales Leader
-			rtq.ASL();
+			imperiumProject_methods.ASL();
 			//Submit quote
 			ProjectMethods_Small_Works.submit_Quoteform();
 			//Status of submitted quote

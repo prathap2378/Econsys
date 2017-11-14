@@ -62,12 +62,13 @@ public void apointkeystaf() throws IOException, InterruptedException{
   }
   //Submit response used in PAG and Matrix
   public void submitResponse() throws InterruptedException, IOException{
-	  login.url();
+
 	  login.loginOD();
 	  b.projectname();
 	  
 	  ab.getComments().sendKeys("Submit response...");
-	  b.submit_Logout();
+	  driver.findElement(By.xpath("//input[@id='btnsubmit']")).click();
+	  login.logout();
   }
   //commercial suite general
   public void commerSuit() throws IOException, InterruptedException{

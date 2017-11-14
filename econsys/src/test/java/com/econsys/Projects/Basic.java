@@ -389,6 +389,8 @@ public void submit_Logout() throws InterruptedException{
 }
 //Board Approval
 	 public void boardApproval() throws IOException, InterruptedException{
+		try {
+		
 		 login.loginboard();
 		 cu.waitForPageToLoad();
 		 log.info("open project");
@@ -410,5 +412,8 @@ public void submit_Logout() throws InterruptedException{
 		     driver.findElement(By.xpath("//div[@class='modal-footer']/a[1]")).click();
 		 }
 		 login.logout();
-	 }
+		} catch (StaleElementReferenceException se) {
+			se.printStackTrace();
+		}
+		}
 }

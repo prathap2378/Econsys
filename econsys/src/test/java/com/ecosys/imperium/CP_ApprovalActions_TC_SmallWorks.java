@@ -23,30 +23,33 @@ import com.econsys.TestData.Workbook;
 import com.econsys.UIobjectrepositary.ActionButtonsUi;
 import com.econsys.UIobjectrepositary.CosCommitQuoteStatusUi;
 import com.econsys.UIobjectrepositary.Preparequote;
+import com.econsys.UIobjectrepositary.TandCverification;
 import com.econsys.UIobjectrepositary.smallWorkPageElements;
+import com.econsys.matrix.MatrixProjects;
 
 /**
  * @author bhanu.pk
  *This class consists of all the methods of Do not proceed and Reject of all tasks 
  */
 public class CP_ApprovalActions_TC_SmallWorks extends Driver{
-	ActionButtonsUi ab=PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
-	CosCommitQuoteStatusUi ccq_Ui = PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
+	static ActionButtonsUi ab=PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
+	static CosCommitQuoteStatusUi CosCommit_Quote_StatusUi = PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
 	Preparequote prepare_Quoteui = PageFactory.initElements(Driver.driver(), Preparequote.class);
 	private static Logger log=Logger.getLogger(CP_ApprovalActions_TC_SmallWorks.class.getName());
 	smallWorkPageElements sWp= PageFactory.initElements(Driver.driver(),smallWorkPageElements.class);
+	static TandCverification tandCver = PageFactory.initElements(driver(), TandCverification.class);
 
 	Login login = new Login();
 	TestListener name = new TestListener();
-	Basic b = new Basic();
+	static Basic b = new Basic();
 	Workbook wb= new Workbook();
 	SmallWorks sw = new SmallWorks();
 	Monorail monorail = new Monorail();
 	TaskCP3CP4 taskCP3_CP4 = new TaskCP3CP4();
 	TasksCP4toCP5 cp4_cp5 = new TasksCP4toCP5();
 	Imperium_SmallWorks_Methods imperium_SmallWorks_Methods = new Imperium_SmallWorks_Methods();
-	EconsysVariables ev=new EconsysVariables();
-	CommonUtils commonUtils = new CommonUtils();
+	static EconsysVariables ev=new EconsysVariables();
+	static CommonUtils commonUtils = new CommonUtils();
 
 	//Do not proceed scenario from CP2 to CP5
 	@Test
@@ -84,7 +87,6 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		if(driver.findElement(By.xpath("//div[contains(text(),'Your request has been processed successfully ')]")).isDisplayed()){
 			log.info("pass cp2 do not proceed");
 		}
-		login.logout();
 	}
 
 	@Test(priority=1)
@@ -93,14 +95,16 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		//Small works quote form to submit quote
 		imperium_SmallWorks_Methods.quoteForm_SubmitQuote();
 
-		//login.loginSL();
 		b.projectname();
-		Thread.sleep(200);
-		commonUtils.selectByVisibleText(ccq_Ui.getQuoteStatus(),ev.quoteStatusAmendBid);
+		commonUtils.waitForPageToLoad();
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),ev.quoteStatusAmendBid);
 		ab.getComments().sendKeys("Amend bid...");
 		ab.getSubmitbutton().click();
 		//login as Sales leader to resubmit the quote form
-		monorail.prepareQuotecp2cp3();
+		imperium_SmallWorks_Methods.prepareRevisedQuote();
+		if(ev.ourformat.equals("No")){
+			MatrixProjects.clApproval();
+		}
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.select_Yes);
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
@@ -114,11 +118,13 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 
 		//login as Sales leader to resubmit the quote form
 		login.loginSL();
-		monorail.prepareQuotecp2cp3();
+		imperium_SmallWorks_Methods.prepareRevisedQuote2();
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.select_Yes);
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
-
+		if(ev.ourformat.equals("No")){
+			MatrixProjects.clApproval(); 
+		}
 		login.loginboard();
 		b.projectname_ReviewApproval();
 		ab.getComments().sendKeys("Do not proceed at CP3");
@@ -131,23 +137,19 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		if(driver.findElement(By.xpath("//div[contains(text(),'Your request has been processed successfully ')]")).isDisplayed()){
 			log.info("CP3 do not proceed - pass");
 		}
-		login.logout();
 	}
-	//@Test(priority=2)
+	@Test(priority=2)
 	public void cp4_doNotProceed() throws IOException, InterruptedException, AWTException, ClassNotFoundException, SQLException {
-		CP_ApprovalActions_TC_SmallWorks donot_proceed = new CP_ApprovalActions_TC_SmallWorks();
-		login.url();
-		imperium_SmallWorks_Methods.smallworkForm();
-		imperium_SmallWorks_Methods.submit_SW_QuoteForm();
+		imperium_SmallWorks_Methods.quoteForm_SubmitQuote();
 
-		donot_proceed.submitQuote_CP4();
+		actions_CP4();
 	}
 	@Test(priority=3)
 	public void cp5_doNotProceed() throws IOException, InterruptedException, AWTException, ClassNotFoundException, SQLException {
 		log.info("cp5_doNotProceed");
 		//Small works quote form to submit quote
 		imperium_SmallWorks_Methods.quoteForm_SubmitQuote();
-		
+
 		imperium_SmallWorks_Methods.statusQuotesubmit_(ev.customerCommitmentType_PO, ev.quoteStatusCCARecived);
 		//cp4 board approval
 		if(ev.execp4.equals("Yes") || (ev.clarification.equals("No")&&
@@ -208,7 +210,6 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		if(driver.findElement(By.xpath("//div[contains(text(),'Your request has been processed successfully ')]")).isDisplayed()){
 			log.info("pass cp5 do not proceed");
 		}
-		login.logout();
 	}
 	public void search() throws InterruptedException, IOException{
 		//Project archive action
@@ -235,27 +236,57 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		//Assert.assertEquals(projectName1, projectName);
 	}
 
-	public void submitQuote_CP4() throws IOException, InterruptedException{
-		monorail.submitQuote();
-		//login.loginSL();
-		b.projectname();
+	//Used fr both small works and projects
+	public static void submit_Explcit_CP4(){
+		try {
+			b.projectname();
+		} catch (InterruptedException | IOException e) {
+			e.printStackTrace();
+		}
 		commonUtils.waitForPageToLoad();
-		commonUtils.selectByVisibleText(ccq_Ui.getQuoteStatus(),ev.quoteStatusCCARecived);
-
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),ev.quoteStatusCCARecived);
 		//Customer Commitment recived
 		commonUtils.waitForPageToLoad();
-		commonUtils.selectByVisibleText(ccq_Ui.getCustomerCommitmentType(),ev.customerCommitmentType_PO);
-		ccq_Ui.getUploadDoc_StatusofSubmitQuote().click();
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getCustomerCommitmentType(),ev.customerCommitmentType_LOI);
+		CosCommit_Quote_StatusUi.getUploadDoc_StatusofSubmitQuote().click();
 		ab.getLinkFileCheckbox().click();
 		ab.getAdd_LinkfilePopup().click();
-		ab.getComments().sendKeys("Customer Commitment recived - "+ev.customerCommitmentType_PO);
+		ab.getComments().sendKeys("Customer Commitment recived - "+ev.customerCommitmentType_LOI);
 		ab.getSubmitbutton().click();
 		//Customer Commitment
-		taskCP3_CP4.customercommit();
-		//Cp4 explicit Approval
-		commonUtils.selectByVisibleText(ccq_Ui.getExeCP4(), "Yes");
-		ccq_Ui.getSubmit().click();
-		login.logout();
+		commonUtils.waitForPageToLoad();
+		String taskName = PropertiesUtil.getPropValues("customer_Commitment_Acceptance");
+		try {
+			b.projectTaskName(taskName);
+		} catch (InterruptedException | IOException e) {
+			e.printStackTrace();
+		}
+		commonUtils.selectByVisibleText(driver.findElement(By.xpath("//select[@id='st_request_for_cw']")),ev.select_No);
+		ab.getComments().sendKeys("Customer Commitment Type");
+		ev.loi_Commencement=ev.select_No;
+		//Does LOI Received specifically request for commencement of work? = 'NO'
+		if(ev.loi_Commencement.equals("No")){
+
+			Imperium_SmallWorks_Methods.commencmentofWork_No();
+			//Select explicit cp4 approval
+			commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getExeCP4(), ev.select_Yes);
+			try {
+				b.submit_Logout();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			commonUtils.waitForPageToLoad();
+		}
+	}
+	//Used fr both small works and projects
+	public void actions_CP4() throws IOException, InterruptedException{
+
+		submit_Explcit_CP4();	
+		try {
+			TaskCP3CP4.TandCreview();
+		} catch (InterruptedException | IOException e) {
+			e.printStackTrace();
+		}
 		//Cancel
 		login.loginboard();
 		b.projectname_ReviewApproval();
@@ -276,20 +307,16 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		ab.getRejectbutton().click();
 		login.logout();
 
-		//login as Sales leader to re-submit customer commitment task(CCA)
 		login.loginSL();
-		b.projectname();
-		ab.getComments().sendKeys("Customet commecement submit Slaes");
-		commonUtils.selectByVisibleText(ccq_Ui.getExeCP4(), "Yes");
-		ccq_Ui.getSubmit().click();
-		login.logout();
+		submit_Explcit_CP4();
 
-		//login as Operational leader to re-submit customer commitment task(CCA)
-		login.loginOD();
+		//Submit T&C review
+		login.loginCL();
+		commonUtils.waitForPageToLoad();
 		b.projectname();
-		ab.getComments().sendKeys("Customet commecement submit Ops");
-		commonUtils.selectByVisibleText(ccq_Ui.getExeCP4(), "Yes");
-		ccq_Ui.getSubmit().click();
+
+		ab.getComments().sendKeys("T & C verification...");
+		tandCver.submitT_Creview.click();
 		login.logout();
 
 		//CP4 board
@@ -305,6 +332,5 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		if(driver.findElement(By.xpath("//div[contains(text(),'Your request has been processed successfully ')]")).isDisplayed()){
 			log.info("pass cp4 do not proceed");
 		}
-		login.logout();
 	}
 }

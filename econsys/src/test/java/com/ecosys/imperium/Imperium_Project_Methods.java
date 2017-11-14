@@ -48,6 +48,7 @@ public class Imperium_Project_Methods extends Driver {
 	static Alerts alerts = PageFactory.initElements(Driver.driver(), Alerts.class);
 	AppointkeystaffandCommerSuitUi appointKeyStaff_CommercialSuite_Uielements = PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
 	static DeliveryReviewUi deliveryReviewUi = PageFactory.initElements(driver(), DeliveryReviewUi.class);
+	static TandCverification tandCver = PageFactory.initElements(driver(), TandCverification.class);
 	Actions actions = new Actions(driver);
 	//imported classes
 	static Workbook wb=new Workbook();
@@ -67,7 +68,7 @@ public class Imperium_Project_Methods extends Driver {
 	String taskNameCP;
 	static String productSpecified,Consultant,projectAddress,size=null;
 	String isEnqueryOpentoAll,performanceBond,pCG,termsandconditionsadvised,endUserIndustrySector=null;
-	String haveweworkedonthissitebefore,areweNamedSpecified,documentationReceived,points,typeofBuilding=null;
+	String haveweworkedonthissitebefore,areweNamedSpecified,documentationReceived,typeofBuilding=null;
 	String enquiryFormat,typeofProject=null;
 	String sl,userName;
 	{
@@ -100,7 +101,7 @@ public class Imperium_Project_Methods extends Driver {
 
 		// select Size
 		commonUtils.selectByVisibleText(nrtq.getEstimatedSize(), estimatedSize);
-
+		nrtq.getPoints().sendKeys(""+5);
 		commonUtils.selectByIndex(nrtq.getNeworExis(), 1);
 		commonUtils.selectByIndex(nrtq.getLeadSource(), 1);
 		//anticipated date
@@ -208,7 +209,7 @@ public class Imperium_Project_Methods extends Driver {
 		}
 	}
 	//********Prepare Quote task***********
-	public void prepare_Quote() throws InterruptedException, IOException {
+	public void prepare_Quote(String overallSell,String locationrtq2) throws InterruptedException, IOException {
 
 		login.loginSL();
 		commonUtils.blindWait();
@@ -217,7 +218,6 @@ public class Imperium_Project_Methods extends Driver {
 		commonUtils.blindWait();
 
 		//RTQ 2 in prepare quote
-		String locationrtq2 = wb.getXLData(4, 4, 1);
 		commonUtils.selectByVisibleText(nrtq.getLocationrtq2(), locationrtq2);
 
 		commonUtils.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), ev.ourformat);
@@ -236,57 +236,15 @@ public class Imperium_Project_Methods extends Driver {
 		ProjectMethods_Small_Works.linktoFileupload();
 		commonUtils.waitForPageToLoad();
 
-		String overallCost = wb.getXLData(1, 4, 2);
-		prepare_Quoteui.getOverallProjectCost().sendKeys(overallCost);
+		prepare_Quoteui.getOverallProjectCost().sendKeys(ev.overallCost);
 
-		String overallSell = wb.getXLData(1, 5, 2);
 		prepare_Quoteui.getOverallProjectSell().sendKeys(overallSell);
 
-		//Reading cost and sell values
-		String testdataXLpath=filepath+"\\src\\main\\java\\com\\econsys\\TestData\\Monorail_testdata.xls";
-		FileInputStream file = new FileInputStream(testdataXLpath);
-		HSSFWorkbook wb1 = new HSSFWorkbook(file);
-		int sheetNumber = 2;
-		HSSFSheet Firstpage = wb1.getSheetAt(sheetNumber);
-
-		Iterator rowIterator = Firstpage.rowIterator();	
-
-		while(rowIterator.hasNext()){
-			HSSFRow row = (HSSFRow) rowIterator.next();
-			int rowNum = row.getRowNum();
-
-			if (rowNum !=0) {
-				if(row!=null && (rowNum==0 || rowNum==1 || rowNum==2)){
-					String quoteType = null;
-					double Cost = 0;
-					double sell = 0;
-
-					if(row.getCell(0)!=null){
-						quoteType= row.getCell(0).getStringCellValue();
-					}
-					if(row.getCell(1)!=null){
-						Cost= row.getCell(1).getNumericCellValue();
-					}
-					if(row.getCell(2)!=null){
-						sell = row.getCell(2).getNumericCellValue();
-					}
-					commonUtils.blindWait();
-					prepare_Quoteui.getAddnewpopup().click();
-					commonUtils.blindWait();
-					prepare_Quoteui.getCostCodeCategorytextfield().sendKeys(quoteType);
-					commonUtils.waitForPageToLoad();
-					prepare_Quoteui.getCost().sendKeys(""+Cost);
-					prepare_Quoteui.getSell().sendKeys(""+sell);
-					commonUtils.blindWait();
-					prepare_Quoteui.getSaveAddcostsellpopup().click();
-					commonUtils.blindWait();
-					commonUtils.waitForPageToLoad();
-				}
-			}
-		}
+		wb.prepareQuote_BidInfoDetails();
+		
 		prepare_Quoteui.getComments().sendKeys("Prepare Quote");
 	}
-	//Prepare Quote2 used in action button verification TC
+	//Prepare Quote2 used in action button verification TC- used on reject of prepare quote 
 	public void prepare_Quote2() throws InterruptedException, IOException {
 
 		login.loginSL();
@@ -307,15 +265,14 @@ public class Imperium_Project_Methods extends Driver {
 		prepare_Quoteui.getComments().sendKeys("Prepare Quote on rejection...");
 	}
 	//Prepare quote Cp2-Cp3
-	public void prepareQuotecp2cp3() throws IOException, InterruptedException{
+	public void prepareQuotecp2cp3(String locationrtq3) throws IOException, InterruptedException{
 
 		commonUtils.waitForPageToLoad();
 		String taskName = PropertiesUtil.getPropValues("prepare_Revised_Quote");
 		basic.projectTaskName(taskName);
 		commonUtils.blindWait();
-		String locationrtq3 = wb.getXLData(9, 4, 1);
 		commonUtils.selectByVisibleText(nrtq.getLocationrtq2(), locationrtq3);
-
+		
 		driver.findElement(By.xpath("//input[@id='fileList_flm_quoteDocument']")).click();
 		ProjectMethods_Small_Works.linktoFileupload();
 
@@ -343,10 +300,12 @@ public class Imperium_Project_Methods extends Driver {
 		//Thread.sleep(1000);
 		String sales = PropertiesUtil.getPropValues("salesto_Operation");
 		basic.projectTaskName(sales);
-		List<WebElement> radio = driver().findElements(By.xpath("//input[@type='radio'][@value='NA']"));
-		for(int i=0;i<radio.size();i++){
+		
+		//sales to operation select radio buttons
+		List<WebElement> radio_Buttons = driver().findElements(By.xpath("//input[@type='radio'][@value='NA']"));
+		for(int i = 0;i<=radio_Buttons.size();i++){
 			commonUtils.waitForPageToLoad();
-			radio.get(i).click();
+			radio_Buttons.get(i).click();
 		}
 		commonUtils.selectByVisibleText(so.getMeeting(), ev.meeting);
 		String customerCommitmentType= ev.customerCommitmentType;
@@ -429,11 +388,9 @@ public class Imperium_Project_Methods extends Driver {
 		}
 	}
 
-	public void deveryreview() throws IOException, InterruptedException{
+	public void deveryreview(String deliveryReview_dission) throws IOException, InterruptedException{
 
 		login.url();
-		String deliveryReview_dission=wb.getXLData(10,12,0);
-
 		/*login as PL to *********** submit*/
 		if(deliveryReview_dission.equals("Submit")){
 			login.loginPL();
@@ -647,5 +604,26 @@ public class Imperium_Project_Methods extends Driver {
 			Thread.sleep(1000);
 		}
 		ab.getComments().sendKeys("Post practical complition");
+	}
+	public void permission_to_Commence() {
+		try {
+			login.loginCL();
+			basic.projectname();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		} 
+		driver.findElement(By.id("fileList_flm_ongoingOrderAcceptanceDocs")).click();
+		try {
+			ProjectMethods_Small_Works.linktoFileupload();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		ab.getComments().sendKeys("CL response...");
+		tandCver.submitT_Creview.click();
+		try {
+			login.logout();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

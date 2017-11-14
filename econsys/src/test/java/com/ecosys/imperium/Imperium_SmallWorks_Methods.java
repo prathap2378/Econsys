@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -25,6 +27,7 @@ import com.econsys.matrix.MatrixProjects;
 import com.econsys.Genriclibrery.*;
 import com.econsys.SmallWorks.ProjectMethods_Small_Works;
 import com.econsys.TestData.*;
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 public class Imperium_SmallWorks_Methods extends Driver{
 	//Page factory
@@ -51,48 +54,65 @@ public class Imperium_SmallWorks_Methods extends Driver{
 	static CommonUtils commonUtils = new CommonUtils();
 	String filepath=System.getProperty("user.dir");
 	String sell;
+	static String expenditure;
 
-	public void smallworkForm() throws InterruptedException, IOException, ClassNotFoundException, SQLException{
-		int rownum= wb.getrowNum(2);
+	public void smallworkForm() throws  ClassNotFoundException, SQLException{
+		try{
+			int rownum= wb.getrowNum(2);
 
-		login.loginSL();
-		rtq.getNewform().click();
-		rtq.getSmallWorks().click();
-		commonUtils.waitForPageToLoad();
-		rtq.getProjectName().sendKeys(ev.projectName());
-		rtq.getCustomerName().sendKeys(wb.getXLData(3, 1, 1));
-		commonUtils.selectByIndex(rtq.getSmallWorksType(), 1);
-		//Quote Info
-		commonUtils.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), wb.getXLData(2, 5, 0));
-		prepare_Quoteui.getOverallProjectCost().sendKeys(wb.getXLData(1, 4, 2));
-		sell = wb.getXLData(1, 5, 2);
-		prepare_Quoteui.getOverallProjectSell().sendKeys(wb.getXLData(1, 5, 2));
-
-		for(int i=1;i<=rownum;i++){
-			prepare_Quoteui.getAddnewpopup().click();
+			login.loginSL();
+			rtq.getNewform().click();
+			rtq.getSmallWorks().click();
 			commonUtils.waitForPageToLoad();
-			prepare_Quoteui.getCostCodeCategorytextfield().sendKeys(wb.getXLData(i, 0, 2));
-			prepare_Quoteui.getCost().sendKeys(wb.getXLData(i, 1, 2));
-			prepare_Quoteui.getSell().sendKeys(wb.getXLData(i, 2, 2));
-			prepare_Quoteui.getSaveAddcostsellpopup().click();
-			Thread.sleep(2000);
-			JavascriptExecutor jse = (JavascriptExecutor)driver;
-			jse.executeScript("window.scrollBy(0,250)", "");
-		}
-		if (driver instanceof JavascriptExecutor) {
-			((JavascriptExecutor)driver).executeScript("setTimeout(function () { }, 0)");
-		} else {
-			throw new IllegalStateException("This driver does not support JavaScript!");
-		}
-		//Upload bid sheet
-		commonUtils.blindWait();
-		driver.findElement(By.xpath("//div[@id='bidSheet-dropzone']")).click();
-		ProjectMethods_Small_Works.uploadFile("Logfails - Copy (20).txt");
+			rtq.getProjectName().sendKeys(ev.projectName());
+			rtq.getCustomerName().sendKeys(wb.getXLData(3, 1, 1));
+			commonUtils.selectByIndex(rtq.getSmallWorksType(), 1);
+			//Quote Info
+			commonUtils.selectByVisibleText(prepare_Quoteui.getQuotationonourFormat(), wb.getXLData(2, 5, 0));
+			prepare_Quoteui.getOverallProjectCost().sendKeys(wb.getXLData(1, 4, 2));
+			sell = wb.getXLData(1, 5, 2);
+			prepare_Quoteui.getOverallProjectSell().sendKeys(wb.getXLData(1, 5, 2));
 
-		driver.findElement(By.xpath("//input[@id='fileList_flm_quoteDocument']")).click();
-		ProjectMethods_Small_Works.linktoFileupload();
-		commonUtils.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), wb.getXLData(4, 5, 0));
-		prepare_Quoteui.getComments().sendKeys("Small Work form ...");
+			for(int i=1;i<=rownum;i++){
+				prepare_Quoteui.getAddnewpopup().click();
+				commonUtils.waitForPageToLoad();
+				prepare_Quoteui.getCostCodeCategorytextfield().sendKeys(wb.getXLData(i, 0, 2));
+				prepare_Quoteui.getCost().sendKeys(wb.getXLData(i, 1, 2));
+				prepare_Quoteui.getSell().sendKeys(wb.getXLData(i, 2, 2));
+				prepare_Quoteui.getSaveAddcostsellpopup().click();
+				Thread.sleep(2000);
+				JavascriptExecutor jse = (JavascriptExecutor)driver;
+				jse.executeScript("window.scrollBy(0,250)", "");
+			}
+			if (driver instanceof JavascriptExecutor) {
+				((JavascriptExecutor)driver).executeScript("setTimeout(function () { }, 0)");
+			} else {
+				throw new IllegalStateException("This driver does not support JavaScript!");
+			}
+			//Upload bid sheet
+			commonUtils.blindWait();
+			driver.findElement(By.xpath("//div[@id='bidSheet-dropzone']")).click();
+			ProjectMethods_Small_Works.uploadFile("Logfails - Copy (20).txt");
+
+			driver.findElement(By.xpath("//input[@id='fileList_flm_quoteDocument']")).click();
+			ProjectMethods_Small_Works.linktoFileupload();
+			commonUtils.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), wb.getXLData(4, 5, 0));
+			prepare_Quoteui.getComments().sendKeys("Small Work form ...");
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ElementNotVisibleException e) {
+			e.printStackTrace();
+		}
+		catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean submit_SW_QuoteForm() throws InterruptedException,IOException{
@@ -123,7 +143,7 @@ public class Imperium_SmallWorks_Methods extends Driver{
 		log.info("loged out");
 		return flag;
 	}
-	
+
 	public void quoteForm_SubmitQuote() throws InterruptedException, IOException, ClassNotFoundException, SQLException{
 		smallworkForm();
 		flag = submit_SW_QuoteForm();
@@ -137,7 +157,7 @@ public class Imperium_SmallWorks_Methods extends Driver{
 		}
 		ProjectMethods_Small_Works.submit_Quoteform();
 	}
-	
+
 
 	//prepare Revised Quite...
 	public void prepareRevisedQuote() throws InterruptedException, IOException{
@@ -156,7 +176,21 @@ public class Imperium_SmallWorks_Methods extends Driver{
 		commonUtils.selectByVisibleText(prepare_Quoteui.getCp2cp3bidsheet(), wb.getXLData(15, 5, 0));
 		prepare_Quoteui.getComments().sendKeys("rePrepare quote...");
 	}
-	//status of submitted quote - small works
+	//Used in TC to disable the unwanted fields
+	public void prepareRevisedQuote2() throws InterruptedException, IOException{
+		//Project name
+		String taskName = PropertiesUtil.getPropValues("prepare_Revised_Quote");
+		basic.projectTaskName(taskName);
+		commonUtils.blindWait();
+		//Delete the bid document first
+		driver.findElement(By.xpath("//*[@id='bidSheet_multifile']//a[contains(text(),'Delete')]")).click();
+		prepare_Quoteui.getCp2cp3biddoc().click();
+		ProjectMethods_Small_Works.linktoFileupload();	
+		commonUtils.selectByVisibleText(prepare_Quoteui.getCp2cp3bidsheet(), wb.getXLData(15, 5, 0));
+		prepare_Quoteui.getComments().sendKeys("rePrepare quote...");
+	}
+	
+	//status of submitted quote 
 	public void statusQuotesubmit_(String customerCommitmentType,String quoteStatus) throws IOException, InterruptedException{
 
 		commonUtils.waitForPageToLoad();
@@ -165,41 +199,50 @@ public class Imperium_SmallWorks_Methods extends Driver{
 		commonUtils.waitForPageToLoad();
 		log.info("quotestatuscp2cp3 : "+quoteStatus);
 
-		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),quoteStatus);
-		commonUtils.waitForPageToLoad();
-		if(quoteStatus.equals("Customer Commitment Received")){
-			{
-				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getCustomerCommitmentType(), customerCommitmentType);
+		if(quoteStatus.equals(ev.quoteStatusCCARecived)){
+			commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),ev.quoteStatusCCARecived);
+			commonUtils.waitForPageToLoad();
+			commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getCustomerCommitmentType(), customerCommitmentType);
 
-				if(!"Verbal Commitment Received - Under Review".equals(customerCommitmentType)){
-					CosCommit_Quote_StatusUi.getUploadDoc_StatusofSubmitQuote().click();
-					ProjectMethods_Small_Works.linktoFileupload();;
-				}
+			if(!"Verbal Commitment Received - Under Review".equals(customerCommitmentType)){
+				CosCommit_Quote_StatusUi.getUploadDoc_StatusofSubmitQuote().click();
+				ProjectMethods_Small_Works.linktoFileupload();;
 			}
 			ab.getComments().sendKeys("Quote status updated as "+quoteStatus);
 			CosCommit_Quote_StatusUi.getSubmit().click();
-			//Customer commitment acceptance logic
-			Imperium_SmallWorks_Methods.CCAlogic_(customerCommitmentType);
+			CCAlogic_(ev.customerCommitmentType);
 		}
-		else if(quoteStatus.equals("Amend Bid")){
 
+		else if(quoteStatus.equals(ev.quoteStatusAmendBid)){
 			ab.getComments().sendKeys("Quote status is Amend Bid");
 			CosCommit_Quote_StatusUi.getSubmit().click();	 
-			prepareRevisedQuote();
+			try {
+				prepareRevisedQuote();
 
-			commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.exeCP3);
-			prepare_Quoteui.getQuoteprepared().click();
-			login.logout();
-			if(ev.ourformat.equals("No")){
-				MatrixProjects.clApproval(); 
+				commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.exeCP3);
+				prepare_Quoteui.getQuoteprepared().click();
+				login.logout();
+				if(ev.ourformat.equals("No")){
+					MatrixProjects.clApproval();
+				}
+				if((ev.exeCP3.equals("Yes"))){
+					basic.boardApproval();
+				}
+				ProjectMethods_Small_Works.submit_Quoteform();
+				status_ResubmittedQuote_();
 			}
-			if((ev.exeCP3.equals("Yes"))){
-				basic.boardApproval();
+			catch (Exception e) {
 			}
-			ProjectMethods_Small_Works.submit_Quoteform();
-			status_ResubmittedQuote_();
+		}
+
+		//Select Amend bid and submit the quote status
+		else if(quoteStatus.equals(ev.quoteStatusAmendBidSubmit)){
+			commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),ev.quoteStatusAmendBid);
+			ab.getComments().sendKeys("Quote status is Amend Bid");
+			CosCommit_Quote_StatusUi.getSubmit().click();	 
 		}
 	}
+
 	//status of resubmit quote - small works
 	public void status_ResubmittedQuote_() throws InterruptedException, IOException{
 		//login.loginSL();
@@ -226,7 +269,7 @@ public class Imperium_SmallWorks_Methods extends Driver{
 
 			ab.getSubmitbutton().click();
 			//Customer commitment acceptance logic
-			Imperium_SmallWorks_Methods.CCAlogic_(ev.customerCommitmentType);
+			CCAlogic_(ev.customerCommitmentType);
 		}
 		//******Amend bid******
 		else if(ev.quote_StatusCp3Cp4.equals("Amend Bid")){
@@ -258,48 +301,22 @@ public class Imperium_SmallWorks_Methods extends Driver{
 			//Does LOI Received specifically request for commencement of work? = 'YES'			 	
 			if(ev.loi_Commencement.equals("Yes")){
 
-				commonUtils.waitForPageToLoad();
-				Thread.sleep(1000);
-				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_limitation_to_scope(), ev.any_limitation_to_scope);
-				//Expenditure edit
-				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_limitation_to_expenditure(), ev.any_limitation_to_expenditure);
-				if(ev.any_limitation_to_expenditure.equals("Yes")){
-					String expenditure = wb.getXLData(1, 5, 2);
-					CosCommit_Quote_StatusUi.getExpenditureLimit().sendKeys(expenditure);
-				}
-				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_Time_limit_to_Instructions(), ev.any_Time_limit_to_Instructions);
-				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_other_Review(), ev.any_other_Review);
-
-				if(ev.any_limitation_to_scope.equals("Yes")||ev.any_limitation_to_expenditure.equals("Yes")||
-						ev.any_Time_limit_to_Instructions.equals("Yes")||ev.any_other_Review.equals("Yes"))
-				{
-					driver().findElement(By.xpath("//input[@id='fileList_flm_LoiDocs']")).click();
-					ProjectMethods_Small_Works.linktoFileupload();	
-				}
-				if(ev.any_limitation_to_scope.equals("No")&&ev.any_limitation_to_expenditure.equals("No")&&
-						ev.any_Time_limit_to_Instructions.equals("Yes")&&ev.any_other_Review.equals("Yes"))
-				{
-					driver().findElement(By.xpath("//input[@id='fileList_flm_slreponseDocs']")).click();
-					ProjectMethods_Small_Works.linktoFileupload();	
-				}
+				commencmentofWork_Yes();
 				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getExeCP4(), ev.execp4);
 				basic.submit_Logout();
-
-				TaskCP3CP4.TandCreview();
 			}
 			//Does LOI Received specifically request for commencement of work? = 'NO'
 			if(ev.loi_Commencement.equals("No")){
+
+				commencmentofWork_No();
 				//Select explicit cp4 approval
-				driver.findElement(By.xpath("//input[@id='fileList_flm_slreponseDocs']")).click();
-				ProjectMethods_Small_Works.linktoFileupload();
-				driver.findElement(By.xpath("//textarea[@id='response_text']")).sendKeys("Prepared Respponse");
 				commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getExeCP4(), ev.execp4);
 				basic.submit_Logout();
 				commonUtils.waitForPageToLoad();
-
-				TaskCP3CP4.TandCreview();
 			}
+			TaskCP3CP4.TandCreview();
 		}
+		
 		//this is verbal
 		else if(customerCommitmentType.equals(ev.customerCommitmentType_Verbal)){
 			commonUtils.waitForPageToLoad();
@@ -318,7 +335,58 @@ public class Imperium_SmallWorks_Methods extends Driver{
 			g34.scopeDocandContractValueVerification();
 		}
 	}
+	public static void commencmentofWork_Yes(){
+		commonUtils.waitForPageToLoad();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_limitation_to_scope(), ev.any_limitation_to_scope);
+		//Expenditure edit
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_limitation_to_expenditure(), ev.any_limitation_to_expenditure);
+		if(ev.any_limitation_to_expenditure.equals("Yes")){
 
+			try {
+				expenditure = wb.getXLData(1, 5, 2);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			CosCommit_Quote_StatusUi.getExpenditureLimit().sendKeys(expenditure);
+		}
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_Time_limit_to_Instructions(), ev.any_Time_limit_to_Instructions);
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getAny_other_Review(), ev.any_other_Review);
+
+		commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.st_any_terms_and_conditions, ev.emailLoi_introduce_TandC);
+
+		if(ev.any_limitation_to_scope.equals("Yes")||ev.any_limitation_to_expenditure.equals("Yes")||
+				ev.any_Time_limit_to_Instructions.equals("Yes")||ev.any_other_Review.equals("Yes")||
+				ev.emailLoi_introduce_TandC.equals("Yes"))
+		{
+			driver().findElement(By.xpath("//input[@id='fileList_flm_LoiDocs']")).click();
+			try {
+				ProjectMethods_Small_Works.linktoFileupload();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}	
+		}
+		if(ev.any_limitation_to_scope.equals("No")&&ev.any_limitation_to_expenditure.equals("No")&&
+				ev.any_Time_limit_to_Instructions.equals("No")&&ev.any_other_Review.equals("No")&&
+				ev.emailLoi_introduce_TandC.equals("No"))
+		{
+			driver().findElement(By.xpath("//input[@id='fileList_flm_slreponseDocs']")).click();
+			try {
+				ProjectMethods_Small_Works.linktoFileupload();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}	
+		}
+
+	}
+	public static void commencmentofWork_No(){
+
+		driver.findElement(By.xpath("//textarea[@id='response_text']")).sendKeys("Prepared Respponse");
+	}
 	public void apointkeystaf() throws IOException, InterruptedException{
 
 		login.loginOD();
@@ -336,32 +404,44 @@ public class Imperium_SmallWorks_Methods extends Driver{
 	}
 
 	public void cummercialSuite_() throws InterruptedException, IOException{
-		//Payment terms
-		login.loginCL();
-		commonUtils.blindWait();
-		//String taskName = PropertiesUtil.getPropValues("commercial_Suite");
-		basic.projectTaskName("Commercial Tasks Prior to Commencement");
-		commonUtils.blindWait();
-		log.info("commmercial suite payments ");
-		commonUtils.selectByIndex(appointKeyStaff_CommercialSuite_Uielements.getDraftCommercialSuitProduced(),2);
-		/*if(ev.draftproduced.equals("Yes")){
+		try{
+			//Payment terms
+			login.loginCL();
+			commonUtils.blindWait();
+			//String taskName = PropertiesUtil.getPropValues("commercial_Suite");
+			basic.projectTaskName("Commercial Tasks Prior to Commencement");
+			commonUtils.blindWait();
+			log.info("commmercial suite payments ");
+			commonUtils.selectByIndex(appointKeyStaff_CommercialSuite_Uielements.getDraftCommercialSuitProduced(),2);
+			/*if(ev.draftproduced.equals("Yes")){
 				  appointKeyStaff_CommercialSuite_Uielements.getPayment_Cycle_Document().click();
 				  projectMethods_Small_Works.linktoFileupload();
 			  }*/
-		appointKeyStaff_CommercialSuite_Uielements.getPayment_Terms().sendKeys("15");
-		appointKeyStaff_CommercialSuite_Uielements.getDays_From().sendKeys("3");
+			appointKeyStaff_CommercialSuite_Uielements.getPayment_Terms().sendKeys("15");
+			appointKeyStaff_CommercialSuite_Uielements.getDays_From().sendKeys("3");
 
-		appointKeyStaff_CommercialSuite_Uielements.getproductionSheduleDocCommercialSuite().click();
-		ProjectMethods_Small_Works.linktoFileupload();
+			appointKeyStaff_CommercialSuite_Uielements.getproductionSheduleDocCommercialSuite().click();
+			ProjectMethods_Small_Works.linktoFileupload();
 
-		appointKeyStaff_CommercialSuite_Uielements.getMilestoneDocInCommercialSuite().click();
-		ProjectMethods_Small_Works.linktoFileupload();
+			appointKeyStaff_CommercialSuite_Uielements.getMilestoneDocInCommercialSuite().click();
+			ProjectMethods_Small_Works.linktoFileupload();
 
-		ab.getComments().sendKeys("Commercial Suite and Application for Payment");
-		ab.getSubmitbutton().click();
-		//Thread.sleep(1000);
-		login.logout();
-		//driver().quit();
+			ab.getComments().sendKeys("Commercial Suite and Application for Payment");
+			ab.getSubmitbutton().click();
+			//Thread.sleep(1000);
+			login.logout();
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ElementNotVisibleException e) {
+			e.printStackTrace();
+		}
 	}
 	//Sales to operation small works
 	public void salesToOperation(){
@@ -387,9 +467,18 @@ public class Imperium_SmallWorks_Methods extends Driver{
 				commonUtils.selectByVisibleText(sales.getDelegateTaskto_PL(),delegatetoPL);
 			}
 			sales.getComments().sendKeys("Sales to Operation form ...");
-		} catch (Exception e) {
+		} catch (ElementNotFoundException e) {
 			e.printStackTrace();
 		} 
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ElementNotVisibleException e) {
+			e.printStackTrace();
+		}
 	}
 	//Operation acceptance
 	public void operation_acceptance(){
@@ -419,43 +508,64 @@ public class Imperium_SmallWorks_Methods extends Driver{
 			prepare_Quoteui.getComments().sendKeys("Operation Acceptance Form ...");
 			/*ab.getReviewInvolveapprovebutton().click();
 			   	login.logout();*/
-		}catch(Exception e){
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ElementNotVisibleException e) {
 			e.printStackTrace();
 		}
 	}
-	public void pdp() throws IOException, InterruptedException {
+	public void pdp() {
+		try{
+			login.loginPL();
+			basic.pnpdp();
+			//deleting Delete links
+			List<WebElement> deletebutton=Driver.driver().findElements(By.xpath("//a[starts-with(@id,'delete_')]"));
+			for(int i=0;i<deletebutton.size();i++){
+				commonUtils.blindWait();
+				deletebutton.get(i).click();
+				commonUtils.blindWait();
+				Driver.driver().findElement(By.xpath("//a[@class='btn btn-small btn-info']")).click();
+			}
+			commonUtils.blindWait();
+			pdp_Ui.getProject_Programme_document().click();
+			ProjectMethods_Small_Works.linktoFileupload();
+			//Value forecast grid details and adding milestone values
+			commonUtils.blindWait();
+			pdp_Ui.getAddnewvalueforcast().click();
+			pdp_Ui.getInvoiceNumber().sendKeys("15");
+			driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();
+			pdp_Ui.getDate().click();
+			String milestonevalue = wb.getXLData(1,5, 2);
+			pdp_Ui.getContractWorks().sendKeys(""+milestonevalue);
+			pdp_Ui.getCommentsMilestone().sendKeys("Application is added...");
+			pdp_Ui.getSavemilestone().click();
 
-		login.loginPL();
-		basic.pnpdp();
-		//deleting Delete links
-		List<WebElement> deletebutton=Driver.driver().findElements(By.xpath("//a[starts-with(@id,'delete_')]"));
-		for(int i=0;i<deletebutton.size();i++){
-			commonUtils.blindWait();
-			deletebutton.get(i).click();
-			commonUtils.blindWait();
-			Driver.driver().findElement(By.xpath("//a[@class='btn btn-small btn-info']")).click();
+			Thread.sleep(1000);
+			/*Mile stone document*/
+			Driver.driver().findElement(By.xpath("//input[@id='fileList_flm_milestoneDocument']")).click();
+			ProjectMethods_Small_Works.linktoFileupload();
+			//Project Report settings
+			commonUtils.selectByVisibleText(pdp_Ui.getReportIntverval_PDP(),ev.select_No);
+			ab.getComments().sendKeys("PDP form ...");
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		commonUtils.blindWait();
-		pdp_Ui.getProject_Programme_document().click();
-		ProjectMethods_Small_Works.linktoFileupload();
-		//Value forecast grid details and adding milestone values
-		commonUtils.blindWait();
-		pdp_Ui.getAddnewvalueforcast().click();
-		pdp_Ui.getInvoiceNumber().sendKeys("15");
-		driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();
-		pdp_Ui.getDate().click();
-		String milestonevalue = wb.getXLData(1,5, 2);
-		pdp_Ui.getContractWorks().sendKeys(""+milestonevalue);
-		pdp_Ui.getCommentsMilestone().sendKeys("Application is added...");
-		pdp_Ui.getSavemilestone().click();
-
-		Thread.sleep(1000);
-		/*Mile stone document*/
-		Driver.driver().findElement(By.xpath("//input[@id='fileList_flm_milestoneDocument']")).click();
-		ProjectMethods_Small_Works.linktoFileupload();
-		//Project Report settings
-		commonUtils.selectByVisibleText(pdp_Ui.getReportIntverval_PDP(),ev.select_No);
-		ab.getComments().sendKeys("PDP form ...");
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ElementNotVisibleException e) {
+			e.printStackTrace();
+		}
 	}
 	//Delivery review submit
 	public void submit_Delivery_Review() throws InterruptedException, IOException{
@@ -557,4 +667,5 @@ public class Imperium_SmallWorks_Methods extends Driver{
 		}
 		ab.getComments().sendKeys("Obtain practical complition");
 	}
+
 }

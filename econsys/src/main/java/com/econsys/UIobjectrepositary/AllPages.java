@@ -28,6 +28,7 @@ WebElement proArchLink;
 @FindBy(xpath="//span[text()=' Executive Dash Board']")
 WebElement exeDashLink;
 
+
 @FindBy(xpath="//span[text()=' Saved RTQ' or text()=' Saved Rtq']")
 WebElement saveRTQlink;
 @FindBy(xpath="//span[text()=' Auto Approval']")
@@ -62,7 +63,7 @@ WebElement userList;
 WebElement proDoc;
 @FindBy(xpath="//div[text()='Guidance Notes']")
 WebElement guidanceNotes;
-@FindBy(xpath="//div[text()='Masters']")
+@FindBy(xpath="//div[text()='Master Data']")
 WebElement gridMasters;
 @FindBy(xpath="//span[@class='ui-jqgrid-title' and text()='Data Report']")
 WebElement dataReport;
@@ -116,8 +117,9 @@ List<WebElement> delegatedOwner_AllPro;
 @FindBy(xpath="//div[div[contains(text(),'delete')]]//div/a[1]")
 WebElement Ok_PopUpBtn;
 
-@FindBy(xpath="//a[contains(@onclick,'viewAllApprovals')]")
-private WebElement viewApprovals;
+@FindBy(xpath="//ul[li[a[contains(@onclick,'viewAllApprovals')]]]//a[contains(@onclick,'viewAllApprovals')]") 
+public WebElement view_All_Approvals;
+
 @FindBy(xpath="//span[contains(text(),'Reports')]")
 private WebElement reports;
 @FindBy(xpath="//span[contains(text(),'Status of Submitted Quote')]")
@@ -185,9 +187,7 @@ public WebElement getStatusofSubmitQuote() {
 public WebElement getReports() {
 	return reports;
 }
-public WebElement getViewApprovals() {
-	return viewApprovals;
-}
+
 public WebElement getOk_PopUpBtn() {
 	return Ok_PopUpBtn;
 }

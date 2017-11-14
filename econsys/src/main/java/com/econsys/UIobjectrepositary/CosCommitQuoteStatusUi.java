@@ -80,7 +80,8 @@ public class CosCommitQuoteStatusUi {
 	public WebElement getCustomerCommitmentType() {
 		return customerCommitmentType;
 	}
-
+	public WebElement st_any_terms_and_conditions;
+	
 	@FindBy(xpath="//input[@id='flm_att_0multifile_hidden_caRecievedAsFile']")
 	private WebElement caRecievedAsFile;
 	

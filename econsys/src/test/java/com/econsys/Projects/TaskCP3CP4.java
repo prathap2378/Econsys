@@ -152,8 +152,7 @@ public class TaskCP3CP4 extends Driver{
 		
 //T and C review in Matrix, PAG and 4eg
 	 public static void TandCreview() throws InterruptedException, IOException{
-		 login.url();
-		 login.loginOD();
+		 login.loginCL();
 		 cu.waitForPageToLoad();
 		 b.projectname();
 		 

@@ -234,47 +234,7 @@ public class Monorail extends Driver {
 		 prepare_Quoteui.getOverallProjectSell().sendKeys(overallSell);
 		 
 		 //Reading cost and sell values
-		 String testdataXLpath=filepath+"\\src\\main\\java\\com\\econsys\\TestData\\Monorail_testdata.xls";
-		 FileInputStream file = new FileInputStream(testdataXLpath);
-		 HSSFWorkbook wb1 = new HSSFWorkbook(file);
-		 int sheetNumber = 2;
-		 HSSFSheet Firstpage = wb1.getSheetAt(sheetNumber);
-			  
-		 Iterator rowIterator = Firstpage.rowIterator();	
-				
-		 while(rowIterator.hasNext()){
-		 HSSFRow row = (HSSFRow) rowIterator.next();
-		 int rowNum = row.getRowNum();
-
-		 if (rowNum !=0) {
-		 if(row!=null && (rowNum==0 || rowNum==1 || rowNum==2)){
-			 String quoteType = null;
-			 double Cost = 0;
-			 double sell = 0;
-			 
-			 if(row.getCell(0)!=null){
-				 quoteType= row.getCell(0).getStringCellValue();
-				 }
-			 if(row.getCell(1)!=null){
-				 Cost= row.getCell(1).getNumericCellValue();
-			 }
-			 if(row.getCell(2)!=null){
-				 sell = row.getCell(2).getNumericCellValue();
-			 }
-			commonUtils.blindWait();
-		 prepare_Quoteui.getAddnewpopup().click();
-			commonUtils.blindWait();
-		 prepare_Quoteui.getCostCodeCategorytextfield().sendKeys(quoteType);
-		 commonUtils.waitForPageToLoad();
-		 prepare_Quoteui.getCost().sendKeys(""+Cost);
-		 prepare_Quoteui.getSell().sendKeys(""+sell);
-		 commonUtils.blindWait();
-		 prepare_Quoteui.getSaveAddcostsellpopup().click();
-		 commonUtils.blindWait();
-		 commonUtils.waitForPageToLoad();
-		 }
-		 }
-		 }
+		 wb.prepareQuote_BidInfoDetails();
 		 prepare_Quoteui.getComments().sendKeys("Prepare Quote");
 	 }
 	 
@@ -289,7 +249,7 @@ public class Monorail extends Driver {
 			 
 			 commonUtils.waitForPageToLoad();
 			 prepare_Quoteui.getQuotedocument_Linkfile().click();
-			 projectMethods_Small_Works.linktoFileupload();
+			 ProjectMethods_Small_Works.linktoFileupload();
 			 commonUtils.waitForPageToLoad();
 			 
 			 //prepare_Quoteui.getRiskopportunityregister_Linkfile().click();
@@ -298,7 +258,7 @@ public class Monorail extends Driver {
 			 commonUtils.selectByVisibleText(prepare_Quoteui.getBidSheetAuthorised(), ev.bidsheetauthorised);
 			  
 			 prepare_Quoteui.getBidsheet_linkfile().click();
-			 projectMethods_Small_Works.linktoFileupload();
+			 ProjectMethods_Small_Works.linktoFileupload();
 			 commonUtils.waitForPageToLoad();
 			 
 			 prepare_Quoteui.getComments().sendKeys("Prepare Quote");
@@ -545,7 +505,7 @@ public class Monorail extends Driver {
 		 commonUtils.blindWait();
 		//Matrix specific change Estimated size and location
 		 String orgName = driver.findElement(By.xpath("//*[@id='breadcrumbs']/ul/li[1]/a[text()='"+ev.org_Name+"']")).getText();
-		 log.info("orgName888888888888____"+orgName);
+		 log.info("orgName____"+orgName);
 		 if(ev.org_Matrixs.equalsIgnoreCase(orgName)){
 			 //RTQ 3 in revised prepare quote
 			 //String eSizertq3 = wb.getXLData(7, 4, 1);

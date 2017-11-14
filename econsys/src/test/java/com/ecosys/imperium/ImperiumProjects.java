@@ -33,9 +33,10 @@ public class ImperiumProjects extends Driver {
 	static CommonUtils commonUtils = PageFactory.initElements(Driver.driver(), CommonUtils.class);
 	static CosCommitQuoteStatusUi ccq = PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
 	static ActionButtonsUi ab = PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
-	static Salestooperation SalestoOperation = PageFactory.initElements(Driver.driver(),Salestooperation.class);
+	static Salestooperation salestoOperation = PageFactory.initElements(Driver.driver(),Salestooperation.class);
 	static AppointkeystaffandCommerSuitUi ak = PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
 	static PDPui pdp_ui = PageFactory.initElements(Driver.driver(),PDPui.class);
+	
 	//imported classes
 	static Workbook wb=new Workbook();
 	static TasksCP4toCP5 g45=new TasksCP4toCP5();
@@ -50,34 +51,34 @@ public class ImperiumProjects extends Driver {
 	static int num;
 	static double overallSell;
 	static String filepath=System.getProperty("user.dir");
-	static Imperium_Project_Methods imperiumProject_methods = new Imperium_Project_Methods();
+	static Imperium_Project_Methods imperium_Project_Methods = new Imperium_Project_Methods();
 	Imperium_SmallWorks_Methods imperium_SmallWorks_Methods = new Imperium_SmallWorks_Methods();
 
-	@Test(invocationCount = 1,threadPoolSize = 1)
+	@Test(invocationCount = 0,threadPoolSize = 0)
 	public void test1() throws Exception {
 		System.out.printf("%n[START] Thread Id : %s is started!", Thread.currentThread().getId());
-		imperiumProjectFlow(ev.estimatedSize,ev.location);
+		imperiumProjectFlow();
 		System.out.printf("%n[END] Thread Id : %s", Thread.currentThread().getId());
 	}
 	@Test
-	public void imperiumProjectFlow(String estimatedSize,String location) throws Exception{
+	public void imperiumProjectFlow() throws Exception{
 
 		login.url();
 		//*****Login as genral user******
 		commonUtils.waitForPageToLoad();
 		login.user();
 		//****Initiation of rtq form*********
-		imperiumProject_methods.rtqForm(estimatedSize,location);
-		imperiumProject_methods.submit_logout_QRnumberAlert();
+		imperium_Project_Methods.rtqForm(ev.estimatedSize,ev.location);
+		imperium_Project_Methods.submit_logout_QRnumberAlert();
 		//***********CP1 explicit approval decision************
-		if((estimatedSize.equals(ev.estimatedSize500_))||(location.equals(ev.location_other))) {
+		if((ev.estimatedSize.equals(ev.estimatedSize500_))||(ev.location.equals(ev.location_other))) {
 			basic.boardApproval();
 		}
 		//Assign Sales Leader
-		imperiumProject_methods.ASL();
+		imperium_Project_Methods.ASL();
 		
 		//Prepare Quote
-		imperiumProject_methods.prepare_Quote();
+		imperium_Project_Methods.prepare_Quote(ev.overallSell,ev.locationrtq2);
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(),ev.exeCP2);
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
@@ -97,7 +98,7 @@ public class ImperiumProjects extends Driver {
 		if(ev.exeCP2.equals("Yes") || ev.bidsheetauthorised.equals("No")||ev.ourformat.equals("No")){
 			basic.boardApproval();
 		}
-		monorail.submitQuote();
+		ProjectMethods_Small_Works.submit_Quoteform();
 		imperium_SmallWorks_Methods.statusQuotesubmit_(ev.customerCommitmentType, ev.quote_StatusCp2Cp3);
 		//**********CP4 exe dession New Flow**************
 		if(ev.execp4.equals("Yes") || (ev.clarification.equals("No") &&
@@ -107,7 +108,7 @@ public class ImperiumProjects extends Driver {
 		}
 		//Submit response
 		g45.submitResponse();
-
+		imperium_Project_Methods.permission_to_Commence();
 		//Appoint Key staff
 		imperium_SmallWorks_Methods.apointkeystaf();
 
@@ -115,14 +116,14 @@ public class ImperiumProjects extends Driver {
 		imperium_SmallWorks_Methods.cummercialSuite_();
 
 		//Sales to operation hand-over
-		imperiumProject_methods.salestoOperation();
-		commonUtils.selectByVisibleText(SalestoOperation.getExeCP5(),ev.exe5_SalestoOper);
+		imperium_Project_Methods.salestoOperation();
+		commonUtils.selectByVisibleText(salestoOperation.getExeCP5(),ev.exe5_SalestoOper);
 		ab.getComments().sendKeys("Sales to operation");
 		ab.getSubmitbutton().click();
 		login.logout();
 
 		//operations hand over
-		imperiumProject_methods.operationAcceptance();
+		imperium_Project_Methods.operationAcceptance();
 		commonUtils.selectByVisibleText(ak.getExeOperationAcceptanceCP5(), ev.exeCP5_OperationAccep);
 		ab.getAcceptOperationAcceptance().click();
 		login.logout();
@@ -135,7 +136,7 @@ public class ImperiumProjects extends Driver {
 			basic.boardApproval();
 		}
 		//Project delivery plan(PDP)
-		imperiumProject_methods.pdp_();
+		imperium_Project_Methods.pdp_();
 		commonUtils.selectByVisibleText(pdp_ui.getExecp6(),ev.execp6);
 		ab.getSubmitbutton().click();
 		commonUtils.waitForPageToLoad();
@@ -145,9 +146,9 @@ public class ImperiumProjects extends Driver {
 			basic.boardApproval();
 		}
 		//Delivery Review
-		imperiumProject_methods.deveryreview();
+		imperium_Project_Methods.deveryreview(ev.deliveryReview_dission);
 		//**********OD approval **************
-		imperiumProject_methods.obtainpracticalcomplition();
+		imperium_Project_Methods.obtainpracticalcomplition();
 		commonUtils.selectByVisibleText(pdp_ui.getOpc_cp8(), ev.execp8);
 		ab.getSubmitbutton().click();
 		login.logout();
@@ -155,7 +156,7 @@ public class ImperiumProjects extends Driver {
 		if(ev.certificateobtained.equals("No")||ev.retationapplied.equals("No")||ev.onmSubmitted.equals("No")||ev.snagListIdentified.equals("No")||ev.internalCompletionDocument.equals("No")||ev.execp8.equals("Yes")){
 			basic.boardApproval();
 		}
-		imperiumProject_methods.postpracticalcomplition();
+		imperium_Project_Methods.postpracticalcomplition();
 		commonUtils.selectByVisibleText(pdp_ui.getPpc_cp9(), ev.execp9);
 		ab.getSubmitbutton().click();
 		commonUtils.blindWait();

@@ -69,7 +69,7 @@ public class CustomerCommitmentAcceptance_TC_Projects extends Driver{
 		if(!sl.equals(userName)){
 			imperiumProject_methods.ASL();
 		}
-		imperiumProject_methods.prepare_Quote();
+		imperiumProject_methods.prepare_Quote(ev.overallSell,ev.locationrtq2);
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(),ev.select_No);
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
