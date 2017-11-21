@@ -40,7 +40,10 @@ public class Alerts extends Driver{
 		private WebElement alert_Accept_Yes;
 
 		//Accept alerts
-				@FindBy(xpath="//div/a[contains(text(),'ok')]")
+				@FindBy(xpath="//div/a[contains(text(),'OK')]")
+				private WebElement alert_Accept_OK;
+				
+				@FindBy(xpath="//div/a[contains(text(),'Ok')]")
 				private WebElement alert_Accept_Ok;
 				
 		/**
@@ -52,6 +55,10 @@ public class Alerts extends Driver{
 		/**
 		 * @return the alert_Accept_Ok
 		 */
+		public WebElement getAlert_Accept_OK() {
+			return alert_Accept_OK;
+		}
+		
 		public WebElement getAlert_Accept_Ok() {
 			return alert_Accept_Ok;
 		}

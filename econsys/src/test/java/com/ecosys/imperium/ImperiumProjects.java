@@ -1,13 +1,8 @@
 package com.ecosys.imperium;
-import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.util.EstimatableObjectWrapper;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
-
 import com.econsys.Genriclibrery.*;
 import com.econsys.Projects.*;
 import com.econsys.SmallWorks.ProjectMethods_Small_Works;
@@ -16,7 +11,7 @@ import com.econsys.UIobjectrepositary.*;
 
 /**
  * @author bhanu.pk
- * Matrix Projects class consists of end to end(CP1-CP9) flow
+ * Imperium Projects class consists of end to end(CP1-CP9) flow
  along with methods
  * Assign sales leader
  * Prepare_Quote
@@ -60,6 +55,7 @@ public class ImperiumProjects extends Driver {
 		imperiumProjectFlow();
 		System.out.printf("%n[END] Thread Id : %s", Thread.currentThread().getId());
 	}
+	
 	@Test
 	public void imperiumProjectFlow() throws Exception{
 
@@ -84,18 +80,14 @@ public class ImperiumProjects extends Driver {
 		login.logout();
 
 		basic.pathdession(ev.eSizertq2,ev.locationrtq2);
-		//For CL approval in case of Quotation in our format is No
-		//boolean isCP1green = estimatedSize.equalsIgnoreCase(ev.estimatedSize0to100k_)&&location.equalsIgnoreCase(ev.location_inside);
-		//boolean isCP1amber = estimatedSize.equalsIgnoreCase(ev.estimatedSize250_)|| location.equalsIgnoreCase(ev.location_SouthEast);
-		//boolean isCP2red = (ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize500_)||ev.locationrtq2.equalsIgnoreCase(ev.location_other));
-		//isCP2amber = (ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize250_)||ev.locationrtq2.equalsIgnoreCase(ev.location_SouthEast));
-		//isCP2green = ((ev.eSizertq2.equalsIgnoreCase(ev.estimatedSize0to100k_) && ev.locationrtq2.equalsIgnoreCase(ev.location_inside)));
-		if((ev.ourformat.equals("No"))){
+
+		//Prepare quote CL approval for quote is not in our format
+		if((ev.ourformat.equals(ev.select_No))){
 			log.info("In CL approval");
 			Imperium_Project_Methods.clApproval();
 		}
 		//**********CP2 exe dession**************
-		if(ev.exeCP2.equals("Yes") || ev.bidsheetauthorised.equals("No")||ev.ourformat.equals("No")){
+		if(ev.exeCP2.equals("Yes") || ev.bidsheetauthorised.equals("No")){
 			basic.boardApproval();
 		}
 		ProjectMethods_Small_Works.submit_Quoteform();
@@ -110,7 +102,7 @@ public class ImperiumProjects extends Driver {
 		g45.submitResponse();
 		imperium_Project_Methods.permission_to_Commence();
 		//Appoint Key staff
-		imperium_SmallWorks_Methods.apointkeystaf();
+		imperium_SmallWorks_Methods.apointkeystaf(ev.projectorSW);
 
 		//commercial suite
 		imperium_SmallWorks_Methods.cummercialSuite_();

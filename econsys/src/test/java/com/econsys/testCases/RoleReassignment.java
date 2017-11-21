@@ -23,7 +23,7 @@ public class RoleReassignment {
 	Login login= new Login();
 	EconsysVariables ev= new EconsysVariables();
 	CommonUtils cu= new CommonUtils();
-	Basic b= new Basic();
+	Basic basic = new Basic();
 	Monorail rtq= new Monorail();
 	Workbook wb= new Workbook();
 	static TasksCP4toCP5 g45=new TasksCP4toCP5();
@@ -38,13 +38,13 @@ public class RoleReassignment {
 	  		//if(elementexist)
 	  		login.user(); 
 	  		//****intiation of rtq form*********
-	  	    b.rtqForm(ev.estimatedSize,ev.location);
+	  	    basic.rtqForm(ev.estimatedSize,ev.location);
 	  	    //rtq submit externally
-	  	    b.submit_Logout();
+	  	    basic.submit_Logout();
 	  		
 	  		//***********CP1 exe dession************
 	  		if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
-	  			b.boardApproval();
+	  			basic.boardApproval();
 	  		}
 
 	  		//Assign Sales Leader
@@ -60,23 +60,23 @@ public class RoleReassignment {
 	  		prepare_Quoteui.getQuoteprepared().click();
 	  		login.logout();
 	  		
-	  		b.pathdession(ev.estimatedSize,ev.location);
+	  		basic.pathdession(ev.estimatedSize,ev.location);
 	  		//**********CP2 exe dession**************
 	  		if((ev.ourformat.equals("No"))||(ev.bidsheetauthorised.equals("No"))||(ev.exeCP2.equals("Yes"))){
-	  			b.boardApproval();
+	  			basic.boardApproval();
 	  		}
 	  		rtq.submitQuote();
 	  		rtq.statusQuotesubmit(ev.customerCommitmentType, ev.quote_StatusCp2Cp3);
 	  		
 	  		//**********CP4 exe dession New Flow**************
 	  		if((ev.clarification.equals("No"))||(ev.execp4.equals("Yes"))){
-	  			b.boardApproval();
+	  			basic.boardApproval();
 	  		}	
 	  		g45.apointkeystaf();
   
 	  	}
 	  		allPages.getAllProjects().click();
-	  		dr.search();
+	  		basic.search();
 	  		allPages.getOptionBtn().click();
 	  		allPages.getReassign_option().click();
 	  		cu.selectByIndex(allPages.getSalesdLead(), 1);

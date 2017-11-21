@@ -39,7 +39,7 @@ EconsysVariables ev= new EconsysVariables();
 ProjectMethods_Small_Works proMethods = new ProjectMethods_Small_Works();
 ActionButtons actionBtns= new ActionButtons();
 CommonUtils cu= new CommonUtils();
-Basic b = new Basic();
+Basic basic = new Basic();
 static Monorail rtq=new Monorail();
 ActionButtonsCPApprovalsSW dr= new ActionButtonsCPApprovalsSW();
 
@@ -57,7 +57,7 @@ public void smallWorksDelete_Task() throws IOException, InterruptedException, AW
 	else{
 		//cp2 board approval
 		if((ev.ourformat.equals("No"))||(ev.bidsheetauthorised.equals("No"))){
-			b.boardApproval();
+			basic.boardApproval();
 	}
 	
 	login.loginSL();
@@ -90,7 +90,7 @@ public void smallWorksDelete_Task() throws IOException, InterruptedException, AW
 	login.user();
 	allPages.getProArchLink().click();
 	cu.waitForPageToLoad();
-	dr.search();
+	basic.search();
 	Assert.assertEquals(driver.findElement(By.xpath("//td[@title='Deleted']")).getText(), "Deleted");
  }
 }
@@ -108,7 +108,7 @@ boolean flag=false;
 	else{
 		//cp2 board approval
 		if((ev.ourformat.equals("No"))||(ev.bidsheetauthorised.equals("No"))){
-			b.boardApproval();
+			basic.boardApproval();
 	}
 		
 	login.user();
@@ -116,7 +116,7 @@ boolean flag=false;
 	allTabs.getAllProjects().click();
 	
 	log.info("search all projects");
-	dr.search();
+	basic.search();
 	driver.findElement(By.xpath("//tr[td[@title="+ev.projectName()+"]]//div/button[starts-with(@id,'actn-btn-')]")).click();
 	
 	driver.findElement(By.xpath("//td/span[contains(text(),'Delete')]")).click();
@@ -138,7 +138,7 @@ boolean flag=false;
 	cu.blindWait();
 	allPages.getProArchLink().click();
 	cu.waitForPageToLoad();
-	dr.search();
+	basic.search();
 	log.info("Searched project");
 	Assert.assertEquals(driver.findElements(By.xpath("//td[@title='Deleted']")).get(0).getText(), "Deleted");
 	log.info("Asserted");

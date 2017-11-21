@@ -74,7 +74,7 @@ public class Imperium_SmallWork_flow extends Driver{
 			//Submit response
 			cp4_cp5.submitResponse();
 			//CP4-CP5 Appoint key staff
-			imperium_SmallWorks_Methods.apointkeystaf();
+			imperium_SmallWorks_Methods.apointkeystaf(ev.selectasSmallWorks);
 			//Commercial suite application for payment
 			imperium_SmallWorks_Methods.cummercialSuite_();
 			//Sales to operation hand-over

@@ -102,7 +102,7 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		ab.getSubmitbutton().click();
 		//login as Sales leader to resubmit the quote form
 		imperium_SmallWorks_Methods.prepareRevisedQuote();
-		if(ev.ourformat.equals("No")){
+		if((ev.cp2cp3ourformat.equals("No"))){
 			MatrixProjects.clApproval();
 		}
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.select_Yes);
@@ -122,7 +122,7 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.select_Yes);
 		prepare_Quoteui.getQuoteprepared().click();
 		login.logout();
-		if(ev.ourformat.equals("No")){
+		if((ev.cp2cp3ourformat.equals("No"))){
 			MatrixProjects.clApproval(); 
 		}
 		login.loginboard();
@@ -160,7 +160,7 @@ public class CP_ApprovalActions_TC_SmallWorks extends Driver{
 		//Submit response
 		cp4_cp5.submitResponse();
 		//CP4-CP5 Appoint key staff
-		imperium_SmallWorks_Methods.apointkeystaf();
+		imperium_SmallWorks_Methods.apointkeystaf(ev.selectasSmallWorks);
 		//Commercial suite application for payment
 		imperium_SmallWorks_Methods.cummercialSuite_();
 		//submit sales to operaton

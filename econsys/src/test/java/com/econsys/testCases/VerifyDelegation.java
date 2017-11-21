@@ -21,7 +21,7 @@ public class VerifyDelegation extends Driver{
 	Logger log=Logger.getLogger(VerifyDelegation.class.getName());
 	Login login = new Login();
 	CommonUtils cu= new CommonUtils();
-	Basic basic=new Basic();
+	Basic basic = new Basic();
 	ActionButtonsCPApprovalsSW dr= new ActionButtonsCPApprovalsSW();
 	EconsysVariables ev= new EconsysVariables();
 	AllPages allPages=PageFactory.initElements(Driver.driver(), AllPages.class);
@@ -59,7 +59,7 @@ public void verify_AllProjectsDelegation() throws IOException, InterruptedExcept
 	    ab.getSubmitbutton().click();
 	    cu.waitForPageToLoad();
 		allPages.getAllProjects().click();
-		dr.search();
+		basic.search();
 		basic.actionButton();
 		allPages.getDelegate_option().click();
 		nrtq.getComments().sendKeys("Verifying Delegation....");
@@ -67,7 +67,7 @@ public void verify_AllProjectsDelegation() throws IOException, InterruptedExcept
 		log.info("Selected User"+selecte_User);
 		allPages.getDelegateBtn().click();
 		cu.blindWait();
-		dr.search();
+		basic.search();
 		String Ddlegated_User=allPages.getDelegatedOwner_AllPro().getAttribute("title");
 		log.info("Actual Delegated User"+Ddlegated_User);
 		
@@ -107,14 +107,14 @@ public void verify_SavedRTQDelegation() throws IOException, InterruptedException
 	 ab.getSave_RTQ().click();
 	 allPages.getAdminLink().click();
 	 allPages.getSaveRTQlink().click();
-	 dr.search();
+	 basic.search();
 	 basic.actionButton();
 	 allPages.getDelegateOption_savedRTQ().click();
 	 String selecte_User=cu.selectByIndex(allPages.getSavedRTQDelegate_select(), 1);
 	 log.info("Selected User for Delegation :"+selecte_User);
 	 nrtq.getComments().sendKeys("Verifying Delegation....");
 	 allPages.getDelegateBtn().click();
-	 dr.search();
+	 basic.search();
 	 String delegated_User = allPages.getDelegateOwners().getAttribute("title");
 	 log.info("Assigned to User after delegation :"+delegated_User);
 	 Assert.assertEquals(delegated_User,selecte_User);

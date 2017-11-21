@@ -41,6 +41,9 @@ public class EconsysVariables {
 	public String execp4;
 
 	//Cp4-Cp5 
+	public String projectorSW;
+	public String selectasProject = "Project";
+	public String selectasSmallWorks = "Small Works";
 	public String draftproduced, exe5_SalestoOper, exeCP5_OperationAccep,meeting,delegatetoPL,meetingwithSL;
 	//Cp6-Cp7
 	public String deliveryReview_dission;
@@ -95,7 +98,7 @@ public class EconsysVariables {
 			//String prjname = "\""+wb.getXLData(1,2,1)+"\"";
 			//log.info("Project name econsys variables: "+prjname);
 			//System.out.println("EV : "+prjname);
-			prjname1= wb.getXLData(1,2,1);
+			prjname1 = wb.getXLData(1,2,1);
 
 			//***********RTQ inputs
 			estimatedSize=wb.getXLData(8, 1, 1);
@@ -149,9 +152,11 @@ public class EconsysVariables {
 			execp4=wb.getXLData(18,7, 0);
 
 			//cp4-cp5 variables
+			
 			el=wb.getXLData(21,5, 0);
 			cl=wb.getXLData(23,5, 0);
 			pl=wb.getXLData(25,5, 0);
+			projectorSW = wb.getXLData(29, 5, 0);
 			draftproduced=wb.getXLData(2,9, 0);
 			exe5_SalestoOper=wb.getXLData(24,7, 0);
 			exeCP5_OperationAccep=wb.getXLData(8, 9, 0);
@@ -188,6 +193,7 @@ public class EconsysVariables {
 		}
 	}
 	public String projectName() throws IOException{
+
 		String prjName = "\""+wb.getXLData(1,2,1)+"\"";
 		return prjName;
 	}

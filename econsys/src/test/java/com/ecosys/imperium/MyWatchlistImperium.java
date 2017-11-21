@@ -144,7 +144,7 @@ public class MyWatchlistImperium extends Driver{
 				
 				imperium_Project_Methods.permission_to_Commence();
 				//Appoint Key staff
-				imperium_SmallWorks_Methods.apointkeystaf();
+				imperium_SmallWorks_Methods.apointkeystaf(ev.selectasProject);
 
 				//commercial suite
 				imperium_SmallWorks_Methods.cummercialSuite_();

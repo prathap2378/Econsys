@@ -36,13 +36,14 @@ public class Imperium_SmallWorks_Methods extends Driver{
 	static Preparequote prepare_Quoteui = PageFactory.initElements(Driver.driver(), Preparequote.class);
 	static ActionButtonsUi ab = PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
 	static smallWorkPageElements smallWorks_PageElements = PageFactory.initElements(Driver.driver(),smallWorkPageElements.class);
-	TandCverification TandCver = PageFactory.initElements(driver(), TandCverification.class);
 	static Salestooperation sales = PageFactory.initElements(Driver.driver(), Salestooperation.class);
 	static AppointkeystaffandCommerSuitUi appointKeyStaff_CommercialSuite_Ui = PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
 	static CosCommitQuoteStatusUi CosCommit_Quote_StatusUi = PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
 	LoginPageui loginui = PageFactory.initElements(Driver.driver(), LoginPageui.class);
 	PDPui pdp_Ui = PageFactory.initElements(Driver.driver(),PDPui.class);
 	AppointkeystaffandCommerSuitUi appointKeyStaff_CommercialSuite_Uielements = PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
+	static TandCverification tandCverification = PageFactory.initElements(driver(), TandCverification.class);
+	
 	//Import class
 	static Login login = new Login();
 	static Workbook wb = new Workbook();
@@ -208,12 +209,16 @@ public class Imperium_SmallWorks_Methods extends Driver{
 				CosCommit_Quote_StatusUi.getUploadDoc_StatusofSubmitQuote().click();
 				ProjectMethods_Small_Works.linktoFileupload();;
 			}
+			//select creaditworthy
+			commonUtils.selectByVisibleText(tandCverification.getCreditWorthy(), ev.select_Yes);
+			
 			ab.getComments().sendKeys("Quote status updated as "+quoteStatus);
 			CosCommit_Quote_StatusUi.getSubmit().click();
 			CCAlogic_(ev.customerCommitmentType);
 		}
 
 		else if(quoteStatus.equals(ev.quoteStatusAmendBid)){
+			commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),ev.quoteStatusAmendBid);
 			ab.getComments().sendKeys("Quote status is Amend Bid");
 			CosCommit_Quote_StatusUi.getSubmit().click();	 
 			try {
@@ -222,6 +227,8 @@ public class Imperium_SmallWorks_Methods extends Driver{
 				commonUtils.selectByVisibleText(prepare_Quoteui.getExecp3(),ev.exeCP3);
 				prepare_Quoteui.getQuoteprepared().click();
 				login.logout();
+				//Need to check
+				basic.pathdessioncp2cp3_Mat(ev.eSizertq3,ev.locationrtq3);
 				if(ev.ourformat.equals("No")){
 					MatrixProjects.clApproval();
 				}
@@ -237,6 +244,7 @@ public class Imperium_SmallWorks_Methods extends Driver{
 
 		//Select Amend bid and submit the quote status
 		else if(quoteStatus.equals(ev.quoteStatusAmendBidSubmit)){
+			
 			commonUtils.selectByVisibleText(CosCommit_Quote_StatusUi.getQuoteStatus(),ev.quoteStatusAmendBid);
 			ab.getComments().sendKeys("Quote status is Amend Bid");
 			CosCommit_Quote_StatusUi.getSubmit().click();	 
@@ -387,14 +395,15 @@ public class Imperium_SmallWorks_Methods extends Driver{
 
 		driver.findElement(By.xpath("//textarea[@id='response_text']")).sendKeys("Prepared Respponse");
 	}
-	public void apointkeystaf() throws IOException, InterruptedException{
-
+	public void apointkeystaf(String projectorSW) throws IOException, InterruptedException{
 		login.loginOD();
 		String taskName = PropertiesUtil.getPropValues("appoint_key_staff");
 		basic.projectTaskName(taskName);
 		commonUtils.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getLeadEL(), ev.el);
 		commonUtils.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getLeadCL(), ev.cl);
 		commonUtils.selectByVisibleText(appointKeyStaff_CommercialSuite_Uielements.getLeadPL(), ev.pl);
+		
+		commonUtils.selectByVisibleText(appointKeyStaff_CommercialSuite_Ui.getprojectorSmallWorks(), projectorSW);
 		RandomNumber radomNum=new RandomNumber();
 		int num=radomNum.randumNumber();
 		appointKeyStaff_CommercialSuite_Uielements.getJobid().sendKeys(""+num);

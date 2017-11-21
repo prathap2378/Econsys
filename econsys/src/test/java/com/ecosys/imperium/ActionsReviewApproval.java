@@ -121,7 +121,7 @@ public class ActionsReviewApproval extends Driver{
 		login.logout();
 
 		basic.pathdession(ev.estimatedSize500_, ev.location_other);
-		if((ev.ourformat.equals("No"))){
+		if((ev.cp2cp3ourformat.equals("No"))){
 			log.info("In CL approval");
 			Imperium_Project_Methods.clApproval();
 		}

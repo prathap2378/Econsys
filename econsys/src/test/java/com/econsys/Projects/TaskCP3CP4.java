@@ -156,7 +156,7 @@ public class TaskCP3CP4 extends Driver{
 		 cu.waitForPageToLoad();
 		 b.projectname();
 		 
-		 cu.selectByIndex(tandCver.getCreditWorthy(), 1);
+		 //cu.selectByIndex(tandCver.getCreditWorthy(), 1); Moved to status of submitted quote
 		 //upload order acknowledgement file
 		 tandCver.getOrderAcknowledgement_file().click();
 		 ProjectMethods_Small_Works.linktoFileupload();

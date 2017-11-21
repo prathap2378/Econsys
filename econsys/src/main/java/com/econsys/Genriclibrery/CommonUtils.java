@@ -24,7 +24,7 @@ public class CommonUtils extends Driver {
 	boolean flag=false;
 	//implicit wait method
 	public void waitForPageToLoad(){
-		driver().manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+		driver().manage().timeouts().implicitlyWait(2000, TimeUnit.SECONDS);
 	}
 	//Explicit wait 
 	public void blindWait() throws InterruptedException{

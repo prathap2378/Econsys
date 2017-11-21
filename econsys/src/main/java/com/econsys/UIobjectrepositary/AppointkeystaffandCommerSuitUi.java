@@ -39,9 +39,17 @@ public class AppointkeystaffandCommerSuitUi {
 	@FindBy(id="fileList_flm_panelProductionScheduleDocument")
 	private WebElement productionSheduleDocCommercialSuite;
 	
+	@FindBy(xpath="//*[@id='st_projectOrSmall']")
+	private WebElement projectOrSmallWorks;
+	
+	public WebElement getprojectorSmallWorks(){
+		return projectOrSmallWorks;
+	}
+	
 	public WebElement getproductionSheduleDocCommercialSuite(){
 		return productionSheduleDocCommercialSuite;
 	}
+	
 	public WebElement getMilestoneDocInCommercialSuite(){
 		return milestoneDocInCommercialSuite;
 	}

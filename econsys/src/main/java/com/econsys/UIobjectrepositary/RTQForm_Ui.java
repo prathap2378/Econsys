@@ -125,6 +125,12 @@ public class RTQForm_Ui {
 	@FindBy(xpath="//td[@aria-describedby='likedProjectDetails_projectName']")
 	private WebElement linkedprojectName;
 
+	@FindBy(xpath="//img[@id='manageAccordion'][@alt='Show-More']")
+	private WebElement showMore;
+	
+	@FindBy(xpath="//img[@id='manageAccordion'][@alt='Show-Less']")
+	private WebElement showLess;
+	
 	@FindBy(xpath="//img[contains(@id,'manageAccordion')]")
 	private WebElement manageAccprdion;//Show More or Show Less button 
 
@@ -449,5 +455,15 @@ public class RTQForm_Ui {
 	//@return the locationrtq2
 	public WebElement getLocationrtq2() {
 		return locationrtq2;
+	}
+	
+	// @return the showMore
+	public WebElement getShowMore() {
+		return showMore;
+	}
+
+	//@return the showLess
+	public WebElement getShowLess() {
+		return showLess;
 	}
 }

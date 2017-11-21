@@ -27,7 +27,7 @@ SadminUi allTabs = PageFactory.initElements(Driver.driver(), SadminUi.class);
 Workbook wb = new Workbook();
 Login login= new Login();
 EconsysVariables ev= new EconsysVariables();
-Basic b= new Basic();
+Basic basic = new Basic();
 ActionButtons actionBtns= new ActionButtons();
 CommonUtils cu= new CommonUtils();
 static Monorail rtq=new Monorail();
@@ -39,14 +39,14 @@ public void projectDelete_Task() throws IOException, InterruptedException, AWTEx
 
 	login.user();
 	//****intiation of rtq form*********
-    b.rtqForm(ev.location, ev.estimatedSize);
+    basic.rtqForm(ev.location, ev.estimatedSize);
     //rtq submit externally
     ab.getSubmitbutton().click();
     cu.waitForPageToLoad();
 	login.logout();
 	//***********CP1 exe dession************
 	if((ev.estimatedSize.equals("D 500+"))||(ev.location.equals("Other"))) {
-		b.boardApproval();
+		basic.boardApproval();
 	}
 	String userName = wb.getXLData(1, 0,0);
 	String sl=wb.getXLData(10, 0, 0);
@@ -97,7 +97,7 @@ public void projectDelete_Task() throws IOException, InterruptedException, AWTEx
 	login.user();
 	allPages.getProArchLink().click();
 	cu.waitForPageToLoad();
-	dr.search();
+	basic.search();
 	Assert.assertEquals(driver.findElement(By.xpath("//td[@title='Deleted']")).getText(), "Deleted");
  }
 
@@ -105,14 +105,14 @@ public void projectDelete_Task() throws IOException, InterruptedException, AWTEx
 //Verification of project deletion in all projects
 public void projectdelete_AllProjects() throws IOException, InterruptedException, AWTException{
 	login.user();
-	b.rtqForm(ev.location, ev.estimatedSize);
+	basic.rtqForm(ev.location, ev.estimatedSize);
 	ab.getSubmitbutton().click();
 	
 	cu.waitForPageToLoad();
 	allTabs.getAllProjects().click();
 	
 	log.info("search all projects");
-	dr.search();
+	basic.search();
 	driver.findElement(By.xpath("//tr[td[@title="+ev.projectName()+"]]//div/button[starts-with(@id,'actn-btn-')]")).click();
 	
 	driver.findElement(By.xpath("//td/span[contains(text(),'Delete')]")).click();
@@ -129,7 +129,7 @@ public void projectdelete_AllProjects() throws IOException, InterruptedException
 	cu.blindWait();
 	allPages.getProArchLink().click();
 	cu.waitForPageToLoad();
-	dr.search();
+	basic.search();
 	Assert.assertEquals(driver.findElements(By.xpath("//td[@title='Deleted']")).get(0).getText(), "Deleted");
 	log.info("Asserted");
 }
@@ -138,7 +138,7 @@ public void projectdelete_AllProjects() throws IOException, InterruptedException
 public void projectSave_Delete_SavedRTQ() throws IOException, InterruptedException, AWTException{
 	login.url();
 	login.user();
-	b.rtqForm(ev.location, ev.estimatedSize);
+	basic.rtqForm(ev.location, ev.estimatedSize);
 	ab.getSave_RTQ().click();
 	//Admin
 	cu.waitForPageToLoad();

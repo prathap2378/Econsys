@@ -17,7 +17,7 @@ import com.econsys.TestData.*;
 
 public class Basic extends Driver {
 	Preparequote pq=PageFactory.initElements(Driver.driver(), Preparequote.class);
-	CommonUtils cu=PageFactory.initElements(Driver.driver(), CommonUtils.class);
+	CommonUtils commonUtils = PageFactory.initElements(Driver.driver(), CommonUtils.class);
 	RTQForm_Ui nrtq=PageFactory.initElements(Driver.driver(), RTQForm_Ui.class);
 	Assignsalesleader sla=PageFactory.initElements(Driver.driver(), Assignsalesleader.class);
 	CosCommitQuoteStatusUi ccq=PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
@@ -43,7 +43,7 @@ public class Basic extends Driver {
   //******RTQ form inputs******
 	public void rtqForm(String estimatedSize,String location) throws InterruptedException, IOException,AWTException {
 		
-	  cu.waitForPageToLoad();
+	  commonUtils.waitForPageToLoad();
 	  nrtq.getRtqLink().click();
 	  nrtq.getProjectLink().click();
 	  
@@ -60,7 +60,7 @@ public class Basic extends Driver {
 	  nrtq.getCustomerName().sendKeys(customer);
 	  
 	  // select Size
-	  cu.selectByVisibleText(nrtq.getEstimatedSize(), estimatedSize);
+	  commonUtils.selectByVisibleText(nrtq.getEstimatedSize(), estimatedSize);
 	  
 	  
 	  int quoteRefenceNumber = (int)(Math.random()*10000000);
@@ -71,8 +71,8 @@ public class Basic extends Driver {
 		  nrtq.getPoints().sendKeys(""+points);
 		  //select company
 		  WebElement company = driver.findElement(By.xpath("//*[@id='st_company']"));
-		  cu.selectByIndex(company, 1);
-		  cu.selectByIndex(nrtq.getNeworExis(), 1);
+		  commonUtils.selectByIndex(company, 1);
+		  commonUtils.selectByIndex(nrtq.getNeworExis(), 1);
 		//Quote reference number
 		  nrtq.getQuoterRefNumber().sendKeys(""+quoteRefenceNumber);
 	  }
@@ -81,62 +81,62 @@ public class Basic extends Driver {
 		  points=wb.getXLData(10,1,1);
 		  nrtq.getPoints().sendKeys(""+points);
 		  //select quotation type
-		  cu.selectByIndex(nrtq.getQuotationType(), 1);
+		  commonUtils.selectByIndex(nrtq.getQuotationType(), 1);
 		//Quote reference number
 		  nrtq.getQuoterRefNumber().sendKeys(""+quoteRefenceNumber);
 	  }
 	  
-	  cu.selectByIndex(nrtq.getNeworExis(), 1);
-	  cu.selectByIndex(nrtq.getLeadSource(), 1);
+	  commonUtils.selectByIndex(nrtq.getNeworExis(), 1);
+	  commonUtils.selectByIndex(nrtq.getLeadSource(), 1);
 	  //anticipated date
 	  nrtq.getAnticipatedDate().click();
 	  driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[2]/button")).click();
 	  //Engineering
 	  //productSpecified=wb.getXLData(12,1,1);
-	  cu.selectByIndex(nrtq.getProductSpecifieddd(),1);
+	  commonUtils.selectByIndex(nrtq.getProductSpecifieddd(),1);
 	  
 	  //typeofBuilding=wb.getXLData(18, 1, 1);
-	  cu.selectByIndex(nrtq.getTypeofBuildingdd(), 1);
+	  commonUtils.selectByIndex(nrtq.getTypeofBuildingdd(), 1);
 	  
 	  //endUserIndustrySector=wb.getXLData(14, 1, 1);
-	  cu.selectByIndex(nrtq.getEndUserIndustrySectordd(), 1);
+	  commonUtils.selectByIndex(nrtq.getEndUserIndustrySectordd(), 1);
 	  
 	  //typeofProject=wb.getXLData(16, 1, 1);
-	  cu.selectByIndex(nrtq.getTypeofProjectdd(), 1);
+	  commonUtils.selectByIndex(nrtq.getTypeofProjectdd(), 1);
 	  
 	  //commercial
 	  enquiryFormat=wb.getXLData(3,2,1);
-	  cu.selectByVisibleText(nrtq.getEnquiryFormatdd(), enquiryFormat);
+	  commonUtils.selectByVisibleText(nrtq.getEnquiryFormatdd(), enquiryFormat);
 	  
 	  documentationReceived=wb.getXLData(5, 2, 1);
-	  cu.selectByVisibleText(nrtq.getDocumentationReceiveddd(), documentationReceived);
+	  commonUtils.selectByVisibleText(nrtq.getDocumentationReceiveddd(), documentationReceived);
 	  
 	  areweNamedSpecified=wb.getXLData(7, 2, 1);
-	  cu.selectByVisibleText(nrtq.getGANameddd(), areweNamedSpecified);
+	  commonUtils.selectByVisibleText(nrtq.getGANameddd(), areweNamedSpecified);
 	  
 	  //select Location
-	  cu.selectByVisibleText(nrtq.getLocationdd(), location);	  
+	  commonUtils.selectByVisibleText(nrtq.getLocationdd(), location);	  
 	  	  
 	  haveweworkedonthissitebefore=wb.getXLData(11, 2, 1);
-	  cu.selectByVisibleText(nrtq.getPreviousExperienceAtSitedd(), haveweworkedonthissitebefore);
+	  commonUtils.selectByVisibleText(nrtq.getPreviousExperienceAtSitedd(), haveweworkedonthissitebefore);
 	  
 	  termsandconditionsadvised=wb.getXLData(13, 2, 1);
-	  cu.selectByVisibleText(nrtq.getTermsConditionsAdviseddd(), termsandconditionsadvised);
+	  commonUtils.selectByVisibleText(nrtq.getTermsConditionsAdviseddd(), termsandconditionsadvised);
 	   
 	  pCG=wb.getXLData(15,2,1);
-	  cu.selectByVisibleText(nrtq.getPCGdd(), pCG);
+	  commonUtils.selectByVisibleText(nrtq.getPCGdd(), pCG);
 	  
 	  performanceBond=wb.getXLData(17, 2,1);
-	  cu.selectByVisibleText(nrtq.getPerformanceBond(), performanceBond);
+	  commonUtils.selectByVisibleText(nrtq.getPerformanceBond(), performanceBond);
 	  	
 	  isEnqueryOpentoAll=wb.getXLData(19, 2, 1);
-	  cu.selectByVisibleText(nrtq.getIsenqueryopentoall(), isEnqueryOpentoAll);
+	  commonUtils.selectByVisibleText(nrtq.getIsenqueryopentoall(), isEnqueryOpentoAll);
 	  
 	  String damage_Advised=wb.getXLData(22,1,1);
-	  cu.selectByVisibleText(nrtq.getDamages_Advised(),damage_Advised);
+	  commonUtils.selectByVisibleText(nrtq.getDamages_Advised(),damage_Advised);
 	  
 	  String retention_Advised=wb.getXLData(21,2,1);
-	  cu.selectByVisibleText(nrtq.getRetention_Advised(),retention_Advised);
+	  commonUtils.selectByVisibleText(nrtq.getRetention_Advised(),retention_Advised);
 	  if(retention_Advised.equalsIgnoreCase(ev.select_Yes)){
 			driver.findElement(By.xpath("//input[@id='st_RetentionValue']")).sendKeys("10");
 		}
@@ -148,7 +148,7 @@ public class Basic extends Driver {
 	  project_Metods.uploadFile("Logfails - Copy (19).txt");
 	 
 	  //uploading documents in case not uploaded for first time
-	  cu.waitForPageToLoad();
+	  commonUtils.waitForPageToLoad();
 	  WebElement rtqDocs = driver.findElement(By.xpath("//div[@id='upload-container']"));
 	  int docsCount = rtqDocs.findElements(By.xpath(".//*")).size();
 	  log.info("docsCount RTQ :"+docsCount);
@@ -163,7 +163,7 @@ public class Basic extends Driver {
 	   }
 	   
 	   else{
-		   cu.waitForPageToLoad();
+		   commonUtils.waitForPageToLoad();
 			  String rtqComments=wb.getXLData(20,1,1);
 			  nrtq.getComments().sendKeys(rtqComments);
 			  //ab.getSavebutton().click();
@@ -253,12 +253,12 @@ public void projectname() throws InterruptedException, IOException{
 	Thread.sleep(1000);
 	ab.getViewalltasks().click();
 	String actionbutton = "//td[@title="+ev.projectName()+"]//following-sibling::td/div/button";
-	cu.blindWait();
-	cu.WaitForElementXPATHPresent(actionbutton);
+	commonUtils.blindWait();
+	commonUtils.WaitForElementXPATHPresent(actionbutton);
 	driver.findElement(By.xpath(actionbutton)).click();
 	   
 	String exactXpathForProject = "//div[@id='action-items-div']/table/tbody/tr[1]/td/span[contains(text(),'Open')]";
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver.findElement(By.xpath(exactXpathForProject)).click();
 }
 public String projectID() throws IOException{
@@ -268,14 +268,14 @@ public String projectID() throws IOException{
 public void projectTaskName(String taskName) throws InterruptedException, IOException{
 	
 	ab.getViewalltasks().click();
-	cu.blindWait();
+	commonUtils.blindWait();
 	String projectName = "//tr[td[@title='"+taskName+"']][td[@title="+ev.projectName()+
 			"]]//preceding-sibling::td/a[contains(text(),'"+taskName+"')]";	
 	try{
 		driver.findElement(By.xpath(projectName)).click();
 	}catch(StaleElementReferenceException e){
 	}catch(WebDriverException w){
-		cu.blindWait();
+		commonUtils.blindWait();
 	}
 }
 public void pnRtq() throws InterruptedException, IOException{
@@ -326,64 +326,64 @@ public void pnDeliveryReview() throws InterruptedException, IOException{
 //Open Project
 public void projectname_ReviewApproval() throws InterruptedException, IOException{
 	//label[@id='myInvolved']
-	cu.waitForPageToLoad();
+	commonUtils.waitForPageToLoad();
 	driver.findElement(By.xpath("//label[@id='groupApprovals']")).click();
 	//taskNameCP = driver.findElement(By.xpath("//td[@title="+ev.projectName()+"]//preceding-sibling::td[1]")).getAttribute("title");
 	//System.out.println("Task Name "+taskNameCP);//td[@title="+ev.projectName()+"]//preceding-sibling::td[3]
 	String exactXpathForProject = "//tr[td[@title="+ev.projectName()+"]]//following-sibling::td/a[contains(text(),'Open')]";
-	cu.blindWait();
+	commonUtils.blindWait();
 	//52343-CMB 20 Fenchurch Street
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver().findElement(By.xpath(exactXpathForProject)).click();
 	}
 //task listed under by New list
 public void projectName_New() throws IOException, InterruptedException{
 	driver.findElement(By.xpath("//*[@id='gate3']/div/ul/li[1]/a")).click();
 	String exactXpathForProject = "//tr[td[@title="+ev.projectName()+"]]//following-sibling::td/a[contains(text(),'Open')]";
-	cu.blindWait();
+	commonUtils.blindWait();
 	//52343-CMB 20 Fenchurch Street
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver().findElement(By.xpath(exactXpathForProject)).click();
 }
 //task listed under by me list
 public void projectName_Board_Byme() throws InterruptedException, IOException{
-	cu.waitForPageToLoad();
+	commonUtils.waitForPageToLoad();
 	driver.findElement(By.xpath("//label[@id='myApprovals']")).click();
 	String exactXpathForProject = "//tr[td[@title="+ev.projectName()+"]]//following-sibling::td/a[contains(text(),'Open')]";
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver().findElement(By.xpath(exactXpathForProject)).click();
 }
 public void projectName_Board_ByGroupApprovals() throws InterruptedException, IOException{
-	cu.blindWait();
+	commonUtils.blindWait();
 	driver.findElement(By.xpath("//label[@id='groupApprovals']")).click();
 	String exactXpathForProject = "//td[@title="+ev.projectName()+"]//following-sibling::td/a[contains(text(),'Open')]";
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver().findElement(By.xpath(exactXpathForProject)).click();
 }
 public void projectname_Involves() throws InterruptedException, IOException{
 	
-	cu.waitForPageToLoad();
+	commonUtils.waitForPageToLoad();
 	driver.findElement(By.xpath("//label[@id='myInvolved']")).click();
 	String exactXpathForProject = "//tr[td[@title="+ev.projectName()+"]]//following-sibling::td/a[contains(text(),'Open')]";
-	cu.blindWait();
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.blindWait();
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver().findElement(By.xpath(exactXpathForProject)).click();
 				
 }
 public void projectname_Reviews() throws IOException, InterruptedException{
 	
-	cu.waitForPageToLoad();
+	commonUtils.waitForPageToLoad();
 	driver.findElement(By.xpath("//label[@id='myReviews']")).click();
 	String exactXpathForProject = "//tr[td[@title="+ev.projectName()+"]]//following-sibling::td/a[contains(text(),'Open')]";
-	cu.blindWait();
-	cu.WaitForElementXPATHPresent(exactXpathForProject);
+	commonUtils.blindWait();
+	commonUtils.WaitForElementXPATHPresent(exactXpathForProject);
 	driver().findElement(By.xpath(exactXpathForProject)).click();
 }
 //Submit the form and logOut 
 public void submit_Logout() throws InterruptedException{
 	//submit form
 	  ab.getSubmitbutton().click();
-	  cu.waitForPageToLoad();
+	  commonUtils.waitForPageToLoad();
 	//log out  
 	  login.logout();
 }
@@ -392,7 +392,7 @@ public void submit_Logout() throws InterruptedException{
 		try {
 		
 		 login.loginboard();
-		 cu.waitForPageToLoad();
+		 commonUtils.waitForPageToLoad();
 		 log.info("open project");
 		 //driver().findElement(By.xpath("//div[@id='gate3']/div/ul/li[1]/a[contains(text(),'New')]")).click();
 		 //actions.moveToElement(element).click().perform();
@@ -400,20 +400,34 @@ public void submit_Logout() throws InterruptedException{
 		 log.info("taskNameCP------"+taskNameCP);
 		 projectname_ReviewApproval();
 		 if(taskNameCP.equals("Control Point 4 Approval")){
-			 cu.blindWait();
-			 cu.selectByVisibleText(driver().findElement(By.xpath("//select[@id='st_authoriseCommencement']")), ev.atherize);
+			 commonUtils.blindWait();
+			 commonUtils.selectByVisibleText(driver().findElement(By.xpath("//select[@id='st_authoriseCommencement']")), ev.atherize);
 		 }
 		 Thread.sleep(1000);
 		 ab.getComments().sendKeys("Board");
 		 ab.getApprove_Button().click();
 		 if(taskNameCP.equals("Control Point 9 Approval")){
 			 
-			 cu.blindWait();
+			 commonUtils.blindWait();
 		     driver.findElement(By.xpath("//div[@class='modal-footer']/a[1]")).click();
 		 }
 		 login.logout();
 		} catch (StaleElementReferenceException se) {
 			se.printStackTrace();
 		}
+		}
+	 
+	 public void search() throws InterruptedException, IOException{
+
+			//Project archive action
+			ab.getSearch().click();
+			commonUtils.waitForPageToLoad();
+
+			commonUtils.selectByVisibleText(driver.findElement(By.xpath("//tr[3]/td[2]/select")),"Project");
+			commonUtils.selectByVisibleText(driver.findElement(By.xpath("//tr[3]/td[3]/select")),"contains");
+
+			if(ab.getSearchProjectname().getAttribute("value").isEmpty())
+				ab.getSearchProjectname().sendKeys(ev.prjname1);
+			ab.getFind().click();
 		}
 }

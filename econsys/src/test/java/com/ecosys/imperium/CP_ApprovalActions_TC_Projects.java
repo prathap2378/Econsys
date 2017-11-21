@@ -190,7 +190,7 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 		}
 		cp4_cp5.submitResponse();
 		//Appoint Key staff
-		imperium_SmallWorks_Methods.apointkeystaf();
+		imperium_SmallWorks_Methods.apointkeystaf(ev.selectasProject);
 
 		//commercial suite
 		imperium_SmallWorks_Methods.cummercialSuite_();
@@ -275,7 +275,7 @@ public class CP_ApprovalActions_TC_Projects extends Driver {
 		imperium_SmallWorks_Methods.statusQuotesubmit_(ev.customerCommitmentType,ev.quote_StatusCp2Cp3);
 
 		cp4_cp5.submitResponse();
-		imperium_SmallWorks_Methods.apointkeystaf();
+		imperium_SmallWorks_Methods.apointkeystaf(ev.selectasProject);
 
 		imperium_SmallWorks_Methods.cummercialSuite_();
 
