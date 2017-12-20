@@ -82,7 +82,9 @@ public class TasksCP5toCP9 extends Driver {
 
 		/*Value forecast grid details and adding milestone values*/
 		cu.blindWait();
-		pdp_ui.getAddnewvalueforcast().click();
+		
+		pdp_ui.getSubmitedBy().sendKeys("Me");
+		
 		driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();
 		pdp_ui.getDate().click();
 		String milestonevalue = wb.getXLData(1,5, 2);
@@ -149,7 +151,7 @@ public class TasksCP5toCP9 extends Driver {
 
 			/*Value forecast grid details and adding milestone values*/
 			cu.blindWait();
-			pdp_ui.getAddnewvalueforcast().click();
+			pdp_ui.getSubmitedBy().sendKeys("Me");
 			//pdp_ui.getMilestone().sendKeys("Milestone");
 			pdp_ui.getInvoiceNumber().sendKeys("15");
 			driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();
@@ -200,7 +202,7 @@ public class TasksCP5toCP9 extends Driver {
 
 			/*Value forecast grid details and adding milestone values*/
 			cu.blindWait();
-			pdp_ui.getAddnewvalueforcast().click();
+			pdp_ui.getSubmitedBy().sendKeys("Me");
 			//pdp_ui.getMilestone().sendKeys("Milestone");
 			pdp_ui.getInvoiceNumber().sendKeys("15");
 			driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();

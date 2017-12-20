@@ -6,9 +6,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import com.econsys.Genriclibrery.CommonUtils;
 import com.econsys.Genriclibrery.Driver;
 import com.econsys.Genriclibrery.EconsysVariables;
@@ -17,7 +15,6 @@ import com.econsys.Projects.Login;
 import com.econsys.Projects.Monorail;
 import com.econsys.SmallWorks.ProjectMethods_Small_Works;
 import com.econsys.UIobjectrepositary.*;
-import com.econsys.matrix.MatrixProjects;
 
 /**
  * @author bhanu.pk
@@ -62,7 +59,7 @@ public class NewLink extends Driver{
 		//ab.getSubmitbutton().click();
 	}
 
-	@Test(priority=2)
+	//@Test(priority=2)
 	public void newLinkAssignSalesLeader() throws IOException, InterruptedException {
 
 		//log.info("This is from  newLinkAssignSalesLeader "+projName);

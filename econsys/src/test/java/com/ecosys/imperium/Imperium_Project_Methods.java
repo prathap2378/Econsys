@@ -1,15 +1,10 @@
 package com.ecosys.imperium;
 
 import java.awt.AWTException;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -82,11 +77,13 @@ public class Imperium_Project_Methods extends Driver {
 	@Test
 	//******RTQ form inputs******
 	public void rtqForm(String estimatedSize,String location) throws InterruptedException, IOException,AWTException {
-
+JavascriptExecutor jeexe = (JavascriptExecutor) driver;
 		commonUtils.waitForPageToLoad();
 		nrtq.getRtqLink().click();
 		nrtq.getProjectLink().click();
-
+		
+		jeexe.executeScript("arguments[0].click()", nrtq.getComments());
+commonUtils.blindWait();
 		log.info("Project name basic: "+ev.projectName());
 		nrtq.getProjectName().sendKeys(ev.projectName());
 
@@ -160,8 +157,7 @@ public class Imperium_Project_Methods extends Driver {
 		//File upload in RTQ fom
 		nrtq.getUploaddocument().click();
 
-		ProjectMethods_Small_Works project_Metods = new ProjectMethods_Small_Works();
-		project_Metods.uploadFile("Logfails - Copy (19).txt");
+		ProjectMethods_Small_Works.uploadFile("Logfails - Copy (19).txt");
 
 		//uploading documents in case not uploaded for first time
 		commonUtils.waitForPageToLoad();
@@ -172,7 +168,7 @@ public class Imperium_Project_Methods extends Driver {
 			do{
 				log.info("ReUpload document");
 				nrtq.getUploaddocument().click();
-				project_Metods.uploadFile("Milestone Document 1.txt");
+				ProjectMethods_Small_Works.uploadFile("Milestone Document 1.txt");
 				log.info("Uploaded");
 			}while(docsCount<1);
 		}
@@ -303,7 +299,8 @@ public class Imperium_Project_Methods extends Driver {
 		
 		//sales to operation select radio buttons
 		List<WebElement> radio_Buttons = driver().findElements(By.xpath("//input[@type='radio'][@value='NA']"));
-		for(int i = 0;i<=radio_Buttons.size();i++){
+		for(int i = 0;i<radio_Buttons.size();i++){
+			log.info("i---"+i);
 			commonUtils.waitForPageToLoad();
 			radio_Buttons.get(i).click();
 		}
@@ -366,13 +363,14 @@ public class Imperium_Project_Methods extends Driver {
 
 			/*Value forecast grid details and adding milestone values*/
 			commonUtils.blindWait();
-			pdp_ui.getAddnewvalueforcast().click();
+			pdp_ui.getProdOfAppValueForecastGridPager_left().click();//Add new button
+			pdp_ui.getSubmitedBy().sendKeys("Me");
 			//pdp_ui.getMilestone().sendKeys("Milestone");
-			pdp_ui.getInvoiceNumber().sendKeys("15");
-			driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();
-			pdp_ui.getDate().click();
-			String milestonevalue = wb.getXLData(1,5, 2);
-			pdp_ui.getContractWorks().sendKeys(""+milestonevalue);
+			//pdp_ui.getInvoiceNumber().sendKeys("15"); Removed
+			//driver().findElement(By.xpath("//input[@id='milestoneDate']")).click();
+			//pdp_ui.getDate().click();
+			
+			pdp_ui.getContractWorks().sendKeys(""+ev.overallSell);
 			pdp_ui.getCommentsMilestone().sendKeys("Application is added...");
 			pdp_ui.getSavemilestone().click();
 
@@ -392,7 +390,7 @@ public class Imperium_Project_Methods extends Driver {
 
 		login.url();
 		/*login as PL to *********** submit*/
-		if(deliveryReview_dission.equals("Submit")){
+		if(deliveryReview_dission.equals(ev.deliveryReview_dission_Submit)){
 			login.loginPL();
 			String taskName = PropertiesUtil.getPropValues("delivery_Review");
 			basic.projectTaskName(taskName);
@@ -409,12 +407,7 @@ public class Imperium_Project_Methods extends Driver {
 				ProjectMethods_Small_Works.uploadFile("Project programme document 1.txt");
 				log.info("uploaded again");
 			}
-			//Mile stone document
-			/*Thread.sleep(4000);
-		  commonUtils.WaitForElementIDPresent("mdrMilestoneDocument-dropzone");
-		  driver.findElement(By.id("mdrMilestoneDocument-dropzone")).click();
-		  ProjectMethods_Small_Works.uploadFile("Plan document 1.txt");*/
-
+			
 			commonUtils.waitForPageToLoad();
 			ab.getComments().sendKeys("Delivery review submit");
 			commonUtils.blindWait();
@@ -439,14 +432,10 @@ public class Imperium_Project_Methods extends Driver {
 		}
 
 		//login as PL -- Monthly Review
-		if(deliveryReview_dission.equals("Monthly Review")){
+		if(deliveryReview_dission.equals(ev.deliveryReview_dission_MonthlyReview)){
 			login.loginPL();
 			String taskName = PropertiesUtil.getPropValues("delivery_Review");
 			basic.projectTaskName(taskName);
-
-			/* Thread.sleep(4000);
-		  driver.findElement(By.id("mdrMilestoneDocument-dropzone")).click();
-		  ProjectMethods_Small_Works.uploadFile("Milestone Document 2.txt");*/
 
 			if(alerts.upload_mdrProgDocument()<1){
 				log.info("files not uploaded for upload_mdrProgDocument document");
@@ -460,7 +449,7 @@ public class Imperium_Project_Methods extends Driver {
 
 			//Checking file uploaded are not
 			if(alerts.upload_mdrProgDocument()<1||alerts.upload_mdrMilestoneDocument()<1){
-				driver().findElement(By.xpath("//input[@value='To Monthly Review']")).click();
+				driver().findElement(By.xpath("//input[@id='review']")).click();
 				log.info("file Madatory error ************");
 				commonUtils.blindWait();
 				driver().findElement(By.xpath("//div/a[contains(text(),'OK')]")).click();
@@ -502,10 +491,7 @@ public class Imperium_Project_Methods extends Driver {
 		driver.findElement(By.id("mdrProgDocument-dropzone")).click();
 		ProjectMethods_Small_Works.uploadFile("Project programme document 3.txt");
 		log.info("DR_ProgDocument uploaded");
-		/*Thread.sleep(4000);
-		  driver.findElement(By.id("mdrMilestoneDocument-dropzone")).click();
-		  ProjectMethods_Small_Works.uploadFile("Milestone Document 3.txt");*/
-
+		
 		Thread.sleep(500);
 		ab.getComments().sendKeys("Delivery review project completed with out changes");
 

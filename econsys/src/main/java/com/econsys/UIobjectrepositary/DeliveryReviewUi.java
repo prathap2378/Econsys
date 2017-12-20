@@ -1,7 +1,10 @@
 package com.econsys.UIobjectrepositary;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import com.econsys.Genriclibrery.Driver;
 
 public class DeliveryReviewUi {
 	
@@ -12,4 +15,11 @@ public class DeliveryReviewUi {
 	public WebElement getDataChange_Alert() {
 		return dataChange_Alert;
 	}
+	
+@FindBy(xpath="//input[@id='review']")
+private WebElement toMonthlyReview;
+
+public WebElement getToMonthlyReview(){
+	return toMonthlyReview;
+}
 }

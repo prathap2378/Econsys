@@ -5,10 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-
 import com.econsys.Projects.*; 
 import com.econsys.UIobjectrepositary.*;
-import com.econsys.econ4eg.Econsys4egProjects;
 import com.econsys.Genriclibrery.CommonUtils;
 import com.econsys.Genriclibrery.Driver;
 import com.econsys.Genriclibrery.EconsysVariables;
@@ -34,7 +32,7 @@ public class Imperium_SmallWork_flow extends Driver{
 	static ReviewInvolve ri=new ReviewInvolve();
 	static TasksCP4toCP5 g45=new TasksCP4toCP5();
 	static TaskCP3CP4 g34=new TaskCP3CP4();
-	static Basic b=new Basic();
+	static Basic basic = new Basic();
 	static Login login=new Login();
 	EconsysVariables ev = new EconsysVariables();
 	Imperium_SmallWorks_Methods imperium_SmallWorks_Methods = new Imperium_SmallWorks_Methods();
@@ -57,7 +55,7 @@ public class Imperium_SmallWork_flow extends Driver{
 				Imperium_Project_Methods.clApproval();
 			}
 			if(ev.exeCP2.equalsIgnoreCase("Yes") || ev.bidsheetauthorised.equals("No")){
-				b.boardApproval();
+				basic.boardApproval();
 			}
 			//Assign Sales Leader
 			imperiumProject_methods.ASL();
@@ -69,7 +67,7 @@ public class Imperium_SmallWork_flow extends Driver{
 			if(ev.execp4.equals("Yes") || (ev.clarification.equals("No")&&
 					(ev.customerCommitmentType.equalsIgnoreCase(ev.customerCommitmentType_SubCon)||
 							ev.customerCommitmentType.equalsIgnoreCase(ev.customerCommitmentType_PO)))){
-				b.boardApproval();
+				basic.boardApproval();
 			}
 			//Submit response
 			cp4_cp5.submitResponse();
@@ -91,7 +89,7 @@ public class Imperium_SmallWork_flow extends Driver{
 			login.logout();
 			//cp5 board approval
 			if(ev.exe5_SalestoOper.equals("Yes")||(ev.exeCP5_OperationAccep.equals("Yes"))){
-				b.boardApproval();
+				basic.boardApproval();
 			}
 			//CP5-CP6 PDP used from generic class cp5_cp9
 			imperium_SmallWorks_Methods.pdp();
@@ -101,10 +99,11 @@ public class Imperium_SmallWork_flow extends Driver{
 			login.logout();
 			//CP6 explicit decision
 			if(ev.execp6.equals("Yes")){
-				b.boardApproval();
+				basic.boardApproval();
 			}
+			
 			//CP6-CP7
-			imperium_SmallWorks_Methods.deliveryreview();
+			imperium_SmallWorks_Methods.deliveryreview(ev.deliveryReview_dission);
 
 			imperium_SmallWorks_Methods.obtainpracticalcomplition();
 			commonUtils.selectByVisibleText(pdp_Ui.getOpc_cp8(), ev.execp8);
@@ -112,7 +111,7 @@ public class Imperium_SmallWork_flow extends Driver{
 			login.logout();
 			//***********CP8 exe dession **********
 			if(ev.certificateobtained.equals("No")||ev.retationapplied.equals("No")||ev.onmSubmitted.equals("No")||ev.snagListIdentified.equals("No")||ev.internalCompletionDocument.equals("No")||ev.execp8.equals("Yes")){
-				b.boardApproval();
+				basic.boardApproval();
 			}
 			//CP8-CP9
 			cp5_cp9.postpracticalcomplition();
@@ -123,7 +122,7 @@ public class Imperium_SmallWork_flow extends Driver{
 			login.logout();
 			//***********CP9 exe dession **********
 			if(ev.finalAccountAgreement.equals("No")||ev.finalRetentionPaid.equals("No")||ev.projectDocumentArchived.equals("No")||ev.projectDebrief.equals("No")||ev.subContractAccountSettled.equals("No")||ev.closureofProject.equals("No")||ev.bondsGuarantees_Resolved.equals("No")||ev.execp9.equals("Yes")){
-				b.boardApproval();
+				basic.boardApproval();
 			}
 		}
 	}

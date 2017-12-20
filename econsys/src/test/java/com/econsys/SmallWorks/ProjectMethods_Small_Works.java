@@ -192,14 +192,13 @@ public void prepareRevisedQuote() throws InterruptedException, IOException{
 	
 	//bid document link
 	prepare_Quoteui.getCp2cp3biddoc().click();
-	linktoFileupload();	
+	linktoFileupload();
 	//Quote document link
 	driver.findElement(By.xpath("//input[@id='fileList_flm_quoteDocument']")).click();
 	linktoFileupload();
 	//Bid sheet value drop down value selection
 	commonutils.selectByVisibleText(prepare_Quoteui.getCp2cp3bidsheet(), wb.getXLData(15, 5, 0));
 	prepare_Quoteui.getComments().sendKeys("rePrepare quote...");
-
 }
 //Submit quote form
 public static void submit_Quoteform() throws InterruptedException, IOException{
@@ -216,6 +215,7 @@ public static void submit_Quoteform() throws InterruptedException, IOException{
 			}*/
 			commonutils.waitForPageToLoad();
 			rtq.getComments().sendKeys("Submit Quote");
+			log.info("Submit the auote and update the status as commited");
 			sWp.getSubmitBtn().click();
 			//login.logout();
 		/*} catch (Exception e) {
@@ -261,8 +261,7 @@ public void statusQuotesubmit(String customerCommitmentType,String quoteStatus) 
 		 prepare_Quoteui.getQuoteprepared().click();
 		 login.logout();
 		 
-		 if((ev.ourformat.equals("Yes")&&ev.cp2cp3ourformat.equals("No"))||(ev.cp2cp3bidsheetauthorised.equals("No"))||(ev.exeCP3.equals("Yes"))){
-			 
+		 if(ev.cp2cp3bidsheetauthorised.equals("No")||ev.exeCP3.equals("Yes")){
 			 b.boardApproval();
 		 }
 		 submit_Quoteform();

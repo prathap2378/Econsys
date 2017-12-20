@@ -8,10 +8,29 @@
 	</listeners>
 	<test name="imperium test">
 		<classes>
-			<!-- <class name="com.ecosys.imperium.CustomerCommitmentAcceptance_TC_SmallWorks"></class>
+		
+			<!-- <class name="com.ecosys.imperium.ImperiumProjects"></class>
+			<class name="com.ecosys.imperium.Imperium_SmallWork_flow"></class>
+			<class name="com.ecosys.imperium.CustomerCommitmentAcceptance_TC_SmallWorks"></class>
 			<class name="com.ecosys.imperium.CustomerCommitmentAcceptance_TC_Projects"></class>
-			<class name="com.ecosys.imperium.CP_ApprovalActions_TC_Projects"></class> -->
-			<class name="com.ecosys.imperium.CP_ApprovalActions_TC_SmallWorks"></class>
+			<class name="com.ecosys.imperium.CP_ApprovalActions_TC_SmallWorks"></class> 
+			<class name="com.ecosys.imperium.CP_ApprovalActions_TC_Projects"></class> 
+			<class name="com.ecosys.imperium.MyWatchlistImperium"></class>
+			<class name="com.ecosys.imperium.PagesVerification"></class>
+			<class name="com.ecosys.imperium.ActionsReviewApproval"></class>
+			<class name="com.ecosys.imperium.LinkProject"></class>
+			<class name="com.ecosys.imperium.NewLink"></class>
+			<class name="com.ecosys.imperium.RoleReassignment"></class>
+			<class name="com.ecosys.imperium.VerifyDelegation"></class>
+			<class name="com.ecosys.imperium.VerifyDeletion_Projects"></class>
+			<class name="com.ecosys.imperium.VerifyDeletion_SamllWorks"></class>
+			<class name="com.ecosys.imperium.Delivery_Review"></class>
+			<class name="com.ecosys.imperium.LoginVerification"></class>
+			<class name="com.ecosys.imperium.Verify_RtQ_SmallWorks"></class>
+			<class name="com.ecosys.imperium.Verify_RtQ_Projects"></class>-->
+			<class name="com.ecosys.imperium.NewLink"></class>
+			
+			
 		</classes>
 	</test>
 </suite>

@@ -19,7 +19,7 @@
 <dependency>
 	  <groupId>org.seleniumhq.selenium</groupId>
 	  <artifactId>selenium-java</artifactId>
-	  <version>3.0.1</version>
+	  <version>3.8.1</version>
 </dependency>
  
 <dependency>
@@ -48,14 +48,23 @@
       <artifactId>testng</artifactId>
       <version>6.10</version>
 </dependency>
-
+<!-- To read xls file -->
 <dependency>
 	<groupId>org.apache.poi</groupId>
 	<artifactId>poi</artifactId>
-	<version>3.12</version>
+	<version>3.17</version>
+</dependency>
+<!-- To read xlsx file -->
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>3.17</version>
 </dependency>
 
- <dependency>
+
+ <!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
+<dependency>
     <groupId>com.relevantcodes</groupId>
     <artifactId>extentreports</artifactId>
     <version>2.41.2</version>
@@ -74,6 +83,19 @@
     <version>2.52.0</version>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+<!-- <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-chrome-driver</artifactId>
+    <version>3.8.0</version>
+</dependency>
+ -->
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver -->
+<!-- <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-remote-driver</artifactId>
+    <version>3.8.0</version>
+</dependency> -->
 
 <!-- <dependency>
 	<groupId>org.apache.poi</groupId>

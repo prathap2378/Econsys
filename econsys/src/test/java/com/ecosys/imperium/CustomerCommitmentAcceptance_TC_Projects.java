@@ -62,6 +62,7 @@ public class CustomerCommitmentAcceptance_TC_Projects extends Driver{
 		boolean elementexist=driver.findElements(By.cssSelector("input[id='_58_emailInput'][name='_58_login']")).size()>0;
 		if(elementexist)
 		login.user();
+		log.info("");
 		//**** econsys RTQ form*********
 		imperiumProject_methods.rtqForm(ev.estimatedSize0to100k_,ev.location_inside);
 		imperiumProject_methods.submit_logout_QRnumberAlert();

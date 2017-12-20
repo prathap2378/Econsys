@@ -31,7 +31,7 @@ public class ImperiumProjects extends Driver {
 	static Salestooperation salestoOperation = PageFactory.initElements(Driver.driver(),Salestooperation.class);
 	static AppointkeystaffandCommerSuitUi ak = PageFactory.initElements(Driver.driver(), AppointkeystaffandCommerSuitUi.class);
 	static PDPui pdp_ui = PageFactory.initElements(Driver.driver(),PDPui.class);
-	
+
 	//imported classes
 	static Workbook wb=new Workbook();
 	static TasksCP4toCP5 g45=new TasksCP4toCP5();
@@ -55,7 +55,7 @@ public class ImperiumProjects extends Driver {
 		imperiumProjectFlow();
 		System.out.printf("%n[END] Thread Id : %s", Thread.currentThread().getId());
 	}
-	
+
 	@Test
 	public void imperiumProjectFlow() throws Exception{
 
@@ -72,7 +72,7 @@ public class ImperiumProjects extends Driver {
 		}
 		//Assign Sales Leader
 		imperium_Project_Methods.ASL();
-		
+
 		//Prepare Quote
 		imperium_Project_Methods.prepare_Quote(ev.overallSell,ev.locationrtq2);
 		commonUtils.selectByVisibleText(prepare_Quoteui.getExpliciteapprovalatgateway2(),ev.exeCP2);

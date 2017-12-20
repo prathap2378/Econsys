@@ -1,17 +1,14 @@
-/**
- * 
- */
-package com.econsys.test;
+/*package com.econsys.test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-/**
+*//**
  * @author bhanu.pk
  *
- */
+ *//*
 public class LocalDriverFactory {
 	
 	static WebDriver createInstance(String browserName) {
@@ -31,4 +28,4 @@ public class LocalDriverFactory {
         return driver;
     }
 
-}
+}*/

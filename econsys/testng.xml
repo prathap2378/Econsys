@@ -2,59 +2,57 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite thread-count="1" name="econsys" verbose="1" parallel="tests">
-  	<listeners>
-        <listener class-name="com.econsys.Listeners.TestListener" />
-        <listener class-name="com.econsys.Listeners.ExtentReporterNG" />
-    </listeners>
-  <!-- <test name="econsystectcases-General">
-    <classes>
-     
-     <class name="com.econsys.testCases.PagesVerification"/>
-     <class name="com.econsys.testCases.LoginVerification"/>
-      <class name="com.econsys.testCases.MyWatchlist"/>
-      <class name="com.econsys.testCases.RtQVerify_Projects"/>
-      <class name="com.econsys.testCases.RtQVerify_SmallWorks"/>
-      
-     <class name="com.econsys.testCases.VerifyDeletion_SamllWorks"/>
-      <class name="com.econsys.testCases.VerifyDeletion_Projects"/>
-      <class name="com.econsys.testCases.VerifyDelegation"/>
-      <class name="com.econsys.testCases.RoleReassignment"/>
-      <class name="com.econsys.testCases.CustomerCommitmentAcceptance_Projects"/>
-      <class name="com.econsys.testCases.CustomerCommitmentAcceptance_SmallWorks"/>
-      <class name="com.econsys.testCases.ActionButtonsCPApprovalsProjects"/>
-      <class name="com.econsys.testCases.ActionButtonsCPApprovalsSW"/>
-      <class name="com.econsys.testCases.ReviewInvolve_ActionButtons"/>
-      <class name="com.econsys.testCases.RejectSmallWorks"/>
-      <class name="com.econsys.testCases.Delivery_Review"/>
-      <class name="com.econsys.testCases.smallWork_flow"/>
-      <class name="com.econsys.testCases.CP1_CP9flowTest"/> 
-      <class name="com.econsys.testCases.NewLink"/>
-      <class name="com.econsys.testCases.LinkProject"/>
-    </classes>
-  </test> -->
-  
- <!--   <test name="UKAS">
-  <classes>
-  
- <class name="com.econsys.ukasProjects.UkasFlow"</class> 
-    <class name="com.econsys.ukasProjects.URL"/>
-     <class name="com.econsys.testCases.MyWatchlist"/>
-     <class name="com.econsys.testCases.VerifyDelegation"/>
-     <class name="com.econsys.testCases.RoleReassignment"/>
-     
-  </classes>
-  </test>-->
-  
-  <test name="Matrix">
-  <classes>
-  <class name="com.econsys.testCases.PagesVerification"/>
- 	 <!-- <class name="com.econsys.matrix.ReviewInvolve_ActionButtons"/> -->
-     <!-- <class name="com.econsys.testCases.MyWatchlist"/>
-     <class name="com.econsys.testCases.VerifyDelegation"/>
-     <class name="com.econsys.testCases.RoleReassignment"/> -->
- 	    
-  </classes>
-  </test>
-  
-  
-</suite> <!-- Suite -->
+	<listeners>
+		<listener class-name="com.econsys.Listeners.TestListener" />
+		<listener class-name="com.econsys.Listeners.ExtentReporterNG" />
+	</listeners>
+	<test name="econsys-GA">
+		<classes>
+			<class name="com.econsys.testCases.PagesVerification" />
+			<class name="com.econsys.testCases.LoginVerification" />
+			<class name="com.econsys.testCases.MyWatchlist" />
+			<class name="com.econsys.testCases.RtQVerify_Projects" />
+			<class name="com.econsys.testCases.RtQVerify_SmallWorks" />
+			<class name="com.econsys.testCases.VerifyDeletion_SamllWorks" />
+			<class name="com.econsys.testCases.VerifyDeletion_Projects" />
+			<class name="com.econsys.testCases.VerifyDelegation" />
+			<class name="com.econsys.testCases.RoleReassignment" />
+			<class name="com.econsys.testCases.CustomerCommitmentAcceptance_Projects" />
+			<class name="com.econsys.testCases.CustomerCommitmentAcceptance_SmallWorks" />
+			<class name="com.econsys.testCases.ActionButtonsCPApprovalsProjects" />
+			<class name="com.econsys.testCases.ActionButtonsCPApprovalsSW" />
+			<class name="com.econsys.testCases.ReviewInvolve_ActionButtons" />
+			<class name="com.econsys.testCases.RejectSmallWorks" />
+			<class name="com.econsys.testCases.Delivery_Review" />
+			<class name="com.econsys.testCases.smallWork_flow" />
+			<class name="com.econsys.testCases.CP1_CP9flowTest" />
+			<class name="com.econsys.testCases.NewLink" />
+			<class name="com.econsys.testCases.LinkProject" />
+		</classes>
+	</test>
+
+	<test name="econsys-UKAS">
+		<classes>
+			<class name="com.econsys.ukasProjects.UkasFlow" />
+			<class name="com.econsys.ukasProjects.URL" />
+			<class name="com.econsys.testCases.MyWatchlist" />
+			<class name="com.econsys.testCases.VerifyDelegation" />
+			<class name="com.econsys.testCases.RoleReassignment" />
+		</classes>
+	</test>
+
+	<test name="econsys-Matrix">
+		<classes>
+			<class name="com.econsys.testCases.PagesVerification" />
+			<class name="com.econsys.matrix.ReviewInvolve_ActionButtons" />
+			<class name="com.econsys.testCases.MyWatchlist" />
+			<class name="com.econsys.testCases.VerifyDelegation" />
+			<class name="com.econsys.testCases.RoleReassignment" />
+		</classes>
+	</test>
+	<test name="econsys-imperium">
+		<classes>
+			<class name="com.ecosys.imperium.CustomerCommitmentAcceptance_TC_SmallWorks"></class>
+		</classes>
+	</test>
+</suite>

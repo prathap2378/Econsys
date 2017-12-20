@@ -3,26 +3,14 @@ package com.econsys.testCases;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
-
-import com.econsys.Genriclibrery.CommonUtils;
-import com.econsys.Genriclibrery.Driver;
-import com.econsys.Projects.Basic;
-import com.econsys.Projects.Login;
-import com.econsys.Projects.Monorail;
-import com.econsys.Projects.TaskCP3CP4;
-import com.econsys.Projects.TasksCP4toCP5;
-import com.econsys.SmallWorks.ProjectMethods_Small_Works;
-import com.econsys.SmallWorks.SmallWorks;
-import com.econsys.UIobjectrepositary.ActionButtonsUi;
-import com.econsys.UIobjectrepositary.CosCommitQuoteStatusUi;
-import com.econsys.UIobjectrepositary.PDPui;
-import com.econsys.UIobjectrepositary.Preparequote;
-import com.econsys.UIobjectrepositary.smallWorkPageElements;
+import com.econsys.Genriclibrery.*;
+import com.econsys.Projects.*;
+import com.econsys.SmallWorks.*;
+import com.econsys.UIobjectrepositary.*;
 
 /**
  * @author bhanu.pk
@@ -30,6 +18,7 @@ import com.econsys.UIobjectrepositary.smallWorkPageElements;
  */
 public class Delivery_Review extends Driver{
 	
+	Logger log = Logger.getLogger(Delivery_Review.class.getName());
 	CommonUtils commonutils = PageFactory.initElements(Driver.driver() , CommonUtils.class);
 	ActionButtonsUi ab=PageFactory.initElements(Driver.driver(),ActionButtonsUi.class);
 	CosCommitQuoteStatusUi ccq=PageFactory.initElements(Driver.driver(), CosCommitQuoteStatusUi.class);
@@ -74,12 +63,12 @@ public class Delivery_Review extends Driver{
 	  
 	  cp4_cp5.commerSuit();
 	  //submit sales to operaton
-	  swMethods.salesToOperation();
+	  ProjectMethods_Small_Works.salesToOperation();
 	  commonutils.selectByVisibleText(sWp.getExe_cp5_sw(),"No");
       sWp.getSubmitBtn().click();
       login.logout();
       //Operations Acceptance
-      swMethods.operation_acceptance();
+      ProjectMethods_Small_Works.operation_acceptance();
       //exeCP5=wb.getXLData(8, 9, 0);
       commonutils.selectByVisibleText(sWp.getExe_cp5_sw_OperatonAcceptance(),"No");
       driver.findElement(By.xpath("//input[@id='approve']")).click();
@@ -109,10 +98,10 @@ public class Delivery_Review extends Driver{
 	  login.logout();
 	 
 	  //login user Operation director and -------Approve
-	  project_Methods_small_Works.od_approval();
+	  ProjectMethods_Small_Works.od_approval();
 	  //Delivery review ------Project completed
 	  project_Methods_small_Works.project_complted_DeliveryReview();
 	  //login user Operation director and -------Approve  
-	  project_Methods_small_Works.od_approval();
+	  ProjectMethods_Small_Works.od_approval();
   }
 }

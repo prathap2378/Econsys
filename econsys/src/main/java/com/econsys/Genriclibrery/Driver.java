@@ -2,6 +2,8 @@ package com.econsys.Genriclibrery;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.*;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class Driver {
 	static String currentPath;
@@ -27,3 +29,5 @@ public class Driver {
 		return driver;
 	}
 }
+
+//Unable to create new remote session. desired capabilities = Capabilities [{marionette=true, firefoxOptions=org.openqa.selenium
