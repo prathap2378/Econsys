@@ -25,7 +25,7 @@ public class Login extends Driver {
 	Workbook wb=new Workbook();
 	LoginPageui loginUi=PageFactory.initElements(Driver.driver(), LoginPageui.class);
 	CommonUtils cu=PageFactory.initElements(Driver.driver(), CommonUtils.class);
-	String sd, psw, bor, cl, el, sl, pl, od, sa=null;
+	String sd, psw, bor, cl, el, sl, pl, od, sa, orgAdmin=null;
 	String userName;
 	String password;
 	
@@ -86,6 +86,16 @@ public void loginsuperadminTestServer() throws IOException, InterruptedException
 	 sa=wb.getXLData(28, 0, 0);
 	 psw=wb.getXLData(28,1, 0);
 	 loginUi.getLoginName().sendKeys(sa);
+	 loginUi.getPasword().sendKeys(psw);
+	 loginUi.getLoginButton().click();
+}
+
+//Login organisation admin
+public void loginOrgAdmin() throws IOException, InterruptedException{
+	 cu.waitForPageToLoad();
+	 orgAdmin =wb.getXLData(25, 0, 0);
+	 psw=wb.getXLData(25,1, 0);
+	 loginUi.getLoginName().sendKeys(orgAdmin);
 	 loginUi.getPasword().sendKeys(psw);
 	 loginUi.getLoginButton().click();
 }
@@ -154,6 +164,4 @@ public void loginOD() throws IOException, InterruptedException{
 	 loginUi.getPasword().sendKeys(psw);
 	 loginUi.getLoginButton().click();
 }
-
-
 }

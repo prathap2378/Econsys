@@ -35,7 +35,7 @@ public class VerifyDelegation extends Driver{
 	@Test
 	public void verify_AllProjectsDelegation() throws IOException, InterruptedException, AWTException{
 		
-		login.user();
+		login.loginOrgAdmin();
 		commonUtils.waitForPageToLoad();
 		allPages.getAllProjects().click();
 		int allProjects_Count = driver.findElements(By.xpath("//div[@id='gview_delegatestaticGrid']//tr")).size();
@@ -83,7 +83,7 @@ public class VerifyDelegation extends Driver{
 	public void verify_SavedRTQDelegation() throws IOException, InterruptedException, AWTException{
 
 		log.info("login as admin saved rtq deligation");
-		login.user();
+		login.loginOrgAdmin();
 
 		allPages.getAdminLink().click();
 		allPages.getSaveRTQlink().click();

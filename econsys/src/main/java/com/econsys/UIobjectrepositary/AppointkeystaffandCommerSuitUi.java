@@ -34,7 +34,7 @@ public class AppointkeystaffandCommerSuitUi {
 	private WebElement payment_Cycle_Document;
 	
 	@FindBy(id="fileList_flm_milestoneDocument")
-	private WebElement milestoneDocInCommercialSuite;
+	private WebElement  payment_Request_document;
 	
 	@FindBy(id="fileList_flm_panelProductionScheduleDocument")
 	private WebElement productionSheduleDocCommercialSuite;
@@ -42,6 +42,19 @@ public class AppointkeystaffandCommerSuitUi {
 	@FindBy(xpath="//*[@id='st_projectOrSmall']")
 	private WebElement projectOrSmallWorks;
 	
+	@FindBy(xpath="//*[@id='st_noticeOfIntentionPeriod']")
+	private WebElement suspend_Period;
+	
+	@FindBy(xpath="//*[@id='scheduleOfRatesNeeded']")
+	private WebElement scheduleOfRatesNeeded;
+	
+	public WebElement getScheduleOfRatesNeeded(){
+		return scheduleOfRatesNeeded;
+	}
+	
+	public WebElement getSuspend_Period(){
+		return suspend_Period;
+	}
 	public WebElement getprojectorSmallWorks(){
 		return projectOrSmallWorks;
 	}
@@ -50,8 +63,8 @@ public class AppointkeystaffandCommerSuitUi {
 		return productionSheduleDocCommercialSuite;
 	}
 	
-	public WebElement getMilestoneDocInCommercialSuite(){
-		return milestoneDocInCommercialSuite;
+	public WebElement getPayment_Request_document(){
+		return payment_Request_document;
 	}
 	public WebElement getPayment_Terms() {
 		return payment_Terms;

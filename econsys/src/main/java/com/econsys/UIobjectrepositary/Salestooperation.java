@@ -145,9 +145,6 @@ public class Salestooperation {
 			return IdentifedRisksandOpportunities;
 		}
 
-		
-		
-
 		public WebElement getExeCP5() {
 			return exeCP5;
 		}

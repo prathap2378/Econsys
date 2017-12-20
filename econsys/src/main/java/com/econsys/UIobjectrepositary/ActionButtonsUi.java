@@ -160,8 +160,8 @@ public class ActionButtonsUi {
 	@FindBy(xpath="//input[@value='Submit']")
 	private WebElement submitbutton;
 	
-	@FindBy(xpath="//input[@value='To Monthly Review']")
-	private WebElement mrbutton;
+	@FindBy(xpath="//input[@value='Review']")
+	private WebElement monthly_Review_Button;
 
 	@FindBy(xpath="//input[@value='Project Completed']")
 	private WebElement projectCompletedbutton;
@@ -283,8 +283,8 @@ public class ActionButtonsUi {
 		return submitbutton;
 	}
 
-	public WebElement getMrbutton() {
-		return mrbutton;
+	public WebElement getMonthly_Review_Button() {
+		return monthly_Review_Button;
 	}
 
 	public WebElement getProjectCompletedbutton() {

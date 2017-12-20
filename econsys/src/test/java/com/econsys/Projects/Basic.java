@@ -427,6 +427,7 @@ public void submit_Logout() throws InterruptedException{
 			commonUtils.selectByVisibleText(driver.findElement(By.xpath("//tr[3]/td[3]/select")),"contains");
 
 			if(ab.getSearchProjectname().getAttribute("value").isEmpty())
+				log.info("Project Name in search pop up---"+ev.prjname1);
 				ab.getSearchProjectname().sendKeys(ev.prjname1);
 			ab.getFind().click();
 		}

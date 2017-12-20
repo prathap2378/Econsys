@@ -2,7 +2,6 @@ package com.econsys.econ4eg;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.util.EstimatableObjectWrapper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;

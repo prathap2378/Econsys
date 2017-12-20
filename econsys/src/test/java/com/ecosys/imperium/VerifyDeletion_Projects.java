@@ -22,6 +22,7 @@ public class VerifyDeletion_Projects extends Driver{
 	AllPages allPages= PageFactory.initElements(Driver.driver(), AllPages.class);
 	RTQForm_Ui nrtq=PageFactory.initElements(Driver.driver(), RTQForm_Ui.class);
 	SadminUi allTabs = PageFactory.initElements(Driver.driver(), SadminUi.class);
+	
 	Workbook wb = new Workbook();
 	Login login= new Login();
 	EconsysVariables ev= new EconsysVariables();
@@ -39,7 +40,7 @@ public class VerifyDeletion_Projects extends Driver{
 
 		login.user();
 		//****intiation of rtq form*********
-		imperium_Project_Methods.rtqForm(ev.location, ev.estimatedSize);
+		imperium_Project_Methods.rtqForm(ev.estimatedSize,ev.location);
 		imperium_Project_Methods.submit_logout_QRnumberAlert();
 		
 		//***********CP1 exe dession************
@@ -72,7 +73,7 @@ public class VerifyDeletion_Projects extends Driver{
 		log.info("saved");
 
 		//SD approval post project delete
-		if(ev.estimatedSize.equals(ev.estimatedSize500_)){
+		if(!ev.estimatedSize.equals(ev.estimatedSize0to100k_)){
 			login.logout();
 			login.loginSD();
 			ab.getGroupapprovals().click();
@@ -97,9 +98,10 @@ public class VerifyDeletion_Projects extends Driver{
 	public void projectdelete_AllProjects() throws IOException, InterruptedException, AWTException{
 		
 		login.user();
-		basic.rtqForm(ev.location, ev.estimatedSize);
-		ab.getSubmitbutton().click();
-
+		imperium_Project_Methods.rtqForm(ev.estimatedSize,ev.location);
+		imperium_Project_Methods.submit_logout_QRnumberAlert();
+		
+		login.loginOrgAdmin();
 		cu.waitForPageToLoad();
 		allTabs.getAllProjects().click();
 
@@ -125,13 +127,15 @@ public class VerifyDeletion_Projects extends Driver{
 		Assert.assertEquals(driver.findElements(By.xpath("//td[@title='Deleted']")).get(0).getText(), "Deleted");
 		log.info("Asserted");
 	}
-	//@Test
+	
 	//Delete Saved rtq from savedRTQ grid
+	@Test
 	public void projectSave_Delete_SavedRTQ() throws IOException, InterruptedException, AWTException{
 		login.url();
 		login.user();
-		basic.rtqForm(ev.location, ev.estimatedSize);
+		imperium_Project_Methods.rtqForm(ev.estimatedSize,ev.location);
 		ab.getSave_RTQ().click();
+		
 		//Admin
 		cu.waitForPageToLoad();
 		ab.getAdmin().click();
